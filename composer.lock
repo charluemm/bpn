@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d300a31e90f17a7df97f2d573efb4b03",
-    "content-hash": "f80ee4e338d281da82def51ccf24c078",
+    "hash": "87c21de25e21cc8a1a066e4e256f4e0f",
+    "content-hash": "451bf4bb97159040c2e879e310845faa",
     "packages": [
         {
             "name": "components/bootstrap",
@@ -74,6 +74,59 @@
                 "web"
             ],
             "time": "2016-07-26 05:59:20"
+        },
+        {
+            "name": "components/bootstrap-default",
+            "version": "3.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/bootstrap-default.git",
+                "reference": "db8137e7656e7887be92a6f54a866ed975b5946e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/bootstrap-default/zipball/db8137e7656e7887be92a6f54a866ed975b5946e",
+                "reference": "db8137e7656e7887be92a6f54a866ed975b5946e",
+                "shasum": ""
+            },
+            "require": {
+                "components/bootstrap": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "styles": [
+                        "css/bootstrap.css",
+                        "css/bootstrap-theme.css"
+                    ],
+                    "files": [
+                        "css/*.css",
+                        "css/*.map",
+                        "fonts/*"
+                    ],
+                    "shim": {
+                        "deps": [
+                            "bootstrap"
+                        ]
+                    }
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Twitter, Inc"
+                }
+            ],
+            "description": "Shim repository for the default theme for Bootstrap.",
+            "homepage": "http://getbootstrap.com",
+            "keywords": [
+                "bootstrap",
+                "css"
+            ],
+            "time": "2015-06-18 12:28:13"
         },
         {
             "name": "components/font-awesome",

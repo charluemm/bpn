@@ -46,26 +46,19 @@ assetic:
     filters:
         cssrewrite: ~
     assets:
-        bootstrap_js:
-            inputs:
-                - "%kernel.root_dir%/../vendor/components/bootstrap/js/bootstrap.js"
-        jquery:
+        kernel_js:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"
-        
-#        chart_js:
-#            inputs:
-#                - "%kernel.root_dir%/../vendor/nnnick/chartjs/Chart.js"
+                - "%kernel.root_dir%/../vendor/components/bootstrap/js/bootstrap.js"
+            output: "js/kernel_js"
 
-        bootstrap_css:
+        kernel_css:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/bootstrap/css/bootstrap.css"
                 - "%kernel.root_dir%/../vendor/components/bootstrap/css/bootstrap-theme.css"
-#            filters: [cssrewrite]
+                - "%kernel.root_dir%/../vendor/components/font-awesome/css/font-awesome.css"
+            output: 'css/kernel.css'
         
-        bootstrap_datepicker_css:
-            inputs:
-                - "%kernel.root_dir%/../vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.css"
         bootstrap_glyphicons_ttf:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/bootstrap/fonts/glyphicons-halflings-regular.ttf"
@@ -107,9 +100,6 @@ assetic:
             inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.woff2'
             output: 'fonts/fontawesome-webfont.woff2'       
                      
-        font_awesome_css:
-            inputs:
-                - "%kernel.root_dir%/../vendor/components/font-awesome/css/font-awesome.css"
 
 # Doctrine Configuration
 doctrine:
