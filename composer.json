@@ -24,7 +24,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "components/jquery": "^3.1",
         "components/bootstrap": "^3.3",
-        "components/font-awesome": "^4.6"
+        "components/font-awesome": "^4.6",
+        "symfony/assetic-bundle": "^2.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
