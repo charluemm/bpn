@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,7 +27,7 @@ class TournamentController extends Controller
      *
      * @Route("/", name="tournament_create")
      * @Method("POST")
-     * @Template("PokernightAppBundle:Tournament:new.html.twig")
+     * @Template("AppBundle:Tournament:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -38,7 +38,7 @@ class TournamentController extends Controller
         if ($form->isValid()) 
         {
             $em = $this->getDoctrine()->getManager();
-            $rankingRepo = $em->getRepository('PokernightAppBundle:TournamentRanking');
+            $rankingRepo = $em->getRepository('AppBundle:TournamentRanking');
             $players = $form->get('players')->getData();
 
             $em->persist($entity);
@@ -111,7 +111,7 @@ class TournamentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Tournament')->find($id);
+        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -136,7 +136,7 @@ class TournamentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Tournament')->find($id);
+        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -177,13 +177,13 @@ class TournamentController extends Controller
      *
      * @Route("/{id}/ranking", name="tournament_add_ranking")
      * @Method("GET")
-     * @Template("PokernightAppBundle:Tournament:edit.html.twig")
+     * @Template("AppBundle:Tournament:edit.html.twig")
      */
     public function addRankingAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Tournament')->find($id);
+        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -220,13 +220,13 @@ class TournamentController extends Controller
      *
      * @Route("/{id}", name="tournament_update")
      * @Method("PUT")
-     * @Template("PokernightAppBundle:Tournament:edit.html.twig")
+     * @Template("AppBundle:Tournament:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Tournament')->find($id);
+        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -239,7 +239,7 @@ class TournamentController extends Controller
         if ($editForm->isValid()) 
         {
         	$em = $this->getDoctrine()->getManager();
-        	$rankingRepo = $em->getRepository('PokernightAppBundle:TournamentRanking');
+        	$rankingRepo = $em->getRepository('AppBundle:TournamentRanking');
         	$players = $editForm->get('players')->getData();
         	
         	$allRankings = new ArrayCollection($rankingRepo->findBy(array('tournament' => $entity)));
@@ -279,13 +279,13 @@ class TournamentController extends Controller
      *
      * @Route("/{id}/ranking", name="tournament_update_ranking")
      * @Method("PUT")
-     * @Template("PokernightAppBundle:Tournament:edit.html.twig")
+     * @Template("AppBundle:Tournament:edit.html.twig")
      */
     public function updateRankingAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Tournament')->find($id);
+        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -320,7 +320,7 @@ class TournamentController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PokernightAppBundle:Tournament')->find($id);
+            $entity = $em->getRepository('AppBundle:Tournament')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Tournament entity.');

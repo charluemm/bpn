@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Config\Definition\BooleanNode;
@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\BooleanNode;
  * Seat
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\SeatRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\SeatRepository")
  */
 class Seat
 {

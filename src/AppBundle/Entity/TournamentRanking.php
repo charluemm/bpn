@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TournamentRank
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\TournamentRankingRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\TournamentRankingRepository")
  */
 class TournamentRanking
 {

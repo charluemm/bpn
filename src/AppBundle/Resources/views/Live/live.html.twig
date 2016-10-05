@@ -1,4 +1,4 @@
-{% extends "PokernightAppBundle::template_live.html.twig" %} 
+{% extends "AppBundle::template_live.html.twig" %} 
 
 {% block content %}
 <div class="container-fluid">
@@ -7,7 +7,7 @@
 		</div>
 		{% for table in tournament.tables %}		
 		<div class="col-sm-7">
-			{% include "PokernightAppBundle:Table:table_10_player.html.twig" with {'seats': table.seats } %}
+			{% include "AppBundle:Table:table_10_player.html.twig" with {'seats': table.seats } %}
 		</div>
 		{% endfor %}
 	</div>

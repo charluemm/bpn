@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
  * TournamentTable
  *
  * @ORM\Table(name="tournament_table")
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\TableRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\TableRepository")
  */
 class TournamentTable
 {
@@ -180,11 +180,11 @@ class TournamentTable
     /**
      * Set tournament
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Tournament $tournament
+     * @param \AppBundle\Entity\Tournament $tournament
      *
      * @return Table
      */
-    public function setTournament(\Reu\Pokernight\AppBundle\Entity\Tournament $tournament)
+    public function setTournament(\AppBundle\Entity\Tournament $tournament)
     {
         $this->tournament = $tournament;
 
@@ -194,7 +194,7 @@ class TournamentTable
     /**
      * Get tournament
      *
-     * @return \Reu\Pokernight\AppBundle\Entity\Tournament
+     * @return \AppBundle\Entity\Tournament
      */
     public function getTournament()
     {
@@ -204,11 +204,11 @@ class TournamentTable
     /**
      * Add seat
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Seat $seat
+     * @param \AppBundle\Entity\Seat $seat
      *
      * @return Table
      */
-    public function addSeat(\Reu\Pokernight\AppBundle\Entity\Seat $seat)
+    public function addSeat(\AppBundle\Entity\Seat $seat)
     {
     	if(!$this->seats->contains($seat))
         	$this->seats->add($seat);
@@ -219,9 +219,9 @@ class TournamentTable
     /**
      * Remove seat
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Seat $seat
+     * @param \AppBundle\Entity\Seat $seat
      */
-    public function removeSeat(\Reu\Pokernight\AppBundle\Entity\Seat $seat)
+    public function removeSeat(\AppBundle\Entity\Seat $seat)
     {
     	if($this->seats->contains($seat))
         	return $this->seats->removeElement($seat);

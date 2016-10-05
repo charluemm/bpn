@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 /**
  * SeatRepository

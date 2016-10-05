@@ -1,4 +1,4 @@
-{% extends 'PokernightAppBundle::template.html.twig' %}
+{% extends 'AppBundle::template.html.twig' %}
 
 {% block content %}
 <div class="content-section-a">
@@ -17,7 +17,7 @@
 				</p>
 			</div>
 			<div class="col-lg-5 col-lg-offset-2 col-sm-6">
-				<img alt="" src="{{ asset('bundles/pokernightapp/images/background.jpg') }}" class="img-responsive">
+				<img alt="" src="{{ asset('bundles/app/images/background.jpg') }}" class="img-responsive">
 			</div>
 		</div>
 	</div> <!-- /.container -->
@@ -27,10 +27,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-lg-3">
-				{% include 'PokernightAppBundle:Widget:widget_player_medium.html.twig' %}
+				{% include 'AppBundle:Widget:widget_player_medium.html.twig' %}
 			</div>
 			<div class="col-sm-6 col-lg-3">
-				{% include 'PokernightAppBundle:Widget:widget_player_medium.html.twig' %}
+				{% include 'AppBundle:Widget:widget_player_medium.html.twig' %}
 			</div>
 		</div>
 	</div> <!-- /.container -->

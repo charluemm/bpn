@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Player
  *
  * @ORM\Table(name="app_player")
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\PlayerRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\PlayerRepository")
  */
 class Player
 {
@@ -218,7 +218,7 @@ class Player
     
     /**
      * @param AnnualRanking $ranking
-     * @return \Reu\Pokernight\AppBundle\Entity\Player
+     * @return \AppBundle\Entity\Player
      */
     public function addAnnualRanking(AnnualRanking $ranking)
     {

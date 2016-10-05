@@ -1,4 +1,4 @@
-{% extends 'PokernightAppBundle::template_default.html.twig' %}
+{% extends 'AppBundle::template_default.html.twig' %}
 
 {% block subtitle %}5-Jahreswertung{% endblock %} 
 
@@ -12,7 +12,7 @@
 				<a href="#" class="list-group-item active">
 					<h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> 5-Jahres-Wertung</h4>
 				</a>
-				{% include 'PokernightAppBundle:Widget:widget_ranking_list.html.twig' with {'ranking' : annualRanking} %}
+				{% include 'AppBundle:Widget:widget_ranking_list.html.twig' with {'ranking' : annualRanking} %}
 			</div>
 		</div>
 	</div>

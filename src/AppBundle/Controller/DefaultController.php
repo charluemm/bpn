@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,7 +15,7 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	
-        return $this->render('PokernightAppBundle:Default:index.html.twig', array(
+        return $this->render('AppBundle:Default:index.html.twig', array(
         		'name' => "Test",
         ));
     }
@@ -25,9 +25,9 @@ class DefaultController extends Controller
     public function annualRankingAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$listAnnualRanking = $em->getRepository('PokernightAppBundle:AnnualRanking')->findLastGroupByPlayer();
+    	$listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastGroupByPlayer();
     	
-        return $this->render('PokernightAppBundle:Default:annualRanking.html.twig', array(
+        return $this->render('AppBundle:Default:annualRanking.html.twig', array(
         		'annualRanking' => $listAnnualRanking
         ));
     }

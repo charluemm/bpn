@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="app_annual_ranking",
  * 				uniqueConstraints={@ORM\UniqueConstraint(name="unique_date_player", columns={"player_id", "date"})})
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\AnnualRankingRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AnnualRankingRepository")
  */
 class AnnualRanking
 {
@@ -149,7 +149,7 @@ class AnnualRanking
     
     /**
      * @param Player $player
-     * @return \Reu\Pokernight\AppBundle\Entity\AnnualRanking
+     * @return \AppBundle\Entity\AnnualRanking
      */
     public function setPlayer(Player $player)
     {
@@ -162,7 +162,7 @@ class AnnualRanking
     }
 
     /**
-     * @return \Reu\Pokernight\AppBundle\Entity\Player
+     * @return \AppBundle\Entity\Player
      */
     public function getPlayer()
     {

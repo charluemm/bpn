@@ -1,4 +1,4 @@
-{% extends "PokernightAppBundle::template_live.html.twig" %} 
+{% extends "AppBundle::template_live.html.twig" %} 
 
 {% block content %}
 <div class="container-fluid">
@@ -7,7 +7,7 @@
 			{% for table in tournament.tables %}		
 			<div class="col-sm-6 tournament-table" id="table-{{ table.id }}">
 				<h3>Tisch {{ table.number }}</h3>
-				{% include "PokernightAppBundle:Table:table_player.html.twig" with {'table': table } %}
+				{% include "AppBundle:Table:table_player.html.twig" with {'table': table } %}
 			</div>
 			{% endfor %}
 		</div>
@@ -46,7 +46,7 @@
 
 {% block javascripts %}
 {{ parent() }}
-{% javascripts '@PokernightAppBundle/Resources/public/js/draw.js' %}
+{% javascripts '@AppBundle/Resources/public/js/draw.js' %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% endblock javascripts %}

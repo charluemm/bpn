@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,13 +25,13 @@ class TableController extends Controller
 {
 	/**
 	 * @Route("/live/add/{tournamentId}", name="table_add_live")
-	 * @Template("PokernightAppBundle:Administration:live_add_table.html.twig")
+	 * @Template("AppBundle:Administration:live_add_table.html.twig")
 	 */
 	public function addTableAction(Request $request,$tournamentId)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$tournamentRepo = $em->getRepository('PokernightAppBundle:Tournament');
-		$tableRepo = $em->getRepository('PokernightAppBundle:TournamentTable');
+		$tournamentRepo = $em->getRepository('AppBundle:Tournament');
+		$tableRepo = $em->getRepository('AppBundle:TournamentTable');
 
 		$tournament = $tournamentRepo->find($tournamentId);
 		$number = 1 + $tableRepo->findMaxNumberByTournament($tournament);
@@ -75,13 +75,13 @@ class TableController extends Controller
      *
      * @Route("/{id}/edit", name="table_edit")
      * @Method("GET")
-     * @Template("PokernightAppBundle:Administration:live_edit_table.html.twig")
+     * @Template("AppBundle:Administration:live_edit_table.html.twig")
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:TournamentTable')->find($id);
+        $entity = $em->getRepository('AppBundle:TournamentTable')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Table entity.');
@@ -125,7 +125,7 @@ class TableController extends Controller
      *
      * @Route("/{id}", name="table_update")
      * @Method("PUT")
-     * @Template("PokernightAppBundle:Table:edit.html.twig")
+     * @Template("AppBundle:Table:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -201,6 +201,6 @@ class TableController extends Controller
     
     private function getRepository()
     {
-    	return $this->getDoctrine()->getRepository('PokernightAppBundle:TournamentTable');
+    	return $this->getDoctrine()->getRepository('AppBundle:TournamentTable');
     }
 }

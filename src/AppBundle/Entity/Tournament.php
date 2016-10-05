@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +10,7 @@ use Assetic\Cache\ArrayCache;
  * Tournament
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\TournamentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\TournamentRepository")
  */
 class Tournament
 {
@@ -213,11 +213,11 @@ class Tournament
     /**
      * Set event
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Event $event
+     * @param \AppBundle\Entity\Event $event
      *
      * @return Tournament
      */
-    public function setEvent(\Reu\Pokernight\AppBundle\Entity\Event $event = null)
+    public function setEvent(\AppBundle\Entity\Event $event = null)
     {
     	if(!empty($event))
     		$event->addTournament($this);
@@ -230,7 +230,7 @@ class Tournament
     /**
      * Get event
      *
-     * @return \Reu\Pokernight\AppBundle\Entity\Event
+     * @return \AppBundle\Entity\Event
      */
     public function getEvent()
     {

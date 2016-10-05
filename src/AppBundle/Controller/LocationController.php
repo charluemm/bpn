@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +28,7 @@ class LocationController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('PokernightAppBundle:Location')->findAll();
+        $entities = $em->getRepository('AppBundle:Location')->findAll();
 
         return array(
             'entities' => $entities,
@@ -39,7 +39,7 @@ class LocationController extends Controller
      *
      * @Route("/", name="location_create")
      * @Method("POST")
-     * @Template("PokernightAppBundle:Location:new.html.twig")
+     * @Template("AppBundle:Location:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -109,7 +109,7 @@ class LocationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Location')->find($id);
+        $entity = $em->getRepository('AppBundle:Location')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Location entity.');
@@ -134,7 +134,7 @@ class LocationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Location')->find($id);
+        $entity = $em->getRepository('AppBundle:Location')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Location entity.');
@@ -173,13 +173,13 @@ class LocationController extends Controller
      *
      * @Route("/{id}", name="location_update")
      * @Method("PUT")
-     * @Template("PokernightAppBundle:Location:edit.html.twig")
+     * @Template("AppBundle:Location:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Location')->find($id);
+        $entity = $em->getRepository('AppBundle:Location')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Location entity.');
@@ -214,7 +214,7 @@ class LocationController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PokernightAppBundle:Location')->find($id);
+            $entity = $em->getRepository('AppBundle:Location')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Location entity.');

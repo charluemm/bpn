@@ -1,5 +1,5 @@
 <?php
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,12 +25,12 @@ class AdministrationController extends Controller
 	 * Acion für Auslosung
 	 *
 	 * @Route("/draw", name="administration_draw")
-	 * @Template("PokernightAppBundle:Administration:draw.html.twig")
+	 * @Template("AppBundle:Administration:draw.html.twig")
 	 */
 	public function drawAction() 
 	{
 		$em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('PokernightAppBundle:Player')->findAll();
+        $entities = $em->getRepository('AppBundle:Player')->findAll();
         
 		return array (
 			'listPlayer' => $entities
@@ -39,13 +39,13 @@ class AdministrationController extends Controller
 
 	/**
 	 * @Route("/live/{tournamentId}", name="administration_live_ranking_update")
-	 * @Template("PokernightAppBundle:Administration:live.html.twig")
+	 * @Template("AppBundle:Administration:live.html.twig")
 	 * @Method("PUT")
 	 */
 	public function updateRankingAction(Request $request, $tournamentId)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entity = $em->getRepository('PokernightAppBundle:Tournament')->find($tournamentId);
+		$entity = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
 		
 		if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -76,7 +76,7 @@ class AdministrationController extends Controller
 	 *  Auswahl live event
 	 *
 	 * @Route("/live/{tournamentId}", name="administration_live")
-	 * @Template("PokernightAppBundle:Administration:live.html.twig")
+	 * @Template("AppBundle:Administration:live.html.twig")
 	 */
 	public function liveAction(Request $request, $tournamentId = null) 
 	{
@@ -84,7 +84,7 @@ class AdministrationController extends Controller
 
 		if(!empty($tournamentId))
 		{
-			$tournament = $em->getRepository('PokernightAppBundle:Tournament')->find($tournamentId);
+			$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
 			$formLiveConfig = $this->createFormBuilder()
 				->add('submit', 'submit', array('label' => 'Speichern'))
 				->getForm();
@@ -105,7 +105,7 @@ class AdministrationController extends Controller
 		$formSelectEvent = $this->createFormBuilder()
 			->add('tournament', 'entity', array(
 					'label' => 'Turnier wählen',
-					'class' => 'PokernightAppBundle:Tournament',
+					'class' => 'AppBundle:Tournament',
 			))
 			->add('submit', 'submit', array('label' => 'Laden'))
 			->getForm();
@@ -129,12 +129,12 @@ class AdministrationController extends Controller
 	 * Acion für Auslosung
 	 *
 	 * @Route("/calculation", name="calculation_index")
-	 * @Template("PokernightAppBundle:Administration:calculation.html.twig")
+	 * @Template("AppBundle:Administration:calculation.html.twig")
 	 */
 	public function calculationIndexAction(Request $request) 
 	{
 		$em = $this->getDoctrine()->getManager();
-        $listTournaments = $em->getRepository('PokernightAppBundle:Tournament')->findAnnualRankingRelevant();
+        $listTournaments = $em->getRepository('AppBundle:Tournament')->findAnnualRankingRelevant();
 		
 		$formStart = $this->createFormBuilder()
 			->add('submit','submit', array('label' => 'Jetzt neu berechnen'))
@@ -145,7 +145,7 @@ class AdministrationController extends Controller
 			$this->createAnnualRanking($listTournaments);
 		}
 
-		$listAnnualRanking = $em->getRepository('PokernightAppBundle:AnnualRanking')->findLastGroupByPlayer();
+		$listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastGroupByPlayer();
 		return array (
 			'frm_start' => $formStart->createView(),
 			'list_tournaments' => $listTournaments,
@@ -157,9 +157,9 @@ class AdministrationController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		/* @var $playerRepo PlayerRepository */
-		$playerRepo = $em->getRepository('PokernightAppBundle:Player');
-		$tournamentRankingRepo = $em->getRepository('PokernightAppBundle:TournamentRanking');
-		$annualRepo = $em->getRepository('PokernightAppBundle:AnnualRanking');
+		$playerRepo = $em->getRepository('AppBundle:Player');
+		$tournamentRankingRepo = $em->getRepository('AppBundle:TournamentRanking');
+		$annualRepo = $em->getRepository('AppBundle:AnnualRanking');
 
 		// Lösche bisheriges Ranking
 		foreach($annualRepo->findAll() as $element)

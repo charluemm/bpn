@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,7 +29,7 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PokernightAppBundle:Player')->findAll();
+        $entities = $em->getRepository('AppBundle:Player')->findAll();
 
         return array(
             'entities' => $entities,
@@ -40,7 +40,7 @@ class PlayerController extends Controller
      *
      * @Route("/", name="player_create")
      * @Method("POST")
-     * @Template("PokernightAppBundle:Player:new.html.twig")
+     * @Template("AppBundle:Player:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -110,7 +110,7 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Player')->find($id);
+        $entity = $em->getRepository('AppBundle:Player')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Player entity.');
@@ -135,7 +135,7 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Player')->find($id);
+        $entity = $em->getRepository('AppBundle:Player')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Player entity.');
@@ -174,13 +174,13 @@ class PlayerController extends Controller
      *
      * @Route("/{id}", name="player_update")
      * @Method("PUT")
-     * @Template("PokernightAppBundle:Player:edit.html.twig")
+     * @Template("AppBundle:Player:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Player')->find($id);
+        $entity = $em->getRepository('AppBundle:Player')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Player entity.');
@@ -215,7 +215,7 @@ class PlayerController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PokernightAppBundle:Player')->find($id);
+            $entity = $em->getRepository('AppBundle:Player')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Player entity.');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,7 +29,7 @@ class EventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PokernightAppBundle:Event')->findAll();
+        $entities = $em->getRepository('AppBundle:Event')->findAll();
 
         return array(
             'entities' => $entities,
@@ -40,7 +40,7 @@ class EventController extends Controller
      *
      * @Route("/", name="event_create")
      * @Method("POST")
-     * @Template("PokernightAppBundle:Event:new.html.twig")
+     * @Template("AppBundle:Event:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -110,7 +110,7 @@ class EventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Event')->find($id);
+        $entity = $em->getRepository('AppBundle:Event')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Event entity.');
@@ -135,7 +135,7 @@ class EventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Event')->find($id);
+        $entity = $em->getRepository('AppBundle:Event')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Event entity.');
@@ -174,13 +174,13 @@ class EventController extends Controller
      *
      * @Route("/{id}", name="event_update")
      * @Method("PUT")
-     * @Template("PokernightAppBundle:Event:edit.html.twig")
+     * @Template("AppBundle:Event:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PokernightAppBundle:Event')->find($id);
+        $entity = $em->getRepository('AppBundle:Event')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Event entity.');
@@ -216,7 +216,7 @@ class EventController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PokernightAppBundle:Event')->find($id);
+            $entity = $em->getRepository('AppBundle:Event')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Event entity.');

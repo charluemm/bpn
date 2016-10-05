@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Event
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Reu\Pokernight\AppBundle\Entity\EventRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\EventRepository")
  */
 class Event
 {
@@ -157,11 +157,11 @@ class Event
     /**
      * Add tournament
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Tournament $tournament
+     * @param \AppBundle\Entity\Tournament $tournament
      *
      * @return Event
      */
-    public function addTournament(\Reu\Pokernight\AppBundle\Entity\Tournament $tournament)
+    public function addTournament(\AppBundle\Entity\Tournament $tournament)
     {
     	if($this->tournaments->contains($tournament))
     		return ;
@@ -173,10 +173,10 @@ class Event
     /**
      * Remove tournament
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Tournament $tournament
+     * @param \AppBundle\Entity\Tournament $tournament
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.  
      */
-    public function removeTournament(\Reu\Pokernight\AppBundle\Entity\Tournament $tournament)
+    public function removeTournament(\AppBundle\Entity\Tournament $tournament)
     {
     	if(!$this->tournaments->contains($tournament))
     		return false;
@@ -197,11 +197,11 @@ class Event
     /**
      * Set location
      *
-     * @param \Reu\Pokernight\AppBundle\Entity\Location $location
+     * @param \AppBundle\Entity\Location $location
      *
      * @return Event
      */
-    public function setLocation(\Reu\Pokernight\AppBundle\Entity\Location $location = null)
+    public function setLocation(\AppBundle\Entity\Location $location = null)
     {
         $this->location = $location;
 
@@ -211,7 +211,7 @@ class Event
     /**
      * Get location
      *
-     * @return \Reu\Pokernight\AppBundle\Entity\Location
+     * @return \AppBundle\Entity\Location
      */
     public function getLocation()
     {

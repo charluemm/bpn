@@ -1,6 +1,6 @@
 <?php
 
-namespace Reu\Pokernight\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,7 +21,7 @@ class LiveController extends Controller
 {
     /**
      * @Route("/{tournamentId}", name="live_index")
-     * @Template("PokernightAppBundle:Live:live.html.twig")
+     * @Template("AppBundle:Live:live.html.twig")
      */
     public function showAction(Request $request, $tournamentId = null)
     {
@@ -30,7 +30,7 @@ class LiveController extends Controller
     	if(!empty($tournamentId))
     	{
     		/* @var $tournament Tournament */
-    		$tournament = $em->getRepository('PokernightAppBundle:Tournament')->find($tournamentId);
+    		$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
     		
     		return array(
     				'tournament' => $tournament
@@ -42,13 +42,13 @@ class LiveController extends Controller
     
     /**
      * @Route("/{tournamentId}/draw", name="live_draw")
-     * @Template("PokernightAppBundle:Live:draw.html.twig")
+     * @Template("AppBundle:Live:draw.html.twig")
      */
     public function liveDrawAction($tournamentId)
     {
     	$em = $this->getDoctrine()->getManager();
     	/* @var $tournament Tournament */
-   		$tournament = $em->getRepository('PokernightAppBundle:Tournament')->find($tournamentId);
+   		$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
 
    		// alle Turnierteilnehmer
    		$playerList = array();
@@ -56,7 +56,7 @@ class LiveController extends Controller
     		$playerList[] = $ranking->getPlayer();
     		
     	// Spieler 5-Jahreswertung
-    	$listAnnualRanking = $em->getRepository('PokernightAppBundle:AnnualRanking')->findLastGroupByPlayer();
+    	$listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastGroupByPlayer();
     	$annualPlayerList = array();
     	foreach($listAnnualRanking as $annualRanking)
     		$annualPlayerList[] = $annualRanking->getPlayer();
@@ -88,12 +88,12 @@ class LiveController extends Controller
     
     /**
      * @Route("/single-table", name="live_single_table")
-     * @Template("PokernightAppBundle:Live:single_table.html.twig")
+     * @Template("AppBundle:Live:single_table.html.twig")
      */
     public function singleTableAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$allPlayer = $em->getRepository('PokernightAppBundle:Player')->findAll();
+    	$allPlayer = $em->getRepository('AppBundle:Player')->findAll();
     	 
         return array(
         		'all_player' => $allPlayer

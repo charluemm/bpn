@@ -2,16 +2,16 @@
 
 {% block stylesheets %} 
 {% stylesheets 
-	'bundles/pokernightapp/css/design.css' 
-	'bundles/pokernightapp/css/widget.css' 
-	'bundles/pokernightapp/css/themes.css' 
+	'bundles/app/css/design.css' 
+	'bundles/app/css/widget.css' 
+	'bundles/app/css/themes.css' 
 	filter='cssrewrite' %}
 <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
 {% endblock %} 
 
 {% block body %} 
-{% include 'PokernightAppBundle:Navigation:default_nav.html.twig' %}
+{% include 'AppBundle:Navigation:default_nav.html.twig' %}
 
 {% block header %}
 <div class="intro-header">
