@@ -1,0 +1,339 @@
+@CHARSET "ISO-8859-1";
+
+.block {
+	background-color: #fff;
+	border: 1px solid #dbe1e8;
+	margin: 0 0 10px;
+	padding: 20px 15px 1px;
+}
+
+.block.full {
+	padding: 20px 15px;
+}
+
+.block .block-content-full {
+	margin: -20px -15px -1px;
+}
+
+.block .block-content-mini-padding {
+	padding: 8px;
+}
+
+.block.full .block-content-full {
+	margin: -20px -15px;
+}
+
+.block .tab-content .block-content-full, .block.full .tab-content .block-content-full
+	{
+	margin-top: -19px !important;
+}
+
+.block-title {
+	background-color: #f9fafc;
+	border-bottom: 1px solid #eaedf1;
+	margin: -20px -15px 20px;
+}
+
+.block-title h1, .block-title h2, .block-title h3, .block-title h4,
+	.block-title h5, .block-title h6 {
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.4;
+	margin: 0;
+	padding: 10px 16px 7px;
+}
+
+.block-title h1 small, .block-title h2 small, .block-title h3 small,
+	.block-title h4 small, .block-title h5 small, .block-title h6 small {
+	color: #777;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+.block-title h1, .block-title h2, .block-title h3 {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.block-options, .block-title .nav-tabs {
+	line-height: 38px;
+	min-height: 40px;
+}
+
+.block-title .nav-tabs {
+	border-bottom: medium none;
+	padding: 3px 1px 0;
+}
+
+.block-title .nav-tabs>li>a {
+	border-bottom: medium none;
+}
+
+.block-title .nav-tabs {
+	margin-bottom: -2px;
+}
+
+.block-title .nav-tabs>li>a {
+	margin-bottom: 0;
+}
+
+.block-title .nav-tabs>li>a:hover {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}
+
+.block-title .nav-tabs>li.active>a, .block-title .nav-tabs>li.active>a:focus,
+	.block-title .nav-tabs>li.active>a:hover {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color: #fff;
+	border-color: #eaedf1 #eaedf1 #fff;
+	border-image: none;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.block-title code {
+	padding: 2px 3px;
+}
+
+.block-options {
+	line-height: 37px;
+	margin: 0 6px;
+}
+
+.block-options .label {
+	display: inline-block;
+	font-size: 13px;
+	padding: 6px;
+	vertical-align: middle;
+}
+
+.block-top {
+	border-bottom: 1px dotted #dbe1e8;
+	margin: -20px -15px 20px;
+}
+
+.block-section {
+	margin-bottom: 20px;
+}
+
+.block.block-fullscreen {
+	bottom: 5px;
+	left: 5px;
+	margin-bottom: 0;
+	overflow-y: auto;
+	position: fixed;
+	right: 5px;
+	top: 5px;
+	z-index: 1031;
+}
+
+.widget {
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+
+.widget .widget-extra, .widget .widget-extra-full {
+	padding: 15px;
+	position: relative;
+}
+
+.widget .widget-extra {
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+
+.widget .widget-content-light {
+	color: #fff;
+}
+
+.widget .widget-content-light small {
+	color: #eee;
+}
+
+.widget .widget-icon, .widget .widget-image {
+	height: 64px;
+	width: 64px;
+}
+
+.widget .widget-icon {
+	border-radius: 32px;
+	color: #fff;
+	display: inline-block;
+	font-size: 28px;
+	line-height: 64px;
+	text-align: center;
+}
+
+.widget .widget-icon .fi, .widget .widget-icon .gi, .widget .widget-icon .hi,
+	.widget .widget-icon .si {
+	margin-top: -3px;
+}
+
+.widget .widget-options, .widget .widget-options-left {
+	opacity: 0.5;
+	position: absolute;
+	top: 5px;
+}
+
+.widget .widget-options {
+	right: 5px;
+}
+
+.widget .widget-options-left {
+	left: 5px;
+}
+
+.widget .widget-options-left:hover, .widget .widget-options:hover {
+	opacity: 1;
+}
+
+.widget-simple {
+	padding: 15px;
+}
+
+.widget-simple::after, .widget-simple::before {
+	content: " ";
+	display: table;
+}
+
+.widget-simple::after {
+	clear: both;
+}
+
+.widget-simple .widget-icon, .widget-simple .widget-image {
+	margin: 0 15px;
+}
+
+.widget-simple .widget-icon.pull-left, .widget-simple .widget-image.pull-left
+	{
+	margin-left: 0;
+}
+
+.widget-simple .widget-icon.pull-right, .widget-simple .widget-image.pull-right
+	{
+	margin-right: 0;
+}
+
+.widget-simple .widget-content {
+	font-size: 18px;
+	margin: 12px 0;
+}
+
+.widget-simple .widget-content small {
+	display: block;
+	font-size: 13px;
+	font-weight: 400;
+	margin-top: 7px;
+}
+
+.widget-advanced .widget-header {
+	height: 150px;
+	overflow: hidden;
+	padding: 15px 15px 50px;
+	position: relative;
+}
+
+.widget-advanced .widget-background {
+	height: 150px;
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+.widget-advanced .widget-background-map {
+	height: 180px;
+	width: 100%;
+}
+
+.widget-advanced .widget-content-image {
+	background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+	left: 0;
+	margin: 0;
+	padding: 15px;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.widget-advanced .widget-main {
+	padding: 50px 15px 15px;
+	position: relative;
+}
+
+.widget-advanced .widget-image-container {
+	background-color: #fff;
+	border-radius: 36px;
+	display: inline-block;
+	height: 74px;
+	left: 50%;
+	margin-left: -36px;
+	padding: 5px;
+	position: absolute;
+	top: -36px;
+	width: 74px;
+}
+
+.widget-advanced .widget-header .widget-image-container {
+	left: auto;
+	margin: 0;
+	position: static;
+	top: auto;
+}
+
+.widget-advanced-alt .widget-header, .widget-advanced-alt .widget-main {
+	padding: 15px;
+}
+
+.widget-advanced-alt .widget-header {
+	height: auto;
+	min-height: 150px;
+}
+
+a.widget {
+	display: block;
+	transition: all 0.2s ease-out 0s;
+}
+
+a.widget:active, a.widget:hover {
+	text-decoration: none;
+}
+
+a.widget.widget-hover-effect1:hover {
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+	transform: translateY(-3px);
+}
+
+a.widget.widget-hover-effect1:active {
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transform: translateY(-1px);
+}
+
+a.widget.widget-hover-effect2:hover {
+	box-shadow: 0 -5px 0 rgba(0, 0, 0, 0.2) inset;
+	transform: translateY(0px);
+}
+
+a.widget.widget-hover-effect2:active {
+	box-shadow: none;
+	transform: translateY(2px);
+}
+
+a.widget.widget-hover-effect3:hover {
+	transform: rotate(2deg);
+}
+
+a.widget.widget-hover-effect3:active {
+	transform: rotate(2deg) scale(0.95);
+}
+
+a.widget.widget-hover-effect4:hover {
+	transform: scale(0.98);
+}
+
+a.widget.widget-hover-effect4:active {
+	transform: rotate(-1deg) scale(0.95);
+}

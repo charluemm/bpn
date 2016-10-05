@@ -1,0 +1,52 @@
+{% extends "PokernightAppBundle::template_live.html.twig" %} 
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-6">
+			{% for table in tournament.tables %}		
+			<div class="col-sm-6 tournament-table" id="table-{{ table.id }}">
+				<h3>Tisch {{ table.number }}</h3>
+				{% include "PokernightAppBundle:Table:table_player.html.twig" with {'table': table } %}
+			</div>
+			{% endfor %}
+		</div>
+		<div class="col-sm-6">
+			<div class="col-sm-12">
+				<a class="btn btn-success" id="btn-run" alt="Start" title="Start"><i class="fa fa-fw fa-play"></i></a>
+				<a class="btn btn-danger" id="btn-stop" alt="Stopp" title="Stopp"><i class="fa fa-fw fa-stop"></i></a>
+				<a class="btn btn-warning" id="btn-refresh" alt="" title=""><i class="fa fa-fw fa-refresh"></i></a>
+			</div>
+			<hr/>
+			<div id="player-list" class="col-sm-12">
+	{# 			<div class="col-sm-12">#}
+	{# 				<div class="list-group" id="source">#}
+	{# 				  {% for row in player_list %}#}
+	{# 				  <button type="button" class="list-group-item">{{ row['player'].nickname }} <small class="pull-right">{{ row['points'] }} Punkte</small></button>#}
+	{# 				  {% else %}#}
+	{# 				  <button type="button" class="list-group-item list-group-danger">Kein Spieler in DB</button>#}
+	{# 				  {% endfor %}#}
+	{# 				</div>#}
+	{# 			</div>#}
+				{% for group in grouped_list %}
+				<div class="col-sm-4" id="player-pool-{{ loop.index }}">
+					<div class="list-group" id="source">
+					  {% for player in group %}
+					  <button type="button" class="list-group-item">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></button>
+					  {% else %}
+					  <button type="button" class="list-group-item list-group-danger">Kein Spieler in DB</button>
+					  {% endfor %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts '@PokernightAppBundle/Resources/public/js/draw.js' %}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock javascripts %}

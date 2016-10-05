@@ -1,0 +1,24 @@
+{% extends "PokernightAppBundle::template_live.html.twig" %} 
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+		{% include "PokernightAppBundle:Widget:widget_single_table.html.twig" %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="col-sm-4">
+				<div class="list-group" id="source">
+				  {% for player in all_player %}
+				  <button type="button" class="list-group-item">{{ player.nickname }}</button>
+				  {% else %}
+				  <button type="button" class="list-group-item list-group-danger">Kein Spieler in DB</button>
+				  {% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

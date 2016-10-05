@@ -1,0 +1,83 @@
+{% set count = list_player | length() %}
+{% set count = 20 %}
+{% set seats = { 10: "Test"} %}
+
+
+
+<table class="table-responsive col-sm-12" border="0" cellpadding="0" cellspacing="0" id="table-draw">
+	<tr>
+		<td class="col-sm-1 poker-seat-1">
+			<a href="" title="Platz 10" alt="Platz 10"{% if count < 7 %} style="display:none"{% endif %}>
+				<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[10] is defined %}{{ seats[10] }}{% else %}
+					Platz 10{% endif %}
+				</p>
+			</a>
+		</td>
+		<td class="col-sm-1 poker-seat-2">
+			<a href="" title="Platz 1" alt="Platz 1">
+				<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">Platz 1</p>
+			</a>
+		</td>
+		<td class="col-sm-1 poker-seat-3">
+		</td>
+		<td class="col-sm-1 poker-seat-4">
+		    <a href="" title="Platz 5" alt="Platz 5"{% if count < 5 %} style="display:none"{% endif %}>
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 2</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat-5">
+		</td>
+		<td class="col-sm-1 poker-seat-6">
+		    <a href="" title="Platz 3" alt="Platz 3">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 3</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat-7">
+		    <a href="" title="Platz 4" alt="Platz 4"{% if count < 9 %} style="display:none"{% endif %}>
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 4</p>
+		    </a>
+	    </td>
+	</tr>
+	<tr>
+		<td id="test" class="col-sm-1 poker-seat-14">
+		    <a href="" title="Platz 9" alt="Platz 9"{% if count < 10 %} style="display:none"{% endif %}>
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 9</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat-13">
+		    <a href="" title="Platz 8" alt="Platz 8">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 8</p>
+		    </a>
+	    </td>
+		<td class="col-sm-1 poker-seat-12">
+	   	</td>
+		<td class="col-sm-1 poker-seat-11">
+		    <a href="" title="Platz 7" alt="Platz 7"{% if count < 6 %} style="display:none"{% endif %}>
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 7</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat-10">
+		</td>
+		<td class="col-sm-1 poker-seat-9">
+		    <a href="" title="Platz 6" alt="Platz 6">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 6</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat-8">
+		    <a href="" title="Platz 5" alt="Platz 5"{% if count < 8 %} style="display:none"{% endif %}>
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+			    <p class="text-center">Platz 5</p>
+		    </a>
+	    </td>
+	</tr>
+</table>

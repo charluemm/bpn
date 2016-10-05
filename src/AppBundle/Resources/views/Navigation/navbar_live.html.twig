@@ -1,0 +1,12 @@
+<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<a href="{{ path("index") }}" class="navbar-brand">{% if tournament is defined %}{{ tournament }}{% else %}Brände Pokernight{% endif %}</a>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a id="menu-toggle" href="#menu-toggle"><i class="fa fa-list"></i> Toggle Menu</a></li>
+		</ul>
+	</div>
+	<!-- /.container -->
+</nav>

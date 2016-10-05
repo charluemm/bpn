@@ -1,0 +1,131 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Auslosung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="page-header">
+			{% if tournament is defined %}
+			<h1>Live Event konfigurieren <small>{{ tournament }}</small></h1>
+			{% else %}
+			<h1>Live Event konfigurieren</h1>
+			{% endif %}
+		</div>
+	</div>
+	{% if frm_select_tournament is defined %}
+	<div class="row">
+		<div class="col-sm-10">
+			{% form_theme frm_select_tournament 'bootstrap_3_horizontal_layout.html.twig' %}
+			{{ form(frm_select_tournament) }}
+		</div>
+		<div class="col-sm-2">
+		</div>
+	</div>
+	{% else %}
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="btn-group pull-right">
+			  <a class="btn btn-default" href="{{ path('table_add_live', {'tournamentId': tournament.id }) }}"><i class="fa fa-plus"></i> Tisch hinzufügen</a>
+			  <a class="btn btn-default" href="{{ path('tournament_edit', { 'id': tournament.id }) }}"><i class="fa fa-fw fa-pencil"></i> Turnier bearbeiten</a>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div class="row">
+		<div class="col-xs-12 col-md-6">
+			<div class="col-xs-12">
+				<h3>Konfiguration</h3>
+{# 				{% form_theme frm_live_config 'bootstrap_3_horizontal_layout.html.twig' %}#}
+{# 				{{ form(frm_live_config) }}#}
+			</div>
+			<div class="col-xs-12">
+				<h3>Live Platzierung</h3>
+				{% form_theme frm_live_ranking 'bootstrap_3_horizontal_layout.html.twig' %}
+				{{ form(frm_live_ranking) }}
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6">
+			<div class="col-xs-12">
+				<div class="list-group">
+					<a href="#" class="list-group-item active">
+						<h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> Spieler <small>({{ tournament.ranking | length() }})</small></h4>
+					</a>
+					{% include 'PokernightAppBundle:Widget:widget_ranking_list.html.twig' with {'ranking' : tournament.ranking } %}
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class="list-group">
+					<a class="list-group-item active">
+						<h4 class="list-group-item-heading"><i class="fa fa-fw fa-bookmark"></i> Tische <small>({{ tournament.tables | length() }})</small></h4>
+					</a>
+					{% for table in tournament.tables %}
+					<a class="list-group-item">
+						<span class="badge pull-left">{{ table.maxSeats }}er Tisch</span>
+						<p class="list-group-item-text"> <i class="fa fa-fw"></i> #{{ table.id }} - Tisch {{ table.number }}</p>
+						<a href="{{ path('table_edit', { 'id': table.id }) }}"><i class="fa fa-fw fa-pencil" alt="bearbeiten" title="bearbeiten"></i> </a>
+					</a>
+					{% else %}
+					<a class="list-group-item list-group-item-warning">
+						<p class="list-group-item-text">keine Tische zugeordnet</p>
+					</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script type="text/javascript">
+
+$( document ).ready(function() {
+	var list = $("#source .list-group-item").toArray();
+	var elemlength = list.length;
+	var timeout = null;
+	var randomitem = null;
+	var i = 1;
+
+	function randomSelect() {    
+		$("#source .list-group-item").removeClass("list-group-item-warning"); 
+		elemlength = list.length;
+		randomnum = Math.floor(Math.random()*elemlength);
+		randomitem = list[randomnum];
+		randTimeout = Math.floor(Math.random() * (400 - 10) + 10);
+		$(randomitem).toggleClass("list-group-item-warning");
+		timeout = setTimeout(randomSelect, randTimeout);
+		if(list.length == 0)
+		{
+			clearTimeout(timeout);
+			list = jQuery.grep(list, function(value) {
+				  return value != randomitem;
+			});
+			$('#result').append($('#source .list-group-item-warning').removeClass('list-group-item-warning'));
+		}
+		else if(i++ % 20 == 0 && list.length != 0)
+		{
+			$('#result').append($(randomitem).removeClass('list-group-item-warning'));
+			list = jQuery.grep(list, function(value) {
+				  return value != randomitem;
+			});
+		}
+	}
+	
+	$('#btn-select').click(function(){
+		i = 1;
+		randomSelect();
+	});
+	$('#btn-stop').click(function(){
+		clearTimeout(timeout);
+		list = jQuery.grep(list, function(value) {
+			  return value != randomitem;
+		});
+		$('#result').append($('#source .list-group-item-warning').removeClass('list-group-item-warning'));
+		randomSelect();
+	});
+});
+</script>
+{% endblock javascripts %}

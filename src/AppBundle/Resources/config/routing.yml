@@ -1,0 +1,31 @@
+bpn_default:
+    resource: "@PokernightAppBundle/Controller/DefaultController.php"
+    type:     annotation 
+
+bpn_administration:
+    resource: "@PokernightAppBundle/Controller/AdministrationController.php"
+    type:     annotation 
+
+bpn_player:
+    resource: "@PokernightAppBundle/Controller/PlayerController.php"
+    type:     annotation 
+
+bpn_location:
+    resource: "@PokernightAppBundle/Controller/LocationController.php"
+    type:     annotation 
+
+bpn_event:
+    resource: "@PokernightAppBundle/Controller/EventController.php"
+    type:     annotation 
+
+bpn_tournament:
+    resource: "@PokernightAppBundle/Controller/TournamentController.php"
+    type:     annotation 
+
+bpn_table:
+    resource: "@PokernightAppBundle/Controller/TableController.php"
+    type:     annotation 
+
+bpn_live:
+    resource: "@PokernightAppBundle/Controller/LiveController.php"
+    type:     annotation 

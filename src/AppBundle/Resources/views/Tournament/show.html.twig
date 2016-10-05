@@ -1,0 +1,77 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Turnierdetails{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="page-header">
+			<h1>{{ entity }} <small>Detailansicht</small></h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-group pull-left">
+				<a class="btn btn-default" href="{{ path('event_index') }}"><i class="fa fa-backward"></i> zurück zur Veranstaltungsübersicht</a>
+			</div>
+			<div class="btn-group pull-right">
+			  {{ form(delete_form) }}
+			</div>
+			<div class="btn-group pull-right">
+			  <a class="btn btn-default" href="{{ path('tournament_edit', { 'id': entity.id }) }}"><i class="fa fa-fw fa-pencil"></i> Turnier bearbeiten</a>
+			  <a class="btn btn-default" href="{{ path('tournament_add_ranking', { 'id': entity.id }) }}"><i class="fa fa-fw fa-list"></i> Plazierung bearbeiten</a>
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+	<div class="row">
+		<div class="col-sm-12 col-md-5">
+		    <table class="table table-striped table-hover table-responsive">
+		        <tbody>
+		            <tr>
+		                <th class="col-sm-5">Name</th>
+		                <td class="col-sm-7">{{ entity.name }}</td>
+		            </tr>
+		            <tr>
+		                <th>Datum</th>
+		                <td>{{ entity.date|date('d.m.Y') }}</td>
+		            </tr>
+		            <tr>
+		                <th>Ort</th>
+		                <td>
+		                	<strong>{{ entity.location }}</strong><br />
+		                	<small>{{ entity.location.address | nl2br }}</small>
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>Veranstaltung</th>
+		                <td><a href="{{ path('event_show', { 'id': entity.event.id }) }}"><i class="fa fa-fw fa-tags"></i> {{ entity.event }}</a></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+		
+		<div class="col-sm-12 col-md-7">
+			<div class="col-sm-12">
+				<div class="list-group">
+				  <a class="list-group-item active">
+				    <h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> Plazierung ({{ entity.ranking | length }})</small></h4>
+				  </a>
+				{% for rank in entity.ranking %}
+				  <a href="{{ path('player_show', { 'id': rank.player.id}) }}" class="list-group-item">
+{# 					    <span class="pull-left badge{% if rank.rank == 1 %} badge-success">{% else %} badge-info">{% endif %}{{ "%d. Platz" | format(rank.rank) }}</span>#}
+				    <p class="list-group-item-text">{{ "%d. " | format(rank.rank) }} <small>{{ rank.player }}</small></p>
+				  </a>
+	            {% else %}
+				  <a class="list-group-item list-group-item-warning">
+				    <p class="list-group-item-text">keine Turniere zugeordnet</p>
+				  </a>
+	            {% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

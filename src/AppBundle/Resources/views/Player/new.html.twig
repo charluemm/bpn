@@ -1,0 +1,28 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Spielerverwaltung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="page-header">
+			<h1>Spieler anlegen</h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-group pull-left">
+			  <a class="btn btn-default" href="{{ path('player_index') }}"><i class="fa fa-backward"></i> zurück zur Übersicht</a>
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+	<div class="row">
+		<div class="col-lg-4 col-md-6 col-sm-12">
+		    {{ form(form) }}
+		</div>
+	</div>
+</div>
+{% endblock %}

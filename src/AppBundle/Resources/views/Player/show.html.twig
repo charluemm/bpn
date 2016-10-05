@@ -1,0 +1,104 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Spielerverwaltung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="page-header">
+			<h1>{{ entity }} <small>Detailansicht</small></h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-group pull-left">
+			  <a class="btn btn-default" href="{{ path('player_index') }}"><i class="fa fa-backward"></i> zurück zur Übersicht</a>
+			</div>
+			<div class="btn-group pull-right">
+			  {{ form(delete_form) }}
+			</div>
+			<div class="btn-group pull-right">
+			  <a class="btn btn-default" href="{{ path('player_edit', { 'id': entity.id }) }}"><i class="fa fa-fw fa-pencil"></i> bearbeiten</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-group pull-left">
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+	<div class="row">
+		<div class="col-sm-12 col-md-5">
+		    <table class="table table-striped table-hover table-responsive">
+		        <tbody>
+		            <tr>
+		                <th class="col-md-5">Name</th>
+		                <td class="col-md-7">{{ entity.surname }}</td>
+		            </tr>
+		            <tr>
+		                <th>Vorname</th>
+		                <td>{{ entity.givenname }}</td>
+		            </tr>
+		            <tr>
+		                <th class="col-sm-5">Spielername</th>
+		                <td class="col-sm-7">{{ entity.nickname }}</td>
+		            </tr>
+		            <tr>
+		                <th>E-Mail Adresse</th>
+		                <td>{{ entity.email }}</td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+		
+		<div class="col-sm-12 col-md-7">
+			<div class="col-sm-12">
+				<div class="list-group">
+				  <a class="list-group-item active">
+				    <h4 class="list-group-item-heading"><i class="fa fa-fw fa-bookmark"></i> Turnierteilnahmen</h4>
+				  </a>
+				{% for rank in entity.tournamentRanking %}
+				  <a href="{{ path('tournament_show', { 'id': rank.tournament.id }) }}" alt="Turnierdetails anzeigen" title="Turnierdetails anzeigen" class="list-group-item">
+				    <span class="badge{% if rank.rank == 0 %}">keine Wertung 
+				    				  {% else %} {% if rank.rank == 1 %} badge-success">{% else %} badge-info">{% endif %}{{ "%d. Platz" | format(rank.rank) }}{% endif %}
+				    </span>
+				    <p class="list-group-item-text">{{ rank.tournament }} <small>{{ rank.tournament.date | date('d.m.Y') }}</small></p>
+				  </a>
+	            {% else %}
+				  <a class="list-group-item list-group-item-warning">
+				    <p class="list-group-item-text">keine Turniere zugeordnet</p>
+				  </a>
+	            {% endfor %}
+				</div>
+			</div>
+			
+			<div class="col-sm-12">
+				<div class="list-group">
+				  <a href="#" class="list-group-item active">
+				    <h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> 5-Jahres-Wertung</h4>
+				  </a>
+				{% for ranking in entity.annualRanking %}
+				  <a class="list-group-item">
+				    <span class="badge{% if ranking.points == 0 %}">keine Wertung 
+				    				  {% else %} badge-info">{{ "%d Punkte (Rang ??)" | format(ranking.points) }}{% endif %}
+				    </span>
+				    <p class="list-group-item-text">{{ ranking.date | date('d.m.Y') }}</p>
+				  </a>
+	            {% else %}
+				  <a class="list-group-item list-group-item-warning">
+				    <p class="list-group-item-text">keine 5 Jahreswertung verfügbar</p>
+				  </a>
+	            {% endfor %}
+				  <a href="#" class="list-group-item success">
+				    <h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> {{ entity.annualRankingPoints }} Punkte</h4>
+				  </a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

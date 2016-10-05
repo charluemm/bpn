@@ -1,21 +1,35 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Reu\Pokernight\AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function indexAction(Request $request)
+	/**
+	 * @Route("/", name="index")
+	 */
+    public function indexAction($name = "Test")
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);
+    	$em = $this->getDoctrine()->getManager();
+    	
+        return $this->render('PokernightAppBundle:Default:index.html.twig', array(
+        		'name' => "Test",
+        ));
+    }
+	/**
+	 * @Route("/annual-ranking", name="annualranking")
+	 */
+    public function annualRankingAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$listAnnualRanking = $em->getRepository('PokernightAppBundle:AnnualRanking')->findLastGroupByPlayer();
+    	
+        return $this->render('PokernightAppBundle:Default:annualRanking.html.twig', array(
+        		'annualRanking' => $listAnnualRanking
+        ));
     }
 }
+

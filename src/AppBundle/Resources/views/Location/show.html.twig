@@ -1,0 +1,57 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Verwaltung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<hr>
+	<div class="row">
+		<div class="col-sm-12">
+		    <h1>{{ entity.name }}</h1>
+		
+		    <table class="record_properties">
+		        <tbody>
+		            <tr>
+		                <th>Id</th>
+		                <td>{{ entity.id }}</td>
+		            </tr>
+		            <tr>
+		                <th>Name</th>
+		                <td>{{ entity.name }}</td>
+		            </tr>
+		            <tr>
+		                <th>Description</th>
+		                <td>{{ entity.description }}</td>
+		            </tr>
+		            <tr>
+		                <th>Addressstreet</th>
+		                <td>{{ entity.addressStreet }}</td>
+		            </tr>
+		            <tr>
+		                <th>Addressplz</th>
+		                <td>{{ entity.addressPlz }}</td>
+		            </tr>
+		            <tr>
+		                <th>Addresslocation</th>
+		                <td>{{ entity.addressLocation }}</td>
+		            </tr>
+		        </tbody>
+		    </table>
+
+	        <ul class="record_actions">
+			    <li>
+			        <a href="{{ path('location') }}">
+			            Back to the list
+			        </a>
+			    </li>
+			    <li>
+			        <a href="{{ path('location_edit', { 'id': entity.id }) }}">
+			            Edit
+			        </a>
+			    </li>
+	    		<li>{{ form(delete_form) }}</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}

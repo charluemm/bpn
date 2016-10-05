@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %} 
+
+{% block stylesheets %} 
+{% stylesheets 'bundles/pokernightapp/css/*' filter='cssrewrite' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %} 
+
+{% block body %} 
+{# NAVBAR #}
+{% include 'PokernightAppBundle:Navigation:navbar_live.html.twig' %}
+
+<div id="wrapper" class="">
+	{# SIDEBAR #}
+	{% include 'PokernightAppBundle:Navigation:sidebar_live.html.twig' %}
+	{# page content #}
+	<div id="page-content-wrapper">
+		{% block content %} 
+    	<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-lg-12">
+				</div>
+			</div>
+		</div>
+		{% endblock%}
+	</div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+		$(".col-sm-1").each(function(){
+		    $(this).height($(this).width() * 1.9);
+		});
+
+		$('#menu-toggle').click(function(){
+			$('#player-list').parent('div').css({"position":"fixed", "right":"0"});
+		});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Spielerverwaltung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<hr>
+	<div class="row">
+		<div class="col-sm-12">
+		    <h1>Player edit</h1>
+		
+		    {{ form(edit_form) }}
+		
+		    <ul class="record_actions">
+			    <li>
+			        <a href="{{ path('player_index') }}">
+			            Back to the list
+			        </a>
+			    </li>
+			    <li>{{ form(delete_form) }}</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}

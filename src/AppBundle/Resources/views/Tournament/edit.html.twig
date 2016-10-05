@@ -1,0 +1,30 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Turniertverwaltung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="page-header">
+			<h1>Turnier bearbeiten <small>{{ entity }}</small></h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-group pull-left">
+			  <a class="btn btn-default" href="{{ path('event_index') }}"><i class="fa fa-backward"></i> zurück zur Veranstaltungsübersicht</a>
+			</div>{% if delete_form is defined %}
+			<div class="btn-group pull-right">
+				{{ form(delete_form) }}
+			</div>{% endif %}
+		</div>
+	</div>
+	
+	<hr>
+	<div class="row">
+		<div class="col-lg-4 col-md-6 col-sm-12">
+    		{{ form(edit_form) }}
+    	</div>
+    </div>
+{% endblock %}

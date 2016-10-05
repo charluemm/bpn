@@ -1,0 +1,104 @@
+<table class="table-responsive col-sm-12" border="0" cellpadding="0" cellspacing="0" id="table-draw">
+	<tr>
+		<td class="col-sm-1 poker-seat poker-seat-1">
+			<a href="" title="Platz 10" alt="Platz 10">
+				<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[10] is defined %}{{ seats[10] }}{% else %}
+					Platz 10{% endif %}
+				</p>
+			</a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-2">
+			<a href="" title="Platz 1" alt="Platz 1">
+				<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[0] is defined %}1 - {{ seats[0].player.nickname }}{% else %}
+					Platz 1{% endif %}
+				</p>
+			</a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-3">
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-4">
+		    <a href="" title="Platz 5" alt="Platz 5">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[1] is defined %}2 - {{ seats[1].player.nickname }}{% else %}
+					Platz 2{% endif %}
+				</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-5">
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-6">
+		    <a href="" title="Platz 3" alt="Platz 3">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[2] is defined %}3 - {{ seats[2].player.nickname }}{% else %}
+					Platz 3{% endif %}
+				</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-7">
+		    <a href="" title="Platz 4" alt="Platz 4">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[3] is defined %}4 - {{ seats[3].player.nickname }}{% else %}
+					Platz 4{% endif %}
+				</p>
+		    </a>
+	    </td>
+	</tr>
+	<tr>
+		<td id="test" class="col-sm-1 poker-seat poker-seat-14">
+		    <a href="" title="Platz 9" alt="Platz 9">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[8] is defined %}9 - {{ seats[8].player.nickname }}{% else %}
+					Platz 9{% endif %}
+				</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-13">
+		    <a href="" title="Platz 8" alt="Platz 8">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[7] is defined %}8 - {{ seats[7].player.nickname }}{% else %}
+					Platz 8{% endif %}
+				</p>
+		    </a>
+	    </td>
+		<td class="col-sm-1 poker-seat poker-seat-12">
+	   	</td>
+		<td class="col-sm-1 poker-seat poker-seat-11">
+		    <a href="" title="Platz 7" alt="Platz 7">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[6] is defined %}7 - {{ seats[6].player.nickname }}{% else %}
+					Platz 7{% endif %}
+				</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-10">
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-9">
+		    <a href="" title="Platz 6" alt="Platz 6">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[5] is defined %}6 - {{ seats[5].player.nickname }}{% else %}
+					Platz 6{% endif %}
+				</p>
+		    </a>
+		</td>
+		<td class="col-sm-1 poker-seat poker-seat-8">
+		    <a href="" title="Platz 5" alt="Platz 5">
+		    	<img src="http://lorempixel.com/400/400/people/" alt="Example" class="img-circle" />
+				<p class="text-center">
+					{% if seats[4] is defined %}5 - {{ seats[4].player.nickname }}{% else %}
+					Platz 5{% endif %}
+				</p>
+		    </a>
+	    </td>
+	</tr>
+</table>

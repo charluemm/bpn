@@ -1,0 +1,59 @@
+{% extends 'PokernightAppBundle::template_default.html.twig' %}
+
+{% block subtitle %}Auslosung{% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="page-header">
+			<h1>5-Jahreswertung <small>Berechnung</small></h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+				{{ form(frm_start) }}
+		</div>
+	</div>
+	
+	<hr>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="list-group">
+				  <a href="#" class="list-group-item active">
+				    <h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> Relevante Turniere</h4>
+				  </a>
+				{% for tournament in list_tournaments %}
+				  <a class="list-group-item">
+				    <p class="list-group-item-text">{{ tournament }} <small>{{ tournament.date | date('d.m.Y') }}</small></p>
+				  </a>
+	            {% else %}
+				  <a class="list-group-item list-group-item-warning">
+				    <p class="list-group-item-text">keine Turniere verfügbar verfügbar</p>
+				  </a>
+	            {% endfor %}
+			</div>
+		</div>
+		
+		<div class="col-sm-6">
+			<div class="list-group">
+				  <a href="#" class="list-group-item active">
+				    <h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> Gesamtpunkte 5-Jahreswertung</h4>
+				  </a>
+				{% for annualRanking in list_annualRanking %}
+				  <a class="list-group-item">
+				    <p class="list-group-item-text">{{ annualRanking.sumPoints }} <small>{{ annualRanking.player }}</small></p>
+				  </a>
+	            {% else %}
+				  <a class="list-group-item list-group-item-warning">
+				    <p class="list-group-item-text">keine Turniere verfügbar verfügbar</p>
+				  </a>
+	            {% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}
