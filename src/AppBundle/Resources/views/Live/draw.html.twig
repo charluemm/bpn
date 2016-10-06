@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-sm-6">
 			{% for table in tournament.tables %}		
-			<div class="col-sm-6 tournament-table" id="table-{{ table.id }}">
+			<div class="col-sm-4 tournament-table" id="table-{{ table.id }}">
 				<h3>Tisch {{ table.number }}</h3>
 				{% include "AppBundle:Table:table_player.html.twig" with {'table': table } %}
 			</div>
