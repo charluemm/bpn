@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * @Route("/administration")
@@ -85,7 +86,7 @@ class AdministrationController extends Controller
 				->add('submit', SubmitType::class, array('label' => 'Speichern'))
 				->getForm();
 			
-			$formLiveRanking = $this->createForm(new AddRankingType(), $tournament, array(
+			$formLiveRanking = $this->createForm(AddRankingType::class, $tournament, array(
 						'action' => $this->generateUrl('administration_live_ranking_update', array('tournamentId' => $tournamentId)),
 						'method' => 'PUT',
 				))
@@ -99,7 +100,7 @@ class AdministrationController extends Controller
 		}
 		
 		$formSelectEvent = $this->createFormBuilder()
-			->add('tournament', 'entity', array(
+			->add('tournament', EntityType::class, array(
 					'label' => 'Turnier wählen',
 					'class' => 'AppBundle:Tournament',
 			))
