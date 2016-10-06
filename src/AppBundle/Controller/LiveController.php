@@ -2,14 +2,12 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Player;
+use AppBundle\Entity\Tournament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Util\Debug;
-use Reu\Pokernight\AppBundle\Entity\Player;
-use Reu\Pokernight\AppBundle\Entity\Tournament;
-use Reu\Pokernight\AppBundle\Entity\Seat;
 
 /**
  * @author Michael Müller <development@reu-network.de>

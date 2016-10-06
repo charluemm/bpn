@@ -7,8 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Reu\Pokernight\AppBundle\Entity\Player;
-use Reu\Pokernight\AppBundle\Form\PlayerType;
+use AppBundle\Entity\Player;
+use AppBundle\Form\PlayerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Player controller.
@@ -71,12 +72,12 @@ class PlayerController extends Controller
      */
     private function createCreateForm(Player $entity)
     {
-        $form = $this->createForm(new PlayerType(), $entity, array(
+        $form = $this->createForm(PlayerType::class, $entity, array(
             'action' => $this->generateUrl('player_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
@@ -160,12 +161,12 @@ class PlayerController extends Controller
     */
     private function createEditForm(Player $entity)
     {
-        $form = $this->createForm(new PlayerType(), $entity, array(
+        $form = $this->createForm(PlayerType::class, $entity, array(
             'action' => $this->generateUrl('player_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
@@ -240,7 +241,7 @@ class PlayerController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('player_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
     }

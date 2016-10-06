@@ -2,19 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Tournament;
+use AppBundle\Entity\TournamentTable;
+use AppBundle\Form\TournamentTableType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Reu\Pokernight\AppBundle\Entity\Tournament;
-use Reu\Pokernight\AppBundle\Form\TournamentTableType;
-use Reu\Pokernight\AppBundle\Entity\TournamentRanking;
-use Doctrine\Common\Util\Debug;
-use Doctrine\Common\Collections\ArrayCollection;
-use Reu\Pokernight\AppBundle\Form\AddRankingType;
-use Reu\Pokernight\AppBundle\Entity\TournamentTable;
-use Reu\Pokernight\AppBundle\Entity\Seat;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Table controller.

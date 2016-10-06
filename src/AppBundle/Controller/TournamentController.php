@@ -7,12 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Reu\Pokernight\AppBundle\Entity\Tournament;
-use Reu\Pokernight\AppBundle\Form\TournamentType;
-use Reu\Pokernight\AppBundle\Entity\TournamentRanking;
-use Doctrine\Common\Util\Debug;
+use AppBundle\Entity\Tournament;
+use AppBundle\Form\TournamentType;
+use AppBundle\Entity\TournamentRanking;
 use Doctrine\Common\Collections\ArrayCollection;
-use Reu\Pokernight\AppBundle\Form\AddRankingType;
+use AppBundle\Form\AddRankingType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Tournament controller.
@@ -72,12 +72,12 @@ class TournamentController extends Controller
      */
     private function createCreateForm(Tournament $entity)
     {
-        $form = $this->createForm(new TournamentType(), $entity, array(
+        $form = $this->createForm(TournamentType::class, $entity, array(
             'action' => $this->generateUrl('tournament_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
@@ -162,12 +162,12 @@ class TournamentController extends Controller
     */
     private function createEditForm(Tournament $entity)
     {
-        $form = $this->createForm(new TournamentType(), $entity, array(
+        $form = $this->createForm(TournamentType::class, $entity, array(
             'action' => $this->generateUrl('tournament_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
@@ -206,15 +206,16 @@ class TournamentController extends Controller
     */
     private function createAddRankingForm(Tournament $entity)
     {
-        $form = $this->createForm(new AddRankingType(), $entity, array(
+        $form = $this->createForm(AddRankingType::class, $entity, array(
             'action' => $this->generateUrl('tournament_update_ranking', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
+    
     /**
      * Edits an existing Tournament entity.
      *
@@ -345,7 +346,7 @@ class TournamentController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('tournament_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
     }

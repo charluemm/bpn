@@ -1,20 +1,16 @@
 <?php
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\AnnualRanking;
+use AppBundle\Entity\Tournament;
+use AppBundle\Entity\TournamentRanking;
+use AppBundle\Form\AddRankingType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Reu\Pokernight\AppBundle\Entity\Tournament;
-use Reu\Pokernight\AppBundle\Entity\AnnualRanking;
-use Reu\Pokernight\AppBundle\Entity\TournamentRanking;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\Common\Util\Debug;
-use Symfony\Component\Form\Forms;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Reu\Pokernight\AppBundle\Form\AddRankingType;
-use Reu\Pokernight\AppBundle\Entity\TournamentTable;
-use Reu\Pokernight\AppBundle\Entity\Seat;
 
 /**
  * @Route("/administration")
@@ -22,7 +18,7 @@ use Reu\Pokernight\AppBundle\Entity\Seat;
 class AdministrationController extends Controller 
 {
 	/**
-	 * Acion für Auslosung
+	 * Action für Auslosung
 	 *
 	 * @Route("/draw", name="administration_draw")
 	 * @Template("AppBundle:Administration:draw.html.twig")
@@ -54,7 +50,7 @@ class AdministrationController extends Controller
 		$editForm = $this->createForm(new AddRankingType(), $entity, array(
 						'method' => 'PUT',
 				))
-				->add('submit', 'submit', array('label' => 'Update'));
+				->add('submit', SubmitType::class, array('label' => 'Update'));
 			
 		$editForm->handleRequest($request);
 		if ($editForm->isValid())
@@ -86,14 +82,14 @@ class AdministrationController extends Controller
 		{
 			$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
 			$formLiveConfig = $this->createFormBuilder()
-				->add('submit', 'submit', array('label' => 'Speichern'))
+				->add('submit', SubmitType::class, array('label' => 'Speichern'))
 				->getForm();
 			
 			$formLiveRanking = $this->createForm(new AddRankingType(), $tournament, array(
 						'action' => $this->generateUrl('administration_live_ranking_update', array('tournamentId' => $tournamentId)),
 						'method' => 'PUT',
 				))
-				->add('submit', 'submit', array('label' => 'Update'));
+				->add('submit', SubmitType::class, array('label' => 'Update'));
 			
 			return array (
 				'tournament' => $tournament,
@@ -107,7 +103,7 @@ class AdministrationController extends Controller
 					'label' => 'Turnier wählen',
 					'class' => 'AppBundle:Tournament',
 			))
-			->add('submit', 'submit', array('label' => 'Laden'))
+			->add('submit', SubmitType::class, array('label' => 'Laden'))
 			->getForm();
 			
 		$formSelectEvent->handleRequest($request);
@@ -137,7 +133,7 @@ class AdministrationController extends Controller
         $listTournaments = $em->getRepository('AppBundle:Tournament')->findAnnualRankingRelevant();
 		
 		$formStart = $this->createFormBuilder()
-			->add('submit','submit', array('label' => 'Jetzt neu berechnen'))
+			->add('submit', SubmitType::class, array('label' => 'Jetzt neu berechnen'))
 			->getForm();
 		$formStart->handleRequest($request);
 		if($formStart->isValid())
