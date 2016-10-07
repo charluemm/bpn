@@ -208,3 +208,50 @@ p.copyright {
 	border-shadow: none;
 	box-shadow: none;
 }
+
+/** CHIPS */
+div.chip {
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.2);
+    -moz-box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.2);
+    -webkit-box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.2);
+    border: 10px dotted #fff;
+}
+
+div.chip div {
+    font-family: Verdana;
+    text-align: center;
+    line-height: 70px;
+    font-size: 1.7em;
+}
+
+div.orange { background: #f7b55e }
+
+div.green { background: #01DF3A; /** #92ed40 */ }
+
+div.blue { background: #2E64FE; /** #4cc3fe */ }
+
+div.black {
+    background: #333;
+    color: #eee;
+    box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.1);
+    -moz-box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.1);
+    -webkit-box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.1);
+    border: 10px dotted #ccc;
+}
+div.red {
+    background: #fd5f72 none repeat scroll 0 0;
+}
+div.white {
+    background: #EFEFEF none repeat scroll 0 0;
+    color: #333;
+}
+div.disabled {
+    opacity: 0.4;
+}
