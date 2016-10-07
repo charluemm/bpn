@@ -34,7 +34,7 @@
 			                {% for tournament in entity.tournaments %}
 			                	<li><small>{{ tournament.date | date('d.m.Y') }}</small> <a href="{{ path('tournament_show', { 'id': tournament.id }) }}"><i class="fa fa-fw fa-tag"></i> {{ tournament.name }}</a></li>
 			                {% else %}
-			                	<li><a href="{{ path('tournament') }}">keine Turniere zugeordnet</a></li>
+			                	<li><a href="{{ path('tournament_create') }}">keine Turniere zugeordnet</a></li>
 			                {% endfor %}
 		                	</ul>
 		                </td>

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Event;
 use AppBundle\Form\EventType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Event controller.
@@ -71,12 +72,12 @@ class EventController extends Controller
      */
     private function createCreateForm(Event $entity)
     {
-        $form = $this->createForm(new EventType(), $entity, array(
+        $form = $this->createForm(EventType::class, $entity, array(
             'action' => $this->generateUrl('event_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
@@ -160,12 +161,12 @@ class EventController extends Controller
     */
     private function createEditForm(Event $entity)
     {
-        $form = $this->createForm(new EventType(), $entity, array(
+        $form = $this->createForm(EventType::class, $entity, array(
             'action' => $this->generateUrl('event_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
@@ -241,7 +242,7 @@ class EventController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('event_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
     }
