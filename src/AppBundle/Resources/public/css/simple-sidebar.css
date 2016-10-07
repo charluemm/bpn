@@ -83,6 +83,7 @@
     width: 250px;
     margin: 0;
     padding: 0;
+    padding-bottom: 50px;
     list-style: none;
 }
 
@@ -91,6 +92,9 @@
     line-height: 40px;
 }
 
+.sidebar-nav li .badge{
+	text-indent: 0;
+}
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
