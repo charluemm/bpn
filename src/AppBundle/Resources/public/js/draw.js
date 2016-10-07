@@ -7,9 +7,9 @@ $( document ).ready(function()
 	var table1 = $("#table-5 .list-group");
 	var table2 = $("#table-6 .list-group");
 	var table3 = $("#table-7 .list-group");
-	var playerGrp1 = $("#player-pool-1 button.list-group-item").toArray();
-	var playerGrp2 = $("#player-pool-2 button.list-group-item").toArray();
-	var playerGrp3 = $("#player-pool-3 button.list-group-item").toArray();
+	var playerGrp1 = $("#player-pool-1 li.list-group-item").toArray();
+	var playerGrp2 = $("#player-pool-2 li.list-group-item").toArray();
+	var playerGrp3 = $("#player-pool-3 li.list-group-item").toArray();
 	var lastSelect = 0;
 	var timeout;
 	var i = 1;
@@ -26,23 +26,14 @@ $( document ).ready(function()
 	
 	$("#btn-refresh").click(function()
 	{
-		$(table1).randomize();
-		$(table1).randomize();
-		$(table1).find('.list-group-item').each(function(i,obj){
+		$listTable = $(".tournament-table");
+		$listTable.each(function(){
+			$(this).randomize();
+			$(this).randomize();
+			$(this).find('.list-group-item').each(function(i,obj){
 //			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
-			$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
-		});
-
-		$(table2).randomize();
-		$(table2).randomize();
-		$(table2).find('.list-group-item').each(function(i,obj){
-			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
-		});
-		
-		$(table3).randomize();
-		$(table3).randomize();
-		$(table3).find('.list-group-item').each(function(i,obj){
-			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
+				$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
+			});			
 		});
 	});
 	

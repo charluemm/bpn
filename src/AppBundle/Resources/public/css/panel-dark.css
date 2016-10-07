@@ -4404,14 +4404,14 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
     margin-bottom: 0;
 }
 a.list-group-item, button.list-group-item {
-    color: #0ce3ac;
+    color: #FFF;
 }
 a.list-group-item .list-group-item-heading, button.list-group-item .list-group-item-heading {
     color: #0bcb9a;
 }
 a.list-group-item:hover, button.list-group-item:hover, a.list-group-item:focus, button.list-group-item:focus {
     background-color: transparent;
-    color: #0ce3ac;
+    color: #FAFAFA;
     text-decoration: none;
 }
 button.list-group-item {
