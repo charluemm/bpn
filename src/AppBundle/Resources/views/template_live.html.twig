@@ -1,9 +1,15 @@
 {% extends '::base.html.twig' %} 
 
 {% block stylesheets %} 
-{% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+{% stylesheets 
+    'bundles/app/css/design.css'
+    'bundles/app/css/themes.css'
+    'bundles/app/css/live.css'
+    'bundles/app/css/simple-sidebar.css'
+    filter='cssrewrite' %}
 <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
+
 {% endblock %} 
 
 {% block body %} 
@@ -13,6 +19,12 @@
 <div id="wrapper" class="">
 	{# SIDEBAR #}
     {% include 'AppBundle:Navigation:live_sidebar_left.html.twig' %}
+    {% include 'AppBundle:Navigation:live_sidebar_right.html.twig' %}
+    
+     <!-- Toggle Buttons -->
+    <a href="#left-menu-toggle" class="btn btn-link btn-md" id="left-menu-toggle"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a href="#right-menu-toggle" class="btn btn-link btn-md" id="right-menu-toggle"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
     {# page content #}
 	<div id="page-content-wrapper">
 		{% block content %} 
@@ -35,9 +47,15 @@ $(document).ready(function() {
 		    $(this).height($(this).width() * 1.9);
 		});
 
-		$('#menu-toggle').click(function(){
-			$('#player-list').parent('div').css({"position":"fixed", "right":"0"});
-		});
+		// Menu Toggle Script
+	    $("#left-menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("left-toggled");
+	    });
+	    $("#right-menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("right-toggled");
+	    });
 });
 </script>
 {% endblock %}
