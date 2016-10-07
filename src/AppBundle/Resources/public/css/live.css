@@ -28,11 +28,7 @@ body {
 	height: auto;
 }
 
-.table th,
-.table td {
-	background-color: #fff;
-    border: 1px solid #ddd;
-}
+
 /* #live-tournament-overview{
 	background: transparent url("../images/live_tournament_background.png") no-repeat fixed center center / cover;
 } */

@@ -13,6 +13,9 @@ use AppBundle\Entity\TournamentRanking;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Form\AddRankingType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Tournament controller.
@@ -349,5 +352,33 @@ class TournamentController extends Controller
             ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    /**
+     * @Route("/data/", name="tournament_json_data")
+     * 
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getTournamentInfo(Request $request)
+    {
+    	$id = $request->get('id');
+    	$id = 5;
+    	if(empty($id))
+    		die("Skriptaufruf fehlgeschlagen.");
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	$tournament = $em->getRepository('AppBundle:Tournament')->find($id);
+    	
+    	if(empty($tournament))
+    		die("Kein Turnier mit dieser ID vorhanden");
+
+    	$return = array(
+    			'player' => array('current' => 6, 'count' => 10, 'text' => "6/10"),
+    			'blind' => array('current' => '10/20', 'next' => "20/40", 'next_time' => time())
+    	);
+    		
+    	return new Response(json_encode($return));
+    	
     }
 }

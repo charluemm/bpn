@@ -9,9 +9,32 @@
                    <h3 class="panel-title">Turnier Info</h3>
                </div>
                <div class="panel-body">
-                    <p>verbleibende Spieler</p>
-                    <p>Blinds</p>
-                    <p>Blinderhöhung</p>
+                    <table class="table">
+                        <tr>
+                            <td>Zeit</td>
+                            <td>verbleibende Spieler</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th id="player_count"></th>
+                        </tr>
+                        <tr>
+                            <td>aktuelle Blinds</td>
+                            <td>nächster Blind</td>
+                        </tr>
+                        <tr>
+                            <th id="blind_current"></th>
+                            <th id="blind_next"></th>
+                        </tr>
+                        <tr>
+                            <td>Blinderhöhung in</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th id="blind_next_time"></th>
+                            <th></th>
+                        </tr>
+                    </table>
                </div>
             </div>
         </div>
@@ -34,4 +57,27 @@
         </div>
 	</div> 
 </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+var auto_refresh = setInterval(function(){
+    $.ajax({
+        url: '{{ path('tournament_json_data') }}',
+        data: {
+            tournamentId: '{{ tournament.id }}'
+        },
+        dataType: 'json',
+        success:function(data){
+            var nextBlindTime = $.now() - data.blind.next_time;
+            
+            $('#player_count').html(data.player.text);
+            $('#blind_current').html(data.blind.current);
+            $('#blind_next').html(data.blind.next);
+            $('#blind_next_time').html(nextBlindTime);
+        }
+    });
+}, 10000);
+</script>
 {% endblock %}
