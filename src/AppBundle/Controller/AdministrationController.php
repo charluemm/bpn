@@ -35,7 +35,7 @@ class AdministrationController extends Controller
 	}
 
 	/**
-	 * @Route("/live/{tournamentId}", name="administration_live_ranking_update")
+	 * @Route("/live/{tournamentId}/update-ranking", name="administration_live_ranking_update")
 	 * @Template("AppBundle:Administration:live.html.twig")
 	 * @Method("PUT")
 	 */
@@ -48,7 +48,7 @@ class AdministrationController extends Controller
 			throw $this->createNotFoundException('Unable to find Tournament entity.');
 		}
 		
-		$editForm = $this->createForm(new AddRankingType(), $entity, array(
+		$editForm = $this->createForm(AddRankingType::class, $entity, array(
 						'method' => 'PUT',
 				))
 				->add('submit', SubmitType::class, array('label' => 'Update'));
@@ -99,6 +99,7 @@ class AdministrationController extends Controller
 			);
 		}
 		
+		// select tournament
 		$formSelectEvent = $this->createFormBuilder()
 			->add('tournament', EntityType::class, array(
 					'label' => 'Turnier wählen',

@@ -61,10 +61,9 @@
 						<h4 class="list-group-item-heading"><i class="fa fa-fw fa-bookmark"></i> Tische <small>({{ tournament.tables | length() }})</small></h4>
 					</a>
 					{% for table in tournament.tables %}
-					<a class="list-group-item">
+					<a class="list-group-item" href="{{ path('table_edit', { 'id': table.id }) }}">
 						<span class="badge pull-left">{{ table.maxSeats }}er Tisch</span>
 						<p class="list-group-item-text"> <i class="fa fa-fw"></i> #{{ table.id }} - Tisch {{ table.number }}</p>
-						<a href="{{ path('table_edit', { 'id': table.id }) }}"><i class="fa fa-fw fa-pencil" alt="bearbeiten" title="bearbeiten"></i> </a>
 					</a>
 					{% else %}
 					<a class="list-group-item list-group-item-warning">
