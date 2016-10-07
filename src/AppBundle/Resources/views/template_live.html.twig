@@ -17,6 +17,10 @@
 {# NAVBAR #}
 {% include 'AppBundle:Navigation:navbar_live.html.twig' %}
 
+<video playsinline autoplay muted loop poster="polina.jpg" id="bgvid">
+    <source src="{{ asset ('bundles/app/images/background_video.mp4') }}" type="video/mp4">
+</video>
+
 <div id="wrapper" class="">
 	{# SIDEBAR #}
     {% include 'AppBundle:Navigation:live_sidebar_left.html.twig' %}
