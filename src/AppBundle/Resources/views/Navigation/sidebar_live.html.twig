@@ -4,9 +4,10 @@
 		<li class="sidebar-brand"><a>Live</a></li>
 {# 		<li><a href="#"><i class="fa fa-fire"></i> Kamin</a></li>#}
 		<li><a href="#">Kamin</a></li>
-		<li><a href="{{ path('live_index', {'tournamentId': tournament.id}) }}">Turnieransicht</a></li>
-		<li><a href="{{ path('live_single_table') }}">EInzeltisch</a></li>
 		{% if tournament is defined %}
+		<li><a href="{{ path('live_index', {'tournamentId': tournament.id}) }}">Index</a></li>
+        <li><a href="{{ path('live_tournament_overview', {'tournamentId': tournament.id}) }}">Turnieransicht</a></li>
+        <li><a href="{{ path('live_single_table') }}">EInzeltisch</a></li>
 		<li><a href="{{ path('live_draw', {'tournamentId': tournament.id}) }}">Auslosung</a></li>
 		{% endif %}
 	</ul>

@@ -1,0 +1,15 @@
+{% extends "AppBundle::template_live.html.twig" %} 
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row"  id="live-tournament-overview">
+		<div class="col-sm-5">
+		</div>
+		{% for table in tournament.tables %}		
+		<div class="col-sm-7">
+			{% include "AppBundle:Table:table_10_player.html.twig" with {'seats': table.seats } %}
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

@@ -24,18 +24,18 @@ class LiveController extends Controller
     public function showAction(Request $request, $tournamentId = null)
     {
     	$em = $this->getDoctrine()->getManager();
-    	
+    	 
     	if(!empty($tournamentId))
     	{
     		/* @var $tournament Tournament */
     		$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
-    		
+    	
     		return array(
     				'tournament' => $tournament
     		);
     	}
-        return array(
-        );    
+    	return array(
+    	);
     }
     
     /**
@@ -97,11 +97,29 @@ class LiveController extends Controller
         		'all_player' => $allPlayer
         );    
     }
-
-    public function addSeat($playerId, $tableId)
+    
+    /**
+     * @Route("/{tournamentId}/overview", name="live_tournament_overview")
+     * @Template("AppBundle:Live:tournament_overview.html.twig")
+     */
+    public function tournamentOverviewAction($tournamentId)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	 
+    	if(!empty($tournamentId))
+    	{
+    		/* @var $tournament Tournament */
+    		$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
     	
+    		return array(
+    				'tournament' => $tournament
+    		);
+    	}
+    	return array(
+    	);
     }
+    
+    
     /**
      *
      * @param Array $list
