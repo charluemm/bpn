@@ -18,6 +18,7 @@ h6 {
 
 body {
 	padding-top: 50px;
+	font-weight: normal;
 }
 
 .clickable-row {
@@ -184,6 +185,19 @@ p.copyright {
 
 .borderless{
 	border: none;
+}
+
+.label-as-badge {
+    border-radius: 10px;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1;
+    min-width: 10px;
+    padding: 3px 7px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 .borderless,

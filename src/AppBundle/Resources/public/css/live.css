@@ -11,8 +11,11 @@ body {
 }
 
 /** PANEL */
-#live-tournament-overview .panel,
-#live-tournament-overview .panel .list-group{
+#live-tournament-overview .panel .list-group-item{
+	padding: 3px 10px;
+}
+
+#live-tournament-overview .list-group{
 	margin-bottom: 0;
 }
 #table-overview image {
