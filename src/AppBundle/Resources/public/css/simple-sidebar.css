@@ -141,14 +141,14 @@ li > .sub-bar {
 
 /* Toggle Buttons */
 #left-menu-toggle {
-    position: absolute;
+    position: fixed;
     top: 10px; 
     left: 0; 
     z-index: 2001
 }
 
 #right-menu-toggle {
-    position: absolute;
+    position: fixed;
     right:0; 
     top: 10px; 
     z-index: 2001

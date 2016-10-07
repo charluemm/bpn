@@ -3,11 +3,33 @@
 {% block content %}
 <div class="container-fluid">
 	<div class="row"  id="live-tournament-overview">
-		{% for table in tournament.tables %}	
-		  <div class="col-sm-4">
-            {% include "AppBundle:Table:table_10_player.html.twig" with {'seats': table.seats } %}
-          </div>	
-		{% endfor %}
+	   <div class="col-sm-6 col-lg-8">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   <h3 class="panel-title">Turnier Info</h3>
+               </div>
+               <div class="panel-body">
+                   
+               </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-4">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   <h3 class="panel-title">Player Ranking</h3>
+               </div>
+               <div class="panel-body">
+                   {% for list in tournament.ranking | batch(tournament.ranking | length / 2) %}
+                   <ul class="list-group borderless small col-sm-6">
+                       {% for rank in list %}
+                       <li class="list-group-item"><span class="badge pull-left">{{ rank.rank }}</span> {{ rank.player.nickname }}</li>
+                       {% endfor %}
+                   </ul>
+                   {% endfor %}
+               </div>
+            </div>
+        </div>
 	</div> 
 </div>
 {% endblock %}
