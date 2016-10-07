@@ -237,21 +237,15 @@ div.green { background: #01DF3A; /** #92ed40 */ }
 
 div.blue { background: #2E64FE; /** #4cc3fe */ }
 
-div.black {
-    background: #333;
-    color: #eee;
-    box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.1);
-    -moz-box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.1);
-    -webkit-box-shadow: inset 0 0 1px 1px rgba(0,0,0, 0.1), 0 0 5px 1px rgba(90,90,90, 0.1), inset 0 35px 1px rgba(255,255,255, 0.1);
-    border: 10px dotted #ccc;
-}
-div.red {
-    background: #fd5f72 none repeat scroll 0 0;
-}
+div.black { background: #333; }
+
+div.red { background: #DF013A; /** #fd5f72 none repeat scroll 0 0; */ }
+
 div.white {
     background: #EFEFEF none repeat scroll 0 0;
     color: #333;
 }
+
 div.disabled {
     opacity: 0.4;
 }
