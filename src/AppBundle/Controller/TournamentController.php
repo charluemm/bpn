@@ -15,6 +15,7 @@ use AppBundle\Form\AddRankingType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Util\Debug;
 
 
 /**
@@ -356,26 +357,29 @@ class TournamentController extends Controller
     
     /**
      * @Route("/data/", name="tournament_json_data")
-     * 
+    
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getTournamentInfo(Request $request)
     {
     	$id = $request->get('id');
-    	$id = 5;
     	if(empty($id))
     		die("Skriptaufruf fehlgeschlagen.");
     	
     	$em = $this->getDoctrine()->getManager();
-    	$tournament = $em->getRepository('AppBundle:Tournament')->find($id);
+    	$tournamentRepo = $em->getRepository('AppBundle:Tournament');
+    	$tournament = $tournamentRepo->find($id);
     	
     	if(empty($tournament))
     		die("Kein Turnier mit dieser ID vorhanden");
 
+    	$activePlayer = $tournamentRepo->countActivePlayer($id);
+		$countPlayer = count($tournament->getRanking());
+		
     	$return = array(
-    			'player' => array('current' => 6, 'count' => 10, 'text' => "6/10"),
-    			'blind' => array('current' => '10/20', 'next' => "20/40", 'next_time' => time())
+    			'player' => array('current' => $activePlayer, 'count' => $countPlayer),
+    			'blind' => array('current' => '10/20', 'next' => "20/40", 'next_time' => time()),
     	);
     		
     	return new Response(json_encode($return));

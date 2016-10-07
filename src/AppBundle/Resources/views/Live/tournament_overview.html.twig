@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container-fluid">
 	<div class="row"  id="live-tournament-overview">
-	   <div class="col-sm-6 col-lg-8">
+       <div class="col-sm-6">
            <div class="panel panel-default">
                <div class="panel-heading">
                    <h3 class="panel-title">Turnier Info</h3>
@@ -15,7 +15,7 @@
                             <td>verbleibende Spieler</td>
                         </tr>
                         <tr>
-                            <th></th>
+                            <th id="time"></th>
                             <th id="player_count"></th>
                         </tr>
                         <tr>
@@ -37,9 +37,30 @@
                     </table>
                </div>
             </div>
+            
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                   <h3 class="panel-title">Wertigkeit Chips</h3>
+               </div>
+               <div class="panel-body">
+                    
+               </div>
+            </div>
+            
         </div>
         
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-3">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   <h3 class="panel-title">Blind Level</h3>
+               </div>
+               <div class="panel-body">
+                    <p>Liste Blind Level</p>
+               </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-3">
            <div class="panel panel-default">
                <div class="panel-heading">
                    <h3 class="panel-title">Player Ranking</h3>
@@ -62,22 +83,48 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
-var auto_refresh = setInterval(function(){
+function refreshTournamentInfo()
+{
     $.ajax({
         url: '{{ path('tournament_json_data') }}',
         data: {
-            tournamentId: '{{ tournament.id }}'
+            id: '{{ tournament.id }}'
         },
         dataType: 'json',
+        type: 'POST',
         success:function(data){
             var nextBlindTime = $.now() - data.blind.next_time;
-            
-            $('#player_count').html(data.player.text);
+
+            $('#player_count').html(data.player.current + "/" + data.player.count);
             $('#blind_current').html(data.blind.current);
             $('#blind_next').html(data.blind.next);
-            $('#blind_next_time').html(nextBlindTime);
         }
     });
-}, 10000);
+}
+
+function updateClock ()
+{
+    var currentTime = new Date ( );
+    var currentHours = currentTime.getHours ( );
+    var currentMinutes = currentTime.getMinutes ( );
+    var currentSeconds = currentTime.getSeconds ( );
+    
+    // Pad the minutes and seconds with leading zeros, if required
+    currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+    currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+   
+    // Compose the string for display
+    var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " Uhr";    
+    $("#time").html(currentTimeString);    
+}
+
+
+$(document).ready(function()
+{
+	updateClock();
+	refreshTournamentInfo();
+    var clock_refresh = setInterval('updateClock()', 1000);
+    var auto_refresh = setInterval('refreshTournamentInfo()', 10000);
+});
 </script>
 {% endblock %}

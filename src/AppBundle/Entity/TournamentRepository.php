@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Query\Expr;
+
 /**
  * TournamentRepository
  *
@@ -23,5 +25,17 @@ class TournamentRepository extends \Doctrine\ORM\EntityRepository
 			->getQuery();
 		
 		return $query->getResult();
+	}
+	
+	public function countActivePlayer($tournamentId)
+	{
+		$query = $this->createQueryBuilder('t')
+			->select('COUNT(p.id)')
+			->join('t.ranking', 'r', Expr\Join::WITH, 't.id = :id')
+			->join('r.player', 'p', Expr\Join::WITH, 'r.rank IS NULL')
+			->setParameter('id', $tournamentId)
+			->getQuery();
+		
+		return $query->getSingleScalarResult();
 	}
 }
