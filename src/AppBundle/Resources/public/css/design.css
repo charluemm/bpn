@@ -177,3 +177,7 @@ p.copyright {
 .img-center {
 	margin: 0 auto;
 }
+
+.badge.pull-left{
+	margin-right: 4px;
+}

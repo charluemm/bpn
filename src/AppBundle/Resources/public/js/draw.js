@@ -7,9 +7,9 @@ $( document ).ready(function()
 	var table1 = $("#table-5 .list-group");
 	var table2 = $("#table-6 .list-group");
 	var table3 = $("#table-7 .list-group");
-	var playerGrp1 = $("#player-pool-1 .list-group-item").toArray();
-	var playerGrp2 = $("#player-pool-2 .list-group-item").toArray();
-	var playerGrp3 = $("#player-pool-3 .list-group-item").toArray();
+	var playerGrp1 = $("#player-pool-1 button.list-group-item").toArray();
+	var playerGrp2 = $("#player-pool-2 button.list-group-item").toArray();
+	var playerGrp3 = $("#player-pool-3 button.list-group-item").toArray();
 	var lastSelect = 0;
 	var timeout;
 	var i = 1;
@@ -29,7 +29,8 @@ $( document ).ready(function()
 		$(table1).randomize();
 		$(table1).randomize();
 		$(table1).find('.list-group-item').each(function(i,obj){
-			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
+//			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
+			$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
 		});
 
 		$(table2).randomize();
@@ -39,8 +40,8 @@ $( document ).ready(function()
 		});
 		
 		$(table3).randomize();
-		$(table4).randomize();
-		$(table5).find('.list-group-item').each(function(i,obj){
+		$(table3).randomize();
+		$(table3).find('.list-group-item').each(function(i,obj){
 			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
 		});
 	});
@@ -80,7 +81,7 @@ $( document ).ready(function()
 		randomitem = source[randomnum];
 		randTimeout = Math.floor(Math.random() * (600 - 200) + 200);
 		
-		console.debug(elemlength);
+		//console.debug(elemlength);
 		$(randomitem).toggleClass("list-group-item-danger");
 		timeout = setTimeout(function(){selectRandomPlayer()}, randTimeout);
 
@@ -99,8 +100,8 @@ $( document ).ready(function()
 		}
 		else if((i++ % 16 == 0 && source.length != 0) || source.length == 1)
 		{
-			console.debug($(randomitem));
-			console.debug("Auswahl: "+$(randomitem).text());
+			//console.debug($(randomitem));
+			//console.debug("Auswahl: "+$(randomitem).text());
 			$(target).append($(randomitem).removeClass('list-group-item-danger'));
 
 			// nächsten Topf wählen
