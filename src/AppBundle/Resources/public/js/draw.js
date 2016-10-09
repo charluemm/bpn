@@ -31,7 +31,6 @@ $( document ).ready(function()
 			$(this).randomize();
 			$(this).randomize();
 			$(this).find('.list-group-item').each(function(i,obj){
-//			$(obj).html(" <small>Platz "+(i+1)+"</small>  "+$(obj).html());
 				$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
 			});			
 		});
@@ -40,28 +39,7 @@ $( document ).ready(function()
 	$("#btn-stop").click(function(){
 		clearTimeout(timeout);
 	});
-
-	function run()
-	{
-		i = 1;
-		// Pot 1
-		source = playerGrp1;
-//		selectRandomPlayer();
-		
-		// Durchlaufe Tische
-		$(listTable).each(function(i, obj)
-		{
-			var listSeats = $(obj).find('.poker-seat');
-			// Durchlaufe sitzplätze (zufällig)
-			$(listSeats).each(function(i, obj)
-			{
-				$(listSeats).removeClass('active')
-				$(obj).addClass('active').wait();
-				selectRandomPlayer();
-				// finde für jeden sitzplatz zufällig einen spieler aus topf
-			});
-		});
-	}
+ 
 	
 	function selectRandomPlayer()
 	{
