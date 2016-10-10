@@ -11,7 +11,7 @@
                            <h3 class="panel-title">Tisch {{ table.number }}</h3>
                        </div>
                        <div class="panel-body">
-                          <ul class="list-group borderless tournament-table" data-max-player="9">                         
+                          <ul class="list-group borderless tournament-table" data-max-player="{{ table.maxSeats }}">                         
                           </ul>
                        </div>
                     </div>
@@ -23,6 +23,7 @@
 				<a class="btn btn-success" id="btn-run" alt="Start" title="Start"><i class="fa fa-fw fa-play"></i></a>
 				<a class="btn btn-danger" id="btn-stop" alt="Stopp" title="Stopp"><i class="fa fa-fw fa-stop"></i></a>
 				<a class="btn btn-warning" id="btn-refresh" alt="" title=""><i class="fa fa-fw fa-refresh"></i></a>
+				<a class="btn btn-info" id="btn-save" alt="" title=""><i class="fa fa-fw fa-floppy-o"></i></a>
 			</div>
 			<hr/>
 			<div id="player-list" class="col-sm-12">
