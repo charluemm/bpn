@@ -11,7 +11,7 @@
                            <h3 class="panel-title">Tisch {{ table.number }}</h3>
                        </div>
                        <div class="panel-body">
-                          <ul class="list-group borderless tournament-table">                         
+                          <ul class="list-group borderless tournament-table" data-max-player="9">                         
                           </ul>
                        </div>
                     </div>
@@ -33,9 +33,9 @@
                            <h3 class="panel-title">Lostopf {{ loop.index }}</h3>
                        </div>
                        <div class="panel-body">
-                          <ul class="list-group borderless">
+                          <ul class="list-group borderless player-pool">
                               {% for player in group %}
-                              <li class="list-group-item">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
+                              <li class="list-group-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
                               {% else %}
                               <li class="list-group-item list-group-item-danger borderless">Kein Spieler zugeordnet</li>
                               {% endfor %}                          
