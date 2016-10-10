@@ -33,7 +33,8 @@ $( document ).ready(function()
 			$(this).randomize();
 			$(this).find('.list-group-item').each(function(i,obj){
 				$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
-			});			
+			});
+			$(this).sumPoints();
 		});
 		$(this).toggleClass('disabled');
 	});
@@ -125,6 +126,15 @@ $( document ).ready(function()
 		}
 	}
 });
+
+$.fn.sumPoints = function(){
+	var sum = 0;
+	$(this).find('.list-group-item').each(function(){
+		sum += $(this).data('player-points');
+	});
+	$(this).closest('.panel').append('<div class=\"panel-footer\">Summe <span class="pull-right">' + sum + ' Punkte</span></div>');
+	return this;
+}
 
 $.fn.randomize = function(selector){
     var $elems = selector ? $(this).find(selector) : $(this).children(),
