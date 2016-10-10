@@ -10,12 +10,9 @@ $( document ).ready(function()
 	var playerGrp1 = $("#player-pool-1 li.list-group-item").toArray();
 	var playerGrp2 = $("#player-pool-2 li.list-group-item").toArray();
 	var playerGrp3 = $("#player-pool-3 li.list-group-item").toArray();
-	var lastSelect = 0;
+	
 	var timeout;
 	var i = 1;
-	var j = 1;
-	
-	var selected_seat = null;
 	
 	$("#btn-run").click(function()
 	{
@@ -24,6 +21,10 @@ $( document ).ready(function()
 		timeout = setTimeout(function(){ selectRandomPlayer();}, 500);
 	});
 	
+	$("#btn-stop").click(function(){
+		clearTimeout(timeout);
+	});
+
 	$("#btn-refresh").click(function()
 	{
 		$listTable = $(".tournament-table");
@@ -34,48 +35,35 @@ $( document ).ready(function()
 				$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
 			});			
 		});
+		$(this).toggleClass('disabled');
 	});
 	
-	$("#btn-stop").click(function(){
-		clearTimeout(timeout);
-	});
- 
 	
 	function selectRandomPlayer()
 	{
-		// Zufälligen Eintrag aus Liste wählen
+		// Markierung zurücksetzen
 		$('.list-group-item').removeClass("list-group-item-danger");
+		// Zufälligen Eintrag aus Liste wählen
 		elemlength = source.length;
 		randomnum = Math.floor(Math.random()*elemlength);
 		randomitem = source[randomnum];
-		randTimeout = Math.floor(Math.random() * (600 - 200) + 200);
-		
-		//console.debug(elemlength);
+
+		// Element markieren
 		$(randomitem).toggleClass("list-group-item-danger");
+
+		// nach zufälligem Timeout wiederholen
+		randTimeout = Math.floor(Math.random() * (600 - 200) + 200);
 		timeout = setTimeout(function(){selectRandomPlayer()}, randTimeout);
 
-		if(playerGrp1.length + playerGrp2.length + playerGrp3.length == 0 || $(target).find('.list-group-item').length == 9)
+		// max. Anzahl an Iterationen erreicht
+		if((i++ % 6 == 0 && source.length != 0))
 		{
-			$(target).randomize();
-			if($(target).not(table1).length === 0)
-				target = table2;
-			else if($(target).not(table2).length === 0)
-				target = table3;
-			else if($(target).not(table3).length === 0)
-			{
-				timeout = clearTimeout(timeout);
-			}
-			i = 1;
-		}
-		else if((i++ % 16 == 0 && source.length != 0) || source.length == 1)
-		{
-			//console.debug($(randomitem));
-			//console.debug("Auswahl: "+$(randomitem).text());
+			// Füge Element zur Zielliste hinzu
 			$(target).append($(randomitem).removeClass('list-group-item-danger'));
-
+			
 			// nächsten Topf wählen
 			// wenn 1
-			if($(source).not(playerGrp1).length === 0)
+			if($(source).is($(playerGrp1)))
 			{
 				playerGrp1 = jQuery.grep(playerGrp1, function(value) {
 					return value != randomitem;
@@ -83,7 +71,7 @@ $( document ).ready(function()
 				source = playerGrp2;
 			}
 			// wenn Pot 2
-			else if($(source).not(playerGrp2).length === 0)
+			else if($(source).is($(playerGrp2)))
 			{
 				playerGrp2 = jQuery.grep(playerGrp2, function(value) {
 					return value != randomitem;
@@ -91,7 +79,7 @@ $( document ).ready(function()
 				source = playerGrp3;
 			}
 			// wenn Pot 3
-			else if($(source).not(playerGrp3).length === 0)
+			else if($(source).is($(playerGrp3)))
 			{
 				playerGrp3 = jQuery.grep(playerGrp3, function(value) {
 					return value != randomitem;
@@ -101,6 +89,39 @@ $( document ).ready(function()
 			// Fehler
 			else
 				alert("Unerwarteter Fehler: Zu viele Gruppen");
+		}
+		// keine Spieler in Auswahl
+		else if(playerGrp1.length + playerGrp2.length + playerGrp3.length == 0)
+		{
+			timeout = clearTimeout(timeout);	
+			i = 1;
+		}
+		// Ziel ist voll
+		else if($(target).find('.list-group-item').length == $(target).data('max-player'))
+		{
+			// neues Ziel wählen
+			if($(target).is($(table1)))
+				target = table2;
+			else if($(target).is($(table2)))
+				target = table3;
+			i = 1;
+		}
+		// restliche Spieler in Topf entsprechen max Spieler am Zieltisch
+		else if(playerGrp1.length + playerGrp2.length + playerGrp3.length == $(target).data('max-player'))
+		{
+			// übrige Elemente hinzufügen
+			$(target).append($(playerGrp1));
+			$(target).append($(playerGrp2));
+			$(target).append($(playerGrp3));
+			// Variable zurücksetzen
+			playerGrp1 = [];
+			playerGrp2 = [];
+			playerGrp3 = [];
+			// Markierung entfernen
+			$('.list-group-item').removeClass("list-group-item-danger");	
+			// timeout stoppen
+			timeout = clearTimeout(timeout);
+			i = 1;
 		}
 	}
 });
@@ -112,87 +133,8 @@ $.fn.randomize = function(selector){
     $parents.each(function(){
         $(this).children(selector).sort(function(){
             return Math.round(Math.random()) - 0.5;
-        // }). remove().appendTo(this); // 2014-05-24: Removed `random` but leaving for reference. See notes under 'ANOTHER EDIT'
         }).detach().appendTo(this);
     });
 
     return this;
 };
-
-/**
-$( document ).ready(function() {
-	var list = $("#source .list-group-item").toArray();
-	var elemlength = list.length;
-	var timeout = null;
-	var randomitem = null;
-	var i = 1;
-
-	function randomSelect(target){    
-		$("#source .list-group-item").removeClass("list-group-item-danger"); 
-		elemlength = list.length;
-		randomnum = Math.floor(Math.random()*elemlength);
-		randomitem = list[randomnum];
-		randTimeout = Math.floor(Math.random() * (400 - 100) + 100);
-		$(randomitem).toggleClass("list-group-item-danger");
-		timeout = setTimeout(randomSelect, randTimeout);
-		if(list.length == 0)
-		{
-			clearTimeout(timeout);
-			list = jQuery.grep(list, function(value) {
-				  return value != randomitem;
-			});
-			$(target).append($('#source .list-group-item-danger').removeClass('list-group-item-danger'));
-		}
-		else if(i++ % 20 == 0 && list.length != 0)
-		{
-			$(target).append($(randomitem).removeClass('list-group-item-danger'));
-			list = jQuery.grep(list, function(value) {
-				  return value != randomitem;
-			});
-		}
-	}
-	
-// 	$('#btn-select').click(function(){
-// 		i = 1;
-// 		$('#table-draw').find('a').each(function(){
-// 			randomSelect($(this));
-// 		});
-// 	});
-	
-	$('#btn-stop').click(function(){
-		clearTimeout(timeout);
-		list = jQuery.grep(list, function(value) {
-			  return value != randomitem;
-		});
-// 		$('#result').append($('#source .list-group-item-danger').removeClass('list-group-item-danger'));
-// 		randomSelect();
-	});
-
-});
-$(function() {
-
-	  $('#btn-select').click(function() {
-		  alert("jklajkal");
-	    $("#table-draw").randomize("td");
-	  });
-
-	});
-
-	(function($) {
-
-	$.fn.randomize = function(childElem) {
-	  return this.each(function() {
-	      var $this = $(this);
-	      var elems = $this.children(childElem);
-
-	      elems.sort(function() { return (Math.round(Math.random())-0.5); });  
-
-	      $this.remove(childElem);  
-
-	      for(var i=0; i < elems.length; i++)
-	        $this.append(elems[i]);      
-
-	  });    
-	}
-	})(jQuery);
-**/
