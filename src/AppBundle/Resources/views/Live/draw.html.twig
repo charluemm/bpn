@@ -2,6 +2,17 @@
 
 {% block content %}
 <div class="container-fluid">
+    <div class="row">
+    	<div class="col-sm-12 text-center">
+    	   <div class="btn-group">
+    		<a class="btn btn-success" id="btn-run" alt="Start" title="Start"><i class="fa fa-fw fa-play"></i></a>
+    		<a class="btn btn-danger" id="btn-stop" alt="Stopp" title="Stopp"><i class="fa fa-fw fa-stop"></i></a>
+    		<a class="btn btn-warning" id="btn-refresh" alt="" title=""><i class="fa fa-fw fa-refresh"></i></a>
+    		<a class="btn btn-info" id="btn-save" alt="" title=""><i class="fa fa-fw fa-floppy-o"></i></a>    	   
+    	   </div>
+    	</div>
+    </div>
+    
 	<div class="row">
 		<div class="col-sm-6">
 			{% for table in tournament.tables %}		
@@ -19,42 +30,24 @@
 			{% endfor %}
 		</div>
 		<div class="col-sm-6">
-			<div class="col-sm-12">
-				<a class="btn btn-success" id="btn-run" alt="Start" title="Start"><i class="fa fa-fw fa-play"></i></a>
-				<a class="btn btn-danger" id="btn-stop" alt="Stopp" title="Stopp"><i class="fa fa-fw fa-stop"></i></a>
-				<a class="btn btn-warning" id="btn-refresh" alt="" title=""><i class="fa fa-fw fa-refresh"></i></a>
-				<a class="btn btn-info" id="btn-save" alt="" title=""><i class="fa fa-fw fa-floppy-o"></i></a>
-			</div>
-			<hr/>
-			<div id="player-list" class="col-sm-12">
-                {% for group in grouped_list %}
-                <div class="col-sm-4">
-                    <div class="panel panel-default" id="player-pool-{{ loop.index }}">
-                       <div class="panel-heading">
-                           <h3 class="panel-title">Lostopf {{ loop.index }}</h3>
-                       </div>
-                       <div class="panel-body">
-                          <ul class="list-group borderless player-pool">
-                              {% for player in group %}
-                              <li class="list-group-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
-                              {% else %}
-                              <li class="list-group-item list-group-item-danger borderless">Kein Spieler zugeordnet</li>
-                              {% endfor %}                          
-                          </ul>
-                       </div>
-                    </div>
+    	    {% for group in grouped_list %}
+            <div class="col-sm-4">
+                <div class="panel panel-default" id="player-pool-{{ loop.index }}">
+                   <div class="panel-heading">
+                       <h3 class="panel-title">Lostopf {{ loop.index }}</h3>
+                   </div>
+                   <div class="panel-body">
+                      <ul class="list-group borderless player-pool">
+                          {% for player in group %}
+                          <li class="list-group-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
+                          {% else %}
+                          <li class="list-group-item list-group-item-danger borderless">Kein Spieler zugeordnet</li>
+                          {% endfor %}                          
+                      </ul>
+                   </div>
                 </div>
-                {% endfor %}
-	{# 			<div class="col-sm-12">#}
-	{# 				<div class="list-group" id="source">#}
-	{# 				  {% for row in player_list %}#}
-	{# 				  <button type="button" class="list-group-item">{{ row['player'].nickname }} <small class="pull-right">{{ row['points'] }} Punkte</small></button>#}
-	{# 				  {% else %}#}
-	{# 				  <button type="button" class="list-group-item list-group-danger">Kein Spieler in DB</button>#}
-	{# 				  {% endfor %}#}
-	{# 				</div>#}
-	{# 			</div>#}				
-			</div>
+            </div>
+            {% endfor %}
 	   </div>
     </div>
 </div>

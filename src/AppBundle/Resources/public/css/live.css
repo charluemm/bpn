@@ -10,6 +10,9 @@ body {
 	background: transparent url("../images/table_overview.png") no-repeat scroll center center / cover;
 }
 
+.row {
+	margin-bottom: 10px;
+}
 /** PANEL */
 .panel .list-group-item{
 	padding: 3px 10px;
