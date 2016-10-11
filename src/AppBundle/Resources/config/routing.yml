@@ -29,3 +29,8 @@ bpn_table:
 bpn_live:
     resource: "@PokernightAppBundle/Controller/LiveController.php"
     type:     annotation 
+
+bpn_ajax:
+    resource: "@PokernightAppBundle/Controller/AjaxController.php"
+    type:     annotation 
+    

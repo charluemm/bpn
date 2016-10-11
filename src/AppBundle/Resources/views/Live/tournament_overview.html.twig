@@ -112,10 +112,7 @@
 function refreshTournamentInfo()
 {
     $.ajax({
-        url: '{{ path('tournament_json_data') }}',
-        data: {
-            id: '{{ tournament.id }}'
-        },
+        url: '{{ path('ajax_tournament_live_data', {'id': tournament.id }) }}',
         dataType: 'json',
         type: 'POST',
         success:function(data){

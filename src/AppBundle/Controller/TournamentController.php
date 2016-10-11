@@ -354,35 +354,4 @@ class TournamentController extends Controller
             ->getForm()
         ;
     }
-    
-    /**
-     * @Route("/data/", name="tournament_json_data")
-    
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getTournamentInfo(Request $request)
-    {
-    	$id = $request->get('id');
-    	if(empty($id))
-    		die("Skriptaufruf fehlgeschlagen.");
-    	
-    	$em = $this->getDoctrine()->getManager();
-    	$tournamentRepo = $em->getRepository('AppBundle:Tournament');
-    	$tournament = $tournamentRepo->find($id);
-    	
-    	if(empty($tournament))
-    		die("Kein Turnier mit dieser ID vorhanden");
-
-    	$activePlayer = $tournamentRepo->countActivePlayer($id);
-		$countPlayer = count($tournament->getRanking());
-		
-    	$return = array(
-    			'player' => array('current' => $activePlayer, 'count' => $countPlayer),
-    			'blind' => array('current' => '10/20', 'next' => "20/40", 'next_time' => time()),
-    	);
-    		
-    	return new Response(json_encode($return));
-    	
-    }
 }
