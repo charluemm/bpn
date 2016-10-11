@@ -1,5 +1,12 @@
 {% extends "AppBundle::template_live.html.twig" %} 
 
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.panel { opacity: 1; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
 	<div class="row"  id="live-tournament-overview">
