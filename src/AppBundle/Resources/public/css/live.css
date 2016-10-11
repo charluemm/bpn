@@ -14,6 +14,12 @@ body {
 	margin-bottom: 10px;
 }
 /** PANEL */
+
+.panel-warning .panel-heading,
+.panel-danger .panel-heading,
+.panel-success .panel-heading {
+	background-image: none;
+}
 .panel .list-group-item{
 	padding: 3px 10px;
 }
