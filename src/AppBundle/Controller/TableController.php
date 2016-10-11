@@ -10,6 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Table controller.
@@ -33,11 +37,11 @@ class TableController extends Controller
 
 		$newTable = new TournamentTable($tournament);
 		$formNewTable = $this->createFormBuilder($newTable)
-			->add('number', 'integer', array('label' => 'Tisch-Nr.', 'data' => $number))
-			->add('finalTable', 'checkbox', array('label' => 'Finaltable?', 'required' => false))
-			->add('maxSeats', 'integer', array('label' => 'max. Spielerplätze (2 - 10)'))
-			->add('comment', 'textarea', array('label' => 'Kommentar', 'required' => false))
-			->add('submit', 'submit', array('label' => 'Hinzufügen'))
+			->add('number', IntegerType::class, array('label' => 'Tisch-Nr.', 'data' => $number))
+			->add('finalTable', CheckboxType::class, array('label' => 'Finaltable?', 'required' => false))
+			->add('maxSeats', IntegerType::class, array('label' => 'max. Spielerplätze (2 - 10)'))
+			->add('comment', TextareaType::class, array('label' => 'Kommentar', 'required' => false))
+			->add('submit', SubmitType::class, array('label' => 'Hinzufügen'))
 			->getForm();
 
 		$formNewTable->handleRequest($request);
@@ -104,13 +108,13 @@ class TableController extends Controller
     {
     	$number = 1 + $this->getRepository()->findMaxNumberByTournament($entity->getTournament());
 
-        $form = $this->createForm(new TournamentTableType(), $entity, array(
+        $form = $this->createForm(TournamentTableType::class, $entity, array(
             'action' => $this->generateUrl('table_update', array('id' => $entity->getId())),
             'method' => 'PUT',
             'number' => $number
         ));
         
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
@@ -189,7 +193,7 @@ class TableController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('table_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
     }
