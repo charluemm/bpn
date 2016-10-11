@@ -87,6 +87,7 @@ class AdministrationController extends Controller
 				->getForm();
 			
 			$formLiveRanking = $this->createForm(AddRankingType::class, $tournament, array(
+						'label' => false,
 						'action' => $this->generateUrl('administration_live_ranking_update', array('tournamentId' => $tournamentId)),
 						'method' => 'PUT',
 				))
