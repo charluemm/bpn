@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * @author Michael Müller <development@reu-network.de>
@@ -24,7 +26,7 @@ class LiveController extends Controller
     public function showAction(Request $request, $tournamentId = null)
     {
     	$em = $this->getDoctrine()->getManager();
-    	 
+    	    	
     	if(!empty($tournamentId))
     	{
     		/* @var $tournament Tournament */
@@ -32,10 +34,28 @@ class LiveController extends Controller
     	
     		return array(
     				'tournament' => $tournament
-    		);
+    		);    		
     	}
-    	return array(
-    	);
+    	else
+    	{
+	    	$frmSelectTournament = $this->createFormBuilder()
+	    		->add('tournament', EntityType::class, array(
+	    				'label' => 'Turnier wählen',
+	    				'class' => 'AppBundle:Tournament'
+	    		))
+	    		->add('submit', SubmitType::class, array('label' => 'Laden'))
+	    		->getForm();
+	    	
+	    	$frmSelectTournament->handleRequest($request);
+	    	if($frmSelectTournament->isValid())
+	    	{
+	    		$tournament = $frmSelectTournament->get('tournament')->getData();
+	    		return $this->redirect($this->generateUrl('live_index', array('tournamentId' => $tournament->getId())));
+	    	}
+	    	return array(
+	    			'frmSelectTournament' => $frmSelectTournament->createView()
+	    	);
+    	}
     }
     
     /**

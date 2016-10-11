@@ -2,6 +2,15 @@
 
 {% block content %}
 <div class="container-fluid">
+    {% if frmSelectTournament is defined %}
+    <div class="row">
+        <div class="col-sm-12">
+            {{ form(frmSelectTournament) }}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if tournament is defined %}
 	<div class="row"  id="live-tournament-overview">
 		<div class="col-sm-5">
 		</div>
@@ -11,5 +20,6 @@
 		</div>
 		{% endfor %}
 	</div>
+	{% endif %}
 </div>
 {% endblock %}
