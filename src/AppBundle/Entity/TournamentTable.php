@@ -32,6 +32,7 @@ class TournamentTable
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="Seat", mappedBy="table")
+     * @ORM\OrderBy("number ASC")
      */
     protected $seats;
 
