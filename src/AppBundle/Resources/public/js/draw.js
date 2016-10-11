@@ -27,8 +27,7 @@ $( document ).ready(function()
 
 	$("#btn-refresh").click(function()
 	{
-		$listTable = $(".tournament-table");
-		$listTable.each(function(){
+		$(listTable).each(function(){
 			$(this).randomize();
 			$(this).randomize();
 			$(this).find('.list-group-item').each(function(i,obj){
@@ -38,7 +37,14 @@ $( document ).ready(function()
 		});
 		$(this).toggleClass('disabled');
 	});
-	
+		
+	$('#btn-save').click(function()
+	{
+		$(listTable).each(function(){
+			$(this).saveSeats();
+		});
+		
+	});
 	
 	function selectRandomPlayer()
 	{
@@ -126,6 +132,32 @@ $( document ).ready(function()
 		}
 	}
 });
+
+$.fn.saveSeats = function(){
+	var list = [];
+	var $this = $(this);
+	
+	$this.find('.list-group-item.seat-item').each(function(){
+		list.push($(this).data('player-id'));
+	});
+
+	$.ajax({
+		url: ajaxTableSeatUrl,
+		data: { 
+			'table': $this.data('table-id'),
+			'list': list 
+		},
+		type: 'POST',
+		success: function(data){
+			$this.closest('.panel').removeClass('panel-default panel-danger').addClass('panel-success');
+		},
+		error: function(data){
+			$this.closest('.panel').removeClass('panel-default panel-success').addClass('panel-danger');
+			console.debug(data);
+		}
+	});
+	return this;
+}
 
 $.fn.sumPoints = function(){
 	var sum = 0;

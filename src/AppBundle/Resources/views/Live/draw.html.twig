@@ -22,7 +22,7 @@
                            <h3 class="panel-title">Tisch {{ table.number }}</h3>
                        </div>
                        <div class="panel-body">
-                          <ul class="list-group borderless tournament-table" data-max-player="{{ table.maxSeats }}">                         
+                          <ul class="list-group borderless tournament-table" data-max-player="{{ table.maxSeats }}" data-table-id="{{ table.id }}">                         
                           </ul>
                        </div>
                     </div>
@@ -39,7 +39,7 @@
                    <div class="panel-body">
                       <ul class="list-group borderless player-pool">
                           {% for player in group %}
-                          <li class="list-group-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
+                          <li class="list-group-item seat-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
                           {% else %}
                           <li class="list-group-item list-group-item-danger borderless">Kein Spieler zugeordnet</li>
                           {% endfor %}                          
@@ -55,6 +55,9 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script>
+var ajaxTableSeatUrl = "{{ path('ajax_table_add_seats') }}";
+</script>
 {% javascripts '@AppBundle/Resources/public/js/draw.js' %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
