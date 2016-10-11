@@ -52,6 +52,8 @@ class Seat
     	$this->table = $table;
     	$this->player = $player;
     	$this->active = true;
+    	
+    	$table->addSeat($this);
     	return $this;
     }
 
@@ -64,6 +66,7 @@ class Seat
     {
     	return $this->player;
     }
+
     /**
      * Set number
      *
