@@ -20,7 +20,7 @@ class TournamentRepository extends \Doctrine\ORM\EntityRepository
 		$query = $this->createQueryBuilder('t')
 			->where('t.mainTournament = true')
 			->andWhere('t.date < CURRENT_TIMESTAMP()')
-			->orderBy('t.date','ASC')
+			->orderBy('t.date','DESC')
 			->setMaxResults(5)
 			->getQuery();
 		

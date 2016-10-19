@@ -167,6 +167,7 @@ class AdministrationController extends Controller
 		$em->flush();
 		// Zähle Spieler pro Turnier
 		$tournamentCount = array();
+		$tournaments = array_reverse($tournaments);
 		foreach($tournaments as $tournament)
 		{
 			$tournamentCount[$tournament->getId()] = \count($tournament->getRanking());
