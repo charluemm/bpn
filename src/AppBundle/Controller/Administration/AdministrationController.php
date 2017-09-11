@@ -1,9 +1,7 @@
 <?php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Administration;
 
-use AppBundle\Entity\AnnualRanking;
 use AppBundle\Entity\Tournament;
-use AppBundle\Entity\TournamentRanking;
 use AppBundle\Form\AddRankingType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
- * @Route("/administration")
  */
 class AdministrationController extends Controller 
 {
@@ -122,91 +119,5 @@ class AdministrationController extends Controller
 		return array (
 			'frm_select_tournament' => $formSelectEvent->createView()
 		);
-	}
-
-	/**
-	 * Acion für Auslosung
-	 *
-	 * @Route("/calculation", name="calculation_index")
-	 * @Template("AppBundle:Administration:calculation.html.twig")
-	 */
-	public function calculationIndexAction(Request $request) 
-	{
-		$em = $this->getDoctrine()->getManager();
-        $listTournaments = $em->getRepository('AppBundle:Tournament')->findAnnualRankingRelevant();
-		
-		$formStart = $this->createFormBuilder()
-			->add('submit', SubmitType::class, array('label' => 'Jetzt neu berechnen'))
-			->getForm();
-		$formStart->handleRequest($request);
-		if($formStart->isValid())
-		{
-			$this->createAnnualRanking($listTournaments);
-		}
-
-		$listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastGroupByPlayer();
-		return array (
-			'frm_start' => $formStart->createView(),
-			'list_tournaments' => $listTournaments,
-			'list_annualRanking' => $listAnnualRanking
-		);
-	}
-	
-	private function createAnnualRanking($tournaments)
-	{
-		$em = $this->getDoctrine()->getManager();
-		/* @var $playerRepo PlayerRepository */
-		$playerRepo = $em->getRepository('AppBundle:Player');
-		$tournamentRankingRepo = $em->getRepository('AppBundle:TournamentRanking');
-		$annualRepo = $em->getRepository('AppBundle:AnnualRanking');
-
-		// Lösche bisheriges Ranking
-		foreach($annualRepo->findAll() as $element)
-			$em->remove($element);
-			
-		$em->flush();
-		
-		// Zähle Spieler pro Turnier
-		$tournamentCount = array();
-		$tournaments = array_reverse($tournaments);
-		foreach($tournaments as $tournament)
-		{
-			$tournamentCount[$tournament->getId()] = \count($tournament->getRanking());
-		}
-		
-		// BERECHNUNG
-		
-		// alle Spieler
-		$listPlayer = $playerRepo->findAll();
-		foreach ($listPlayer as $player)
-		{
-			$playerSumPkt = 0;
-			// Durchlaufe alle relevanten Turniere
-			/* @var $tournament Tournament */
-			foreach($tournaments as $tournament)
-			{
-				$tournamentRank = $tournamentRankingRepo->findOneBy(array('player' => $player, 'tournament' => $tournament));
-				$annualRanking = $annualRepo->findOneBy(array('player' => $player, 'tournament' => $tournament));
-				if(empty($annualRanking))
-				{
-					$annualRanking = new AnnualRanking($player);
-					$em->persist($annualRanking);
-				}
-				$points = 0;
-				if(!empty($tournamentRank))
-				{
-					$rank = $tournamentRank->getRank();
-					$points = $tournamentCount[$tournament->getId()] - $rank + 1;
-					$playerSumPkt += $points;
-				}
-				
-				$annualRanking
-				    ->setPoints($points)
-				    ->setSumPoints($playerSumPkt)
-				    ->setTournament($tournament);
-			}
-		}
-		$em->flush();
-		return true;
 	}
 }

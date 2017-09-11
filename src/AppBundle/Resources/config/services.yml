@@ -2,3 +2,32 @@ services:
 #    pokernight_app.example:
 #        class: Reu\Pokernight\AppBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    bpn.player.repository:
+        class: AppBundle\Repository\PlayerRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Player
+    bpn.tournament.repository:
+        class: AppBundle\Repository\TournamentRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Tournament
+
+    bpn.annual_ranking.repository:
+        class: AppBundle\Repository\AnnualRankingRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\AnnualRanking\AnnualRanking
+            
+    bpn.player.manager:
+        class: AppBundle\Entity\PlayerManager
+        arguments: [ '@doctrine', '@bpn.player.repository' ]
+            
+    bpn.tournament.manager:
+        class: AppBundle\Entity\TournamentManager
+        arguments: [ '@doctrine', '@bpn.tournament.repository' ]
+        
+    bpn.annual_ranking.manager:
+        class: AppBundle\Entity\AnnualRanking\AnnualRankingManager
+        arguments: [ '@doctrine', '@bpn.annual_ranking.repository' ]

@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Util\Debug;
+use AppBundle\Entity\TournamentManager;
 
 
 /**
@@ -35,7 +36,11 @@ class TournamentController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Tournament();
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->create();
+        
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -45,7 +50,8 @@ class TournamentController extends Controller
             $rankingRepo = $em->getRepository('AppBundle:TournamentRanking');
             $players = $form->get('players')->getData();
 
-            $em->persist($entity);
+            $tournamentManager->update($entity, false);
+            
             foreach ($players as $player)
             {
             	$ranking = $rankingRepo->findBy(array('tournament' => $entity, 'player' => $player));
@@ -95,7 +101,10 @@ class TournamentController extends Controller
      */
     public function newAction()
     {
-        $entity = new Tournament();
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->create();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -113,9 +122,10 @@ class TournamentController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
@@ -138,10 +148,11 @@ class TournamentController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
-
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->find($id);
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
         }
@@ -185,10 +196,11 @@ class TournamentController extends Controller
      */
     public function addRankingAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
-
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->find($id);
+       
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
         }
@@ -229,10 +241,11 @@ class TournamentController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
-
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->find($id);
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
         }
@@ -267,6 +280,7 @@ class TournamentController extends Controller
         	
         	$entity->setRanking($tournamentRanking);
         	
+        	$tournamentManager->update($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('tournament_edit', array('id' => $id)));
@@ -288,10 +302,11 @@ class TournamentController extends Controller
      */
     public function updateRankingAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Tournament')->find($id);
-
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        
+        $entity = $tournamentManager->find($id);
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tournament entity.');
         }
@@ -301,8 +316,7 @@ class TournamentController extends Controller
         
         if ($editForm->isValid()) 
         {
-        	$em = $this->getDoctrine()->getManager();
-            $em->flush();
+        	$tournamentManager->update($entity);
 
             return $this->redirect($this->generateUrl('tournament_add_ranking', array('id' => $id)));
         }
@@ -324,15 +338,16 @@ class TournamentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Tournament')->find($id);
-
+            /** @var TournamentManager $tournamentManager **/
+            $tournamentManager = $this->get('bpn.tournament.manager');
+            
+            $entity = $tournamentManager->find($id);
+            
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Tournament entity.');
             }
-
-            $em->remove($entity);
-            $em->flush();
+            
+            $tournamentManager->remove($entity);
         }
 
         return $this->redirect($this->generateUrl('tournament'));

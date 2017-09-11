@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\Common\Util\Debug;
+use AppBundle\Entity\TournamentManager;
+use AppBundle\Entity\AnnualRanking\AnnualRankingManager;
 
 /**
  * @author Michael Müller <development@reu-network.de>
@@ -147,18 +149,20 @@ class LiveController extends Controller
     public function annualRankingAction($tournamentId)
     {
         if(!empty($tournamentId))
-        $em = $this->getDoctrine()->getManager();
         {
-            /* @var $tournament Tournament */
-            $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+            /** @var TournamentManager $tournamentManager **/
+            $tournamentManager = $this->get('bpn.tournament.manager');
+            /** @var AnnualRankingManager $annualRankingManager **/
+            $annualRankingManager = $this->get('bpn.annual_ranking.manager');
             
-            $listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastByPlayerList($tournament->getPlayers());
-
+            $tournament = $tournamentManager->find($tournamentId); 
+            
             return array(
                 'tournament' => $tournament,
-                'annualRanking' => $listAnnualRanking
+                'annualRanking' => $annualRankingManager->findCurrentForTournament($tournament)
             );
         }
+        
         return array(
         );
     }

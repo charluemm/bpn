@@ -5635,9 +5635,7 @@ th.visible-print, td.visible-print {
 .text-info, .text-info:hover {
     color: #3498db;
 }
-table a:not(.btn), .table a:not(.btn) {
-    text-decoration: underline;
-}
+
 table .dropdown-menu a, .table .dropdown-menu a {
     text-decoration: none;
 }

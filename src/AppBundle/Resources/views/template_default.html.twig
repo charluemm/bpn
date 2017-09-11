@@ -1,7 +1,7 @@
 {% extends 'AppBundle::template.html.twig' %} 
 
 {% block header %}
-<header class="default-header">
+<header class="default-header {{ header_css | default('header-background-1') }}">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">

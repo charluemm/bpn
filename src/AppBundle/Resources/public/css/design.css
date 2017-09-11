@@ -109,7 +109,7 @@ body {
 }
 
 .banner {
-	background: rgba(0, 0, 0, 0) url("../images/banner-bg.jpg") no-repeat scroll center center / cover;
+    background: rgba(0, 0, 0, 0) url("../images/banner-bg.jpg") no-repeat scroll center center / cover;
 	color: #f8f8f8;
 	padding: 100px 0;
 }
@@ -162,9 +162,21 @@ p.copyright {
 }
 
 .default-header {
-	background: rgba(0, 0, 0, 0) url("../images/banner-bg.jpg") no-repeat scroll center center / cover;
 	color: #f8f8f8;
 	height: 250px;
+	margin-bottom: 15px;
+}
+
+.header-background-1{
+	background: rgba(0, 0, 0, 0) url("../images/banner-bg.jpg") no-repeat scroll center center / cover;
+}
+
+.header-background-2{
+    background: rgba(0, 0, 0, 0) url("../images/poker-deck.jpg")no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .tagline {

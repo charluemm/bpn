@@ -4,7 +4,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Entity\AnnualRanking;
+use AppBundle\Entity\AnnualRanking\AnnualRanking;
+use AppBundle\Entity\AnnualRanking\AnnualRankingManager;
 
 class DefaultController extends Controller
 {
@@ -24,34 +25,11 @@ class DefaultController extends Controller
 	 */
     public function annualRankingAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	
-    	$playerRepo = $em->getRepository('AppBundle:AnnualRanking');
-    		
-    	$listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastGroupByPlayer();
-    	
-    	$playerList = array();
-    	foreach ($playerRepo->findAll() as $player)
-    	{
-    	    foreach ($player->getAnnualHistory() as $annualHistory)
-    	    {
-    	        array_push($playerList[$player->getId()]['history'], $value1);
-    	        
-    	    }
-    	}
-    	
-    	foreach($listAnnualRanking as $rank)
-    	{
-    	    $playerList[] = array(
-    	            'points' => $rank->getSumPoints(),
-    	            'player' => $rank->getPlayer()
-    	            
-    	    );
-    	}
-    	
+        /** @var AnnualRankingManager $annualRankingManager **/
+        $annualRankingManager = $this->get('bpn.annual_ranking.manager');
+        
         return $this->render('AppBundle:Default:annualRanking.html.twig', array(
-        		'annualRanking' => $listAnnualRanking,
-                'playerList' => $playerList
+        		'annualRanking' => $annualRankingManager->findCurrentRanking()
         ));
     }
 }

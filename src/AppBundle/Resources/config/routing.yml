@@ -1,36 +1,37 @@
+administration:
+    resource: "@AppBundle/Controller/Administration/"
+    type:     annotation 
+    prefix:   /administration
+
 bpn_default:
-    resource: "@PokernightAppBundle/Controller/DefaultController.php"
+    resource: "@AppBundle/Controller/DefaultController.php"
     type:     annotation 
-
-bpn_administration:
-    resource: "@PokernightAppBundle/Controller/AdministrationController.php"
-    type:     annotation 
-
+    
 bpn_player:
-    resource: "@PokernightAppBundle/Controller/PlayerController.php"
+    resource: "@AppBundle/Controller/PlayerController.php"
     type:     annotation 
 
 bpn_location:
-    resource: "@PokernightAppBundle/Controller/LocationController.php"
+    resource: "@AppBundle/Controller/LocationController.php"
     type:     annotation 
 
 bpn_event:
-    resource: "@PokernightAppBundle/Controller/EventController.php"
+    resource: "@AppBundle/Controller/EventController.php"
     type:     annotation 
 
 bpn_tournament:
-    resource: "@PokernightAppBundle/Controller/TournamentController.php"
+    resource: "@AppBundle/Controller/TournamentController.php"
     type:     annotation 
 
 bpn_table:
-    resource: "@PokernightAppBundle/Controller/TableController.php"
+    resource: "@AppBundle/Controller/TableController.php"
     type:     annotation 
 
 bpn_live:
-    resource: "@PokernightAppBundle/Controller/LiveController.php"
+    resource: "@AppBundle/Controller/LiveController.php"
     type:     annotation 
 
 bpn_ajax:
-    resource: "@PokernightAppBundle/Controller/AjaxController.php"
+    resource: "@AppBundle/Controller/AjaxController.php"
     type:     annotation 
     

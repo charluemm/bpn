@@ -2,31 +2,21 @@
 
 {% block subtitle %}5-Jahreswertung{% endblock %} 
 
+{% set header_css = 'header-background-2' %}
 {% block content %}
 <div class="container">
-	<hr>
-	<div class="row">
-		<div class="col-sm-12 col-md-5">
-		    <h1>5-Jahreswertung</h1>
-		    <div class="list-group">
-				<a href="#" class="list-group-item active">
-					<h4 class="list-group-item-heading"><i class="fa fa-fw fa-trophy"></i> 5-Jahres-Wertung</h4>
-				</a>
-				{% include 'AppBundle:Widget:widget_ranking_list.html.twig' with {'ranking' : annualRanking} %}
-			</div>
-		</div>
-	</div>
-	
 	<div class="row">
 	   {% set index = 0 %}
-	   {% for col in playerList|batch(playerList|length / 2) %}
+	   {% for col in annualRanking|batch(annualRanking|length / 2) %}
 	   <div class="col-sm-6">
 	       <table class="table">
 	           {% for row in col %}{% set index = index + 1 %}
 	           <tr>
+	               <td>{% if index == 1 %}<i class="fa fa-diamond"></i>{% endif %}</td>
 	               <td>{{ index }}</td>
-	               <td>{{ row.player }}</td>
-	               <td>{{ row.points }}
+                   <td>{{ row.player }}</td>
+                   <td>{{ row.sumPoints }} Pkt.</td>
+	               <td><a href="{{ path("tournament_show", { 'id': row.tournament.id }) }}" title="{{ row.tournament.description }}" class="badge {{ row.points > 0 ? "badge-success" : "badge-info" }}">{{ row.points > 0 ? "+ " : "" }}{{ row.points }} Pkt.</a></td>
 	           </tr>
 	           {% endfor %}
 	       </table>

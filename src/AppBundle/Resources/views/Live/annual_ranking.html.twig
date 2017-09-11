@@ -12,7 +12,8 @@
                 <tr>
                     <td class="badge{% if index == 1 %} badge-success{% else %} badge-info{% endif %}">{{ index }}</td>
                     <td>{{ ranking.player.nickname }}</td>
-                    <td>{{ ranking.sumPoints }} Punkte</td>
+                   <td class="text-right">{{ ranking.sumPoints }} Pkt.</td>
+                   <td><a href="{{ path("tournament_show", { 'id': ranking.tournament.id }) }}" title="{{ ranking.tournament.description }}" class="badge {{ ranking.points > 0 ? "badge-success" : "badge-info" }}">{{ ranking.points > 0 ? "+ " : "" }}{{ ranking.points }} Pkt.</a></td>
                 </tr>             
           {% endfor %}
           </table>
