@@ -22,15 +22,16 @@ class AddRankingType extends AbstractType
 	        {
 	        	$form = $event->getForm();
 	        	$data = $event->getData();
-	        	$form->add('ranking', CollectionType::class, array(
-			            		'entry_type' => RankingFieldType::class,
-			            		'label' => $options['label'] === null ? 'Plazierung' : $options['label'],
-			            		'entry_options'  => array(
-			            				'label' => false,
-			            				'required'  => false,
-			            				'max' => $data->getRanking()->count(),
-			            		)
-			            ));
+	        	$form
+	        	  ->add('ranking', CollectionType::class, array(
+	            		'entry_type' => RankingFieldType::class,
+	            		'label' => $options['label'] === null ? 'Plazierung' : $options['label'],
+	            		'entry_options'  => array(
+	            				'label' => false,
+	            				'required'  => false,
+	            				'max' => $data->getRanking()->count(),
+            		     )
+	               ));
 // 		        	->add('players', 'entity', array(
 // 	        			'label' => 'Teilnemer',
 // 	        			'class' => 'PokernightAppBundle:Player',

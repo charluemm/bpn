@@ -17,6 +17,38 @@ use AppBundle\Entity\Seat;
  * @Route("/ajax")
  */
 class AjaxController extends Controller {
+
+	/**
+	 * Gibt für ein bestimmtes Turnier das aktuelle Ranking zurück
+	 *
+	 * @Route("/tournament/{id}/ranking", name="ajax_tournament_ranking")
+	 * @Method("POST")
+	 *
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\JsonResponse
+	 */
+	public function getTournamentRankingAction($id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		if (empty ( $id ))
+			die ( "Skriptaufruf fehlgeschlagen." );
+		
+		$em = $this->getDoctrine ()->getManager ();
+		$tournamentRepo = $em->getRepository ( 'AppBundle:Tournament' );
+		$tournament = $tournamentRepo->find ( $id );
+	
+		if(empty($tournament))
+			return new JsonResponse(array('message' => "Es wurde kein Turnier mit der ID $id gefunden."), 500);
+		
+		$content = array();
+		
+		foreach($tournament->getRanking() as $rank)
+		{
+			$content[] = array('player' => $rank->getPlayer()->getNickname(), 'rank' => $rank->getRank());
+		}
+		
+		return new JsonResponse($content, 200);
+	}
 	
 	/**
 	 * Gibt Livedaten zu einem Turnier als JSON zurück
@@ -35,10 +67,10 @@ class AjaxController extends Controller {
 		$em = $this->getDoctrine ()->getManager ();
 		$tournamentRepo = $em->getRepository ( 'AppBundle:Tournament' );
 		$tournament = $tournamentRepo->find ( $id );
-		
+	
 		if (empty ( $tournament ))
 			die ( "Kein Turnier mit dieser ID vorhanden" );
-		
+	
 		$activePlayer = $tournamentRepo->countActivePlayer ( $id );
 		$countPlayer = count ( $tournament->getRanking () );
 		
@@ -59,10 +91,10 @@ class AjaxController extends Controller {
 	
 	/**
 	 * Legt einen neuen Sitz für einen übergebenen Tisch und Spieler an
-	 * 
+	 *
 	 * @Route("/table/add/seat-list", name="ajax_table_add_seats")
 	 * @Method("POST")
-	 * 
+	 *
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\JsonResponse
 	 */

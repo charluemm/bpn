@@ -98,7 +98,7 @@
                <div class="panel-heading">
                    <h3 class="panel-title">Player Ranking</h3>
                </div>
-               <div class="panel-body">
+               <div class="panel-body" id="player-ranking">
                    {% for list in tournament.ranking | batch(tournament.ranking | length / 2) %}
                    <ul class="list-group borderless col-sm-6">
                        {% for rank in list %}
@@ -118,7 +118,7 @@
 <script>
 function refreshTournamentInfo()
 {
-    $.ajax({
+	$.ajax({
         url: '{{ path('ajax_tournament_live_data', {'id': tournament.id }) }}',
         dataType: 'json',
         type: 'POST',
@@ -132,6 +132,35 @@ function refreshTournamentInfo()
     });
 }
 
+function refreshRanking()
+{
+	$.ajax({
+        url: '{{ path('ajax_tournament_ranking', {'id': tournament.id }) }}',
+        dataType: 'json',
+        type: 'POST',
+        success:function(data){
+            $('#player-ranking').empty();
+
+            var i = 0;
+            var res = data;
+
+            // TODO: AUsgabe in zwei Spalten
+
+            for(j = 1; j <= 2; j++)
+            {
+                add = "";
+                while(i < (res.length / 2))
+                {
+                	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + res[i * j].rank + "</span> " + res[i * j].player + "</li>";
+                    i++;
+                }
+                $('#player-ranking').append("<ul class=\"list-group borderless col-sm-6\">" + add);
+                $('#player-ranking').append("</ul>");
+                i = 0;
+            }           
+        }
+    });
+}
 function updateClock ()
 {
     var currentTime = new Date ( );
@@ -153,8 +182,10 @@ $(document).ready(function()
 {
 	updateClock();
 	refreshTournamentInfo();
+	refreshRanking();
     var clock_refresh = setInterval('updateClock()', 1000);
     var auto_refresh = setInterval('refreshTournamentInfo()', 10000);
+    var ranking_refesh = setInterval('refreshRanking()', 10000);
 });
 </script>
 {% endblock %}

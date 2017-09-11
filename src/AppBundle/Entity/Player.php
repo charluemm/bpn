@@ -62,7 +62,7 @@ class Player
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AnnualRanking", mappedBy="player")
-     * @ORM\OrderBy({"date" = "DESC"})
+     * @ORM\OrderBy({"tournament" = "DESC"})
      */
     private $annualRanking;
     

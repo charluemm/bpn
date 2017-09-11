@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * 5-Jahreswertung
  *
  * @ORM\Table(name="app_annual_ranking",
- * 				uniqueConstraints={@ORM\UniqueConstraint(name="unique_date_player", columns={"player_id", "date"})})
+ * 				uniqueConstraints={@ORM\UniqueConstraint(name="unique_tournament_player", columns={"player_id", "tournament_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\AnnualRankingRepository")
  */
 class AnnualRanking
@@ -24,19 +24,12 @@ class AnnualRanking
     private $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    private $date;
-
-    /**
      * @var integer
      *
-     * @ORM\Column(name="points", type="integer")
+     * @ORM\Column(name="rank", type="integer", nullable=true)
      */
-    private $points = 0;
-
+    private $rank = null;
+    
     /**
      * @var integer
      *
@@ -51,6 +44,16 @@ class AnnualRanking
      * @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false)
      */
     protected $player;
+    
+    /**
+     * zugeordnetes Turnier
+     * 
+     * @ORM\ManyToOne(targetEntity="Tournament", fetch="EAGER")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id", nullable=false)
+     * 
+     * @var Tournament
+     */
+    protected $tournament;
     
     /**
      * @var \DateTime
@@ -75,30 +78,17 @@ class AnnualRanking
         return $this->id;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return PlayerRanking
-     */
-    public function setDate($date)
+    public function setRank($rank = null)
     {
-        $this->date = $date;
-
+        $this->rank = $rank;
         return $this;
     }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
+    
+    public function getRank()
     {
-        return $this->date;
+        return $this->rank;
     }
-
+    
     /**
      * Set points
      *
@@ -167,6 +157,26 @@ class AnnualRanking
     public function getPlayer()
     {
     	return $this->player;
+    }
+    
+    /**
+     * 
+     * @param Tournament $tournament
+     * @return \AppBundle\Entity\AnnualRanking
+     */
+    public function setTournament(Tournament $tournament)
+    {
+        $this->tournament = $tournament;
+        return $this;
+    }
+    
+    /**
+     * 
+     * @return \AppBundle\Entity\Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
     }
     
     /**

@@ -22,7 +22,7 @@ class TournamentTableType extends AbstractType
      	
         $builder
         	->add('number', IntegerType::class, array('label' => 'Tisch-Nr.', 'data' => $number))
-			->add('finalTable', CheckboxType::class, array('label' => 'Finaltable?'))
+			->add('finalTable', CheckboxType::class, array('label' => 'Finaltable?', 'required' => false))
 			->add('maxSeats', IntegerType::class, array('label' => 'max. Spielerplätze (2 - 10)'))
 			->add('comment', TextareaType::class, array('label' => 'Kommentar', 'required' => false))
         ;

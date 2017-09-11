@@ -4,9 +4,7 @@ $( document ).ready(function()
 	var target;
 	
 	var listTable = $(".tournament-table").toArray();
-	var table1 = $("#table-5 .list-group");
-	var table2 = $("#table-6 .list-group");
-	var table3 = $("#table-7 .list-group");
+	
 	var playerGrp1 = $("#player-pool-1 li.list-group-item").toArray();
 	var playerGrp2 = $("#player-pool-2 li.list-group-item").toArray();
 	var playerGrp3 = $("#player-pool-3 li.list-group-item").toArray();
@@ -17,7 +15,7 @@ $( document ).ready(function()
 	$("#btn-run").click(function()
 	{
 		source = playerGrp1;
-		target = $('#table-5 .list-group');
+		target = 0;
 		timeout = setTimeout(function(){ selectRandomPlayer();}, 500);
 	});
 	
@@ -63,10 +61,11 @@ $( document ).ready(function()
 		timeout = setTimeout(function(){selectRandomPlayer()}, randTimeout);
 
 		// max. Anzahl an Iterationen erreicht
-		if((i++ % 6 == 0 && source.length != 0))
+		if((i++ % 11 == 0 && source.length != 0))
 		{
 			// Füge Element zur Zielliste hinzu
-			$(target).append($(randomitem).removeClass('list-group-item-danger'));
+			//$(listTable[target]).append($(randomitem).removeClass('list-group-item-danger'));
+			$(listTable[target]).append($(randomitem).removeClass('list-group-item-danger'));
 			
 			// nächsten Topf wählen
 			// wenn 1
@@ -104,22 +103,30 @@ $( document ).ready(function()
 			i = 1;
 		}
 		// Ziel ist voll
-		else if($(target).find('.list-group-item').length == $(target).data('max-player'))
+		else if($(listTable[target]).find('.list-group-item').length == $(listTable[target]).data('max-player'))
 		{
 			// neues Ziel wählen
-			if($(target).is($(table1)))
+			if(target < listTable.length)
+				target++;
+			else
+				target = 0;
+			
+			i = 1;
+			return ;
+			
+			if($(listTable[target]).is($(table1)))
 				target = table2;
-			else if($(target).is($(table2)))
+			else if($(listTable[target]).is($(table2)))
 				target = table3;
 			i = 1;
 		}
 		// restliche Spieler in Topf entsprechen max Spieler am Zieltisch
-		else if(playerGrp1.length + playerGrp2.length + playerGrp3.length == $(target).data('max-player'))
+		else if(playerGrp1.length + playerGrp2.length + playerGrp3.length <= ($(listTable[target]).data('max-player') - $(listTable[target]).find('.list-group-item').length))
 		{
 			// übrige Elemente hinzufügen
-			$(target).append($(playerGrp1));
-			$(target).append($(playerGrp2));
-			$(target).append($(playerGrp3));
+			$(listTable[target]).append($(playerGrp1));
+			$(listTable[target]).append($(playerGrp2));
+			$(listTable[target]).append($(playerGrp3));
 			// Variable zurücksetzen
 			playerGrp1 = [];
 			playerGrp2 = [];

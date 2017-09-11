@@ -16,5 +16,22 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="row">
+	   {% set index = 0 %}
+	   {% for col in playerList|batch(playerList|length / 2) %}
+	   <div class="col-sm-6">
+	       <table class="table">
+	           {% for row in col %}{% set index = index + 1 %}
+	           <tr>
+	               <td>{{ index }}</td>
+	               <td>{{ row.player }}</td>
+	               <td>{{ row.points }}
+	           </tr>
+	           {% endfor %}
+	       </table>
+	   </div>
+	   {% endfor %}
+	</div>
 </div>
 {% endblock %}

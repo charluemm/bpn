@@ -5,26 +5,26 @@
         <title>{% block title %}Brände Pokernight WebApp{% endblock %}</title>
         {% stylesheets '@kernel_css' %}
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-    	{% endstylesheets %}
+        {% endstylesheets %}
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-	{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
     {% javascripts '@kernel_js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    	<script type="text/javascript">
-    		$(document).ready(function() {
-			    $(".clickable-row").click(function() {
-			        window.document.location = $(this).data("href");
-			    });
-			    $("#menu-toggle").click(function(e) {
-			        e.preventDefault();
-			        $("#wrapper").toggleClass("toggled");
-			    });
-			});
-    	</script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".clickable-row").click(function() {
+                    window.document.location = $(this).data("href");
+                });
+                $("#menu-toggle").click(function(e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+            });
+        </script>
     {% block javascripts %}
     {% endblock javascripts %}
     </body>

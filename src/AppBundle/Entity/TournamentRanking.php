@@ -19,13 +19,26 @@ class TournamentRanking
      */
     protected $tournament;
 
-    /** 
+    /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Player", inversedBy="tournamentRanking", fetch="EAGER") 
+     * @ORM\ManyToOne(targetEntity="Player", inversedBy="tournamentRanking", fetch="EAGER")
      * @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false)
      */
     protected $player;
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Player")
+     * @ORM\JoinColumn(name="kicked_by_player_id", referencedColumnName="id", nullable=true)
+     */
+    private $kickedByPlayer;
+    
+    /**
+     * @ORM\Column(name="kicked_at", type="datetime", nullable=true)
+     * 
+     * @var \DateTime
+     */
+    private $kickedAt;
+    
     /**
      * @var integer
      *
@@ -57,6 +70,29 @@ class TournamentRanking
     {
     	return $this->player;
     }
+
+    public function getKickedByPlayer()
+    {
+        return $this->kickedByPlayer;
+    }
+
+    public function setKickedByPlayer(Player $player)
+    {
+        $this->kickedByPlayer = $player;
+        return $this;
+    }
+
+    public function getKickedAt()
+    {
+        return $this->kickedAt;
+    }
+
+    public function setKickedAt(\DateTime $kickedAt = null)
+    {
+        $this->kickedAt = $kickedAt;
+        return $this;
+    }
+ 
     /**
      * Set rank
      *

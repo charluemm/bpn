@@ -1,5 +1,9 @@
 body {
-	background: rgba(0, 0, 0, 0) url("../images/background.jpg") no-repeat fixed center center / cover;
+	background: rgba(0, 0, 0, 0) url("../images/background_hd.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #page-content-wrapper {}

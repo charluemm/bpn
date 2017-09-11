@@ -17,7 +17,7 @@
 		<div class="col-sm-6">
 			{% for table in tournament.tables %}		
 			<div class="col-sm-4">
-			     <div class="panel panel-default" id="table-{{ table.id }}">
+			     <div class="panel panel-default" id="table-{{ table.id }}" style="margin-left: -27px">
                        <div class="panel-heading">
                            <h3 class="panel-title">Tisch {{ table.number }}</h3>
                        </div>
@@ -39,7 +39,7 @@
                    <div class="panel-body">
                       <ul class="list-group borderless player-pool">
                           {% for player in group %}
-                          <li class="list-group-item seat-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
+                          <li class="list-group-item seat-item" data-player-id="{{ player.id }}" data-player-points="{{ player.getAnnualRankingPoints() }}">{{ player.nickname }} <small class="pull-right small">{{ player.getAnnualRankingPoints() }} Punkte</small></li>
                           {% else %}
                           <li class="list-group-item list-group-item-danger borderless">Kein Spieler zugeordnet</li>
                           {% endfor %}                          

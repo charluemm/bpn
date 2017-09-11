@@ -165,6 +165,7 @@ class AdministrationController extends Controller
 			$em->remove($element);
 			
 		$em->flush();
+		
 		// Zähle Spieler pro Turnier
 		$tournamentCount = array();
 		$tournaments = array_reverse($tournaments);
@@ -184,9 +185,8 @@ class AdministrationController extends Controller
 			/* @var $tournament Tournament */
 			foreach($tournaments as $tournament)
 			{
-				$date = $tournament->getDate();
 				$tournamentRank = $tournamentRankingRepo->findOneBy(array('player' => $player, 'tournament' => $tournament));
-				$annualRanking = $annualRepo->findOneBy(array('player' => $player, 'date' => $date));
+				$annualRanking = $annualRepo->findOneBy(array('player' => $player, 'tournament' => $tournament));
 				if(empty($annualRanking))
 				{
 					$annualRanking = new AnnualRanking($player);
@@ -200,7 +200,10 @@ class AdministrationController extends Controller
 					$playerSumPkt += $points;
 				}
 				
-				$annualRanking->setPoints($points)->setSumPoints($playerSumPkt)->setDate($date);
+				$annualRanking
+				    ->setPoints($points)
+				    ->setSumPoints($playerSumPkt)
+				    ->setTournament($tournament);
 			}
 		}
 		$em->flush();

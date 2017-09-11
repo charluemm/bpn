@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\Common\Util\Debug;
 
 /**
  * @author Michael Müller <development@reu-network.de>
@@ -124,19 +125,42 @@ class LiveController extends Controller
      */
     public function tournamentOverviewAction($tournamentId)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	 
-    	if(!empty($tournamentId))
-    	{
-    		/* @var $tournament Tournament */
-    		$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
-    	
-    		return array(
-    				'tournament' => $tournament
-    		);
-    	}
-    	return array(
-    	);
+        $em = $this->getDoctrine()->getManager();
+        
+        if(!empty($tournamentId))
+        {
+            /* @var $tournament Tournament */
+            $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+            
+            return array(
+                    'tournament' => $tournament
+            );
+        }
+        return array(
+        );
+    }
+    
+    /**
+     * @Route("/{tournamentId}/annual-ranking", name="live_tournament_annual_ranking")
+     * @Template("AppBundle:Live:annual_ranking.html.twig")
+     */
+    public function annualRankingAction($tournamentId)
+    {
+        if(!empty($tournamentId))
+        $em = $this->getDoctrine()->getManager();
+        {
+            /* @var $tournament Tournament */
+            $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+            
+            $listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastByPlayerList($tournament->getPlayers());
+
+            return array(
+                'tournament' => $tournament,
+                'annualRanking' => $listAnnualRanking
+            );
+        }
+        return array(
+        );
     }
     
     
