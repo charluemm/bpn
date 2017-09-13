@@ -107,9 +107,8 @@ class AnnualRankingManager extends AbstractManager
             ->join('r.player', 'p')
             ->join('r.tournament', 't')
             //->where($qb->expr()->in('r.tournament', $subQuery->getDQL()))
-            ->groupBy('r.player')
-            ->having('t.date = MAX(t.date)')
-            ->orderBy('r.sumPoints', 'DESC');
+            ->orderBy('curr_rank', 'ASC')
+            ->groupBy('r.player');
         
         // filter player if tournament is set
         if(!is_null($tournament))

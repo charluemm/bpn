@@ -44,7 +44,7 @@ class AjaxController extends Controller {
 		
 		foreach($tournament->getRanking() as $rank)
 		{
-			$content[] = array('player' => $rank->getPlayer()->getNickname(), 'rank' => $rank->getRank());
+			$content[] = array('player' => $rank->getPlayer()->getNickname(), 'rank' => $rank->getRank() ? : "");
 		}
 		
 		return new JsonResponse($content, 200);

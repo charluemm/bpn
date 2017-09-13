@@ -63,7 +63,7 @@ class Player extends AbstractPlayer
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\AnnualRanking\AnnualRanking", mappedBy="player")
-     * @ORM\OrderBy({"tournament" = "DESC"})
+     * @ORM\OrderBy({"year" = "DESC"})
      */
     protected $annualRanking;
         

@@ -67,9 +67,13 @@ class LiveController extends Controller
      */
     public function liveDrawAction($tournamentId)
     {
-    	$em = $this->getDoctrine()->getManager();
+    	/** @var TournamentManager $tournamentManager **/
+    	$tournamentManager = $this->get('bpn.tournament.manager');
+    	/** @var AnnualRankingManager $annualRankingManager **/
+    	$annualRankingManager = $this->get('bpn.annual_ranking.manager');
+    	
     	/* @var $tournament Tournament */
-   		$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+   		$tournament = $tournamentManager->find($tournamentId);
 
    		// alle Turnierteilnehmer
    		$playerList = array();
@@ -77,7 +81,7 @@ class LiveController extends Controller
     		$playerList[] = $ranking->getPlayer();
     		
     	// Spieler 5-Jahreswertung
-    	$listAnnualRanking = $em->getRepository('AppBundle:AnnualRanking')->findLastGroupByPlayer();
+    	$listAnnualRanking = $annualRankingManager->findCurrentRanking();
     	$annualPlayerList = array();
     	foreach($listAnnualRanking as $annualRanking)
     		$annualPlayerList[] = $annualRanking->getPlayer();

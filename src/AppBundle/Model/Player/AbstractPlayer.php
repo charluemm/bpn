@@ -211,12 +211,9 @@ abstract class AbstractPlayer implements PlayerInterface
     
     public function getAnnualRankingPoints()
     {
-    	$sum = 0;
-    	/* @var $annualRanking AnnualRanking */
-    	foreach($this->getAnnualRanking() as $annualRanking)
-    	{
-    		$sum += $annualRanking->getPoints();
-    	}
-    	return $sum;
+        if($this->annualRanking->isEmpty())
+            return 0;
+        
+        return $this->annualRanking->first()->getSumPoints();
     }
 }
