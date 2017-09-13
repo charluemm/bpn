@@ -16,6 +16,17 @@ h6 {
 	font-weight: 700;
 }
 
+.rank-down{
+	width: 0;
+height: 0;
+border-style: solid;
+border-width: 50px 25px 0 25px;
+border-color: #ff0000 transparent transparent transparent;
+line-height: 0px;
+_border-color: #ff0000 #000000 #000000 #000000;
+_filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+
 body {
 	padding-top: 50px;
 	font-weight: normal;

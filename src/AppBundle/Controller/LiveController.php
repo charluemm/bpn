@@ -159,7 +159,7 @@ class LiveController extends Controller
             
             return array(
                 'tournament' => $tournament,
-                'annualRanking' => $annualRankingManager->findCurrentForTournament($tournament)
+                'ranking_data' => $annualRankingManager->findAdvancedForTournament($tournament)
             );
         }
         

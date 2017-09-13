@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $annualRankingManager = $this->get('bpn.annual_ranking.manager');
         
         return $this->render('AppBundle:Default:annualRanking.html.twig', array(
-        		'annualRanking' => $annualRankingManager->findCurrentRanking()
+        		'annualRanking' => $annualRankingManager->findAdvancedForTournament()
         ));
     }
 }

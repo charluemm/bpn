@@ -1,19 +1,25 @@
 {% extends "AppBundle::template_live.html.twig" %} 
 
 {% block content %}
-<div class="container-fluid">   
-	<div class="row">
-	   {% set index = 0 %}
-	   {% for col in annualRanking|batch(annualRanking|length / 3) %}
-		<div class="col-sm-4">
+<div class="container-fluid">       
+    <div class="row">
+       {% set index = 0 %}
+       {% for col in ranking_data|batch(ranking_data|length / 3) %}
+        <div class="col-sm-4">
           <table class="table">
-            {% for ranking in col %}   
-                {% set index = index + 1 %}   
+            {% for row in col %}   
+                {% set diff_points = (row.current - row.previous) %}{% set diff_rank = (row.prev_rank - row.curr_rank) %}
                 <tr>
-                    <td class="badge{% if index == 1 %} badge-success{% else %} badge-info{% endif %}">{{ index }}</td>
-                    <td>{{ ranking.player.nickname }}</td>
-                   <td class="text-right">{{ ranking.sumPoints }} Pkt.</td>
-                   <td><a href="{{ path("tournament_show", { 'id': ranking.tournament.id }) }}" title="{{ ranking.tournament.description }}" class="badge {{ ranking.points > 0 ? "badge-success" : "badge-info" }}">{{ ranking.points > 0 ? "+ " : "" }}{{ ranking.points }} Pkt.</a></td>
+                    <td class="badge{% if row.curr_rank == 1 %} badge-success{% else %} badge-info{% endif %}">{{ row.curr_rank }}</td>
+                    <td>{% if diff_rank < 0 %}
+                        <span class="text-danger" }}">&#x1F53B; {{ diff_rank|slice(1) }}</span>
+                        {% elseif diff_rank > 0 %}
+                        <span class="text-success" }}">&#x1F53A; {{ diff_rank }}</span>
+                    {% endif %}
+                    </td>
+                    <td>{{ row.player }}</td>
+                   <td class="text-right">{{ row.current }} Pkt.</td>
+                   <td><a class="badge {{ diff_points > 0 ? "badge-success" : "badge-info" }}">{{ diff_points > 0 ? "+ " : "" }}{{ diff_points }} Pkt.</a></td>
                 </tr>             
           {% endfor %}
           </table>
