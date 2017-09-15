@@ -3,6 +3,11 @@ administration:
     type:     annotation 
     prefix:   /administration
 
+live:
+    resource: "@AppBundle/Controller/Live/"
+    type:     annotation 
+    prefix:   /live
+
 bpn_default:
     resource: "@AppBundle/Controller/DefaultController.php"
     type:     annotation 
@@ -25,10 +30,6 @@ bpn_tournament:
 
 bpn_table:
     resource: "@AppBundle/Controller/TableController.php"
-    type:     annotation 
-
-bpn_live:
-    resource: "@AppBundle/Controller/LiveController.php"
     type:     annotation 
 
 bpn_ajax:

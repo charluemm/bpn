@@ -12,10 +12,9 @@
     
     {% if tournament is defined %}
 	<div class="row"  id="live-tournament-overview">
-		<div class="col-sm-5">
-		</div>
+		
 		{% for table in tournament.tables %}		
-		<div class="col-sm-7">
+		<div class="col-sm-5">
 			{% include "AppBundle:Table:table_10_player.html.twig" with {'seats': table.seats } %}
 		</div>
 		{% endfor %}

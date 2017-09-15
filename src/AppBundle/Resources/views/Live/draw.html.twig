@@ -19,7 +19,7 @@
 			<div class="col-sm-4">
 			     <div class="panel panel-default" id="table-{{ table.id }}" style="margin-left: -27px">
                        <div class="panel-heading">
-                           <h3 class="panel-title">Tisch {{ table.number }}</h3>
+                           <h3 class="panel-title">Tisch {{ table.number }} <small class="pull-right">{{ table.maxSeats }} Spieler</small></h3>
                        </div>
                        <div class="panel-body">
                           <ul class="list-group borderless tournament-table" data-max-player="{{ table.maxSeats }}" data-table-id="{{ table.id }}">                         
