@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Seat;
+use AppBundle\Entity\Tournament;
+use AppBundle\Entity\TournamentRanking;
 
 /**
  *
@@ -35,6 +37,7 @@ class AjaxController extends Controller {
 		
 		$em = $this->getDoctrine ()->getManager ();
 		$tournamentRepo = $em->getRepository ( 'AppBundle:Tournament' );
+		/** @var $tournament Tournament **/
 		$tournament = $tournamentRepo->find ( $id );
 	
 		if(empty($tournament))
@@ -42,12 +45,13 @@ class AjaxController extends Controller {
 		
 		$content = array();
 		
+		/** @var $rank TournamentRanking **/
 		foreach($tournament->getRanking() as $rank)
 		{
 			$content[] = array('player' => $rank->getPlayer()->getNickname(), 'rank' => $rank->getRank() ? : "");
 		}
 		
-		return new JsonResponse($content, 200);
+		return new JsonResponse(array_reverse($content), 200);
 	}
 	
 	/**

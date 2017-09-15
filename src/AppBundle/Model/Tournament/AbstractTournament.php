@@ -7,6 +7,7 @@ use AppBundle\Model\Tournament\TournamentInterface;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\TournamentRanking;
 use AppBundle\Entity\TournamentTable;
+use AppBundle\Entity\Event;
 
 /**
  * AbstractTournament

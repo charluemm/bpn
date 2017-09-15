@@ -141,12 +141,9 @@ function refreshRanking()
         success:function(data){
             $('#player-ranking').empty();
 
-            var i = 1;
-            var res = data;
+            var i = 0;
             var item;
             var append = "";
-            
-            // TODO: AUsgabe in zwei Spalten
             var length = res.length;
             
             for(j = 1; j <= 2; j++)
@@ -154,17 +151,17 @@ function refreshRanking()
             	add = "";
                 while(i < (length / 2))
                 {
-                    console.log("ITEM " + (i));
-                    item = res.pop();
-                	//add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + res[i * j].rank + "</span> " + res[i * j].player + "</li>";
-                	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player + "</li>";
+                    item = data.pop();
+                    if(item != "undefined")
+                    {
+                    	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player + "</li>";
+                    }
                     i++;
                 }
                 append += "<ul class=\"list-group borderless col-sm-6\">" + add + "</ul>";
                 i = 0;
-                
-            }           
-                $('#player-ranking').append(append);
+            }
+            $('#player-ranking').append(append);
         }
     });
 }
