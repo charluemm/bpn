@@ -99,7 +99,11 @@ assetic:
         font-awesome-woff2:
             inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.woff2'
             output: 'fonts/fontawesome-webfont.woff2'       
-                     
+        ## font digital clock
+        font-digital-ttf:
+            inputs: '@AppBundle/Resources/public/fonts/digital-7.ttf'
+            output: 'fonts/digital-7.ttf'
+        
 
 # Doctrine Configuration
 doctrine:

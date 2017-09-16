@@ -6,6 +6,34 @@ body {
   background-size: cover;
 }
 
+.navbar-brand {
+	margin-left: 25px;
+}
+
+/** NAVBAR **/
+.navbar-clock {
+	height: 40px;
+	padding: 10px 0px;
+	min-width: 150px;
+	font-size: 16px;
+	line-height: 1;
+	vertical-align: middle;
+	margin-left: 50px;
+}
+
+.navbar-right {
+	margin-right: 5px;
+}
+
+.navbar-clock .fa {
+	vertical-align: bottom;
+	font-size: 1.2em;
+}
+
+.navbar-clock span {
+	font-size: 2.4em;
+}
+
 #page-content-wrapper {}
 
 #tournament-table-overview {

@@ -420,3 +420,7 @@
 .tournament-open {
 	color: #999;
 }
+
+.text-digital {
+	font-family: "digital-clock-font";
+}

@@ -1,4 +1,4 @@
-{% extends "AppBundle::template_live.html.twig" %} 
+{% extends "AppBundle::template_live_new.html.twig" %} 
 
 {% block stylesheets %}
 {{ parent() }}
@@ -144,7 +144,7 @@ function refreshRanking()
             var i = 0;
             var item;
             var append = "";
-            var length = res.length;
+            var length = data.length;
             
             for(j = 1; j <= 2; j++)
             {
@@ -152,7 +152,7 @@ function refreshRanking()
                 while(i < (length / 2))
                 {
                     item = data.pop();
-                    if(item != "undefined")
+                    if(typeof item != "undefined")
                     {
                     	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player + "</li>";
                     }
@@ -177,8 +177,8 @@ function updateClock ()
     currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
    
     // Compose the string for display
-    var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " Uhr";    
-    $("#time").html(currentTimeString);    
+    var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds;    
+    $(".current-time").html(currentTimeString);    
 }
 
 
@@ -189,7 +189,7 @@ $(document).ready(function()
 	refreshRanking();
     var clock_refresh = setInterval('updateClock()', 1000);
     var auto_refresh = setInterval('refreshTournamentInfo()', 10000);
-    var ranking_refesh = setInterval('refreshRanking()', 10000);
+    var ranking_refesh = setInterval('refreshRanking()', 15000);
 });
 </script>
 {% endblock %}

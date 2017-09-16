@@ -1,0 +1,67 @@
+{% extends '::base.html.twig' %} 
+
+{% block stylesheets %} 
+{% stylesheets 
+    'bundles/app/css/panel-dark.css' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 
+    'bundles/app/css/design.css'
+    'bundles/app/css/themes.css'
+    'bundles/app/css/live.css'
+    'bundles/app/css/simple-sidebar.css' 
+    filter="cssrewrite" %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %} 
+
+{% block body %} 
+{# NAVBAR #}
+{% include 'AppBundle:Navigation:navbar_live_new.html.twig' %}
+
+{#
+<video playsinline autoplay loop id="bgvid">
+    <source src="{{ asset ('bundles/app/images/background_video.mp4') }}" type="video/mp4">
+</video>
+#}
+<div id="wrapper" class="">
+	{# SIDEBAR #}
+    {% include 'AppBundle:Navigation:live_sidebar_left.html.twig' %}
+    
+     <!-- Toggle Buttons -->
+    <a href="#left-menu-toggle" class="btn btn-link btn-md" id="left-menu-toggle"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    
+    {# page content #}
+	<div id="page-content-wrapper">
+		{% block content %} 
+    	<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-lg-12">
+				</div>
+			</div>
+		</div>
+		{% endblock%}
+	</div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+		$(".col-sm-1").each(function(){
+		    $(this).height($(this).width() * 1.9);
+		});
+
+		// Menu Toggle Script
+	    $("#left-menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("left-toggled");
+	    });
+	    $("#right-menu-toggle").click(function(e) {
+	        e.preventDefault();
+	        $("#wrapper").toggleClass("right-toggled");
+	    });
+});
+</script>
+{% endblock %}

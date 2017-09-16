@@ -1,4 +1,10 @@
 @CHARSET "ISO-8859-1";
+
+@font-face{
+ font-family:'digital-clock-font';
+ src: url('../fonts/digital-7.ttf');
+}
+
 body,
 html {
 	height: 100%;
