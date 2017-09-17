@@ -13,6 +13,11 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - AppBundle\Entity\Tournament
+    bpn.tournament_ranking.repository:
+        class: AppBundle\Repository\TournamentRankingRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\TournamentRanking
 
     bpn.annual_ranking.repository:
         class: AppBundle\Repository\AnnualRankingRepository
@@ -27,6 +32,10 @@ services:
     bpn.tournament.manager:
         class: AppBundle\Entity\TournamentManager
         arguments: [ '@doctrine', '@bpn.tournament.repository' ]
+        
+    bpn.tournament_ranking.manager:
+        class: AppBundle\Entity\TournamentRanking\TournamentRankingManager
+        arguments: [ '@doctrine', '@bpn.tournament_ranking.repository' ]
         
     bpn.annual_ranking.manager:
         class: AppBundle\Entity\AnnualRanking\AnnualRankingManager

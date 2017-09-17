@@ -10,6 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
+use AppBundle\Form\TournamentRankType;
+use AppBundle\Form\RankingFieldType;
+use Doctrine\ORM\Query\Expr;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use AppBundle\Entity\TournamentRanking;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use AppBundle\Entity\TournamentRanking\TournamentRankingManager;
 
 /**
  */
@@ -30,41 +38,6 @@ class AdministrationController extends Controller
 			'listPlayer' => $entities
 		);
 	}
-
-	/**
-	 * @Route("/live/{tournamentId}/update-ranking", name="administration_live_ranking_update")
-	 * @Template("AppBundle:Administration:live.html.twig")
-	 * @Method("PUT")
-	 */
-	public function updateRankingAction(Request $request, $tournamentId)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$entity = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
-		
-		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find Tournament entity.');
-		}
-		
-		$editForm = $this->createForm(AddRankingType::class, $entity, array(
-						'method' => 'PUT',
-				))
-				->add('submit', SubmitType::class, array('label' => 'Update'));
-			
-		$editForm->handleRequest($request);
-		if ($editForm->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->flush();
-		
-			return $this->redirect($this->generateUrl('administration_live', array('tournamentId' => $tournamentId)));
-		}
-		
-		return array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
-		
-	}
 	
 	/**
 	 *  Auswahl live event
@@ -75,24 +48,80 @@ class AdministrationController extends Controller
 	public function liveAction(Request $request, $tournamentId = null) 
 	{
 		$em = $this->getDoctrine()->getManager();
-
+		/** @var $tournamentRankingManager TournamentRankingManager **/
+		$tournamentRankingManager = $this->get('bpn.tournament_ranking.manager');
+		
 		if(!empty($tournamentId))
 		{
-			$tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
-			$formLiveConfig = $this->createFormBuilder()
+		    $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+		    $formLiveConfig = $this->createFormBuilder()
 				->add('submit', SubmitType::class, array('label' => 'Speichern'))
 				->getForm();
 			
-			$formLiveRanking = $this->createForm(AddRankingType::class, $tournament, array(
-						'label' => false,
-						'action' => $this->generateUrl('administration_live_ranking_update', array('tournamentId' => $tournamentId)),
-						'method' => 'PUT',
-				))
-				->add('submit', SubmitType::class, array('label' => 'Update'));
+				
+				
+			$playersAlive = $tournament->getPlayers();
+			$formEditRank = $this->createFormBuilder()
+    			->add('player', EntityType::class, array(
+    			        'label' => 'Spieler',
+    			        'class' => 'AppBundle:Player',
+    			        'choices' => $playersAlive,
+    			        'placeholder' => 'Spieler wählen',
+    			        'required' => true
+    			))
+    			->add('kickedByPlayer', EntityType::class, array(
+    			        'label' => 'ausgeschieden gegen',
+    			        'class' => 'AppBundle:Player',
+    			        'choices' => $playersAlive,
+    			        'placeholder' => 'Spieler wählen',
+    			        'required' => true
+    			))
+    			->add('kickedAt', DateTimeType::class, array(
+    			        'label' => 'Zeitpunk',
+    			        'widget' => 'single_text',
+    			        'format' => 'dd.MM.yyyy HH:mm',
+    			        'data' => new \DateTime(),
+    			        'required' => true
+    			))
+			 ->add('submit', SubmitType::class, array('label' => 'Update'))
+		     ->getForm();
 			
+    	     $formEditRank->handleRequest($request);
+    	     if($formEditRank->isSubmitted() && $formEditRank->isValid())
+    	     {
+    	         $player = $formEditRank->get('player')->getData();
+    	         $kickedBy = $formEditRank->get('kickedByPlayer')->getData();
+    	         $kickedAt = $formEditRank->get('kickedAt')->getData();
+    	         
+    	         /** @var $ranking TournamentRanking **/
+    	         $ranking = $tournamentRankingManager->findOneByUnique($tournament, $player);
+    	         
+    	         if(empty($ranking))
+    	         {
+    	             $this->addFlash('error', "Spieler $player ist kein Turnierteilnehmer!");
+    	         }
+    	         else
+    	         {
+    	             $ranking
+    	               ->setKickedByPlayer($kickedBy)
+    	               ->setKickedAt($kickedAt);
+    	             
+	                 if($tournamentRankingManager->update($ranking))
+	                 {
+	                     $this->addFlash('success', 'Platzierung erfolgreich angepasst!');
+	                 }
+	                 else 
+	                 {
+	                     $this->addFlash('error', 'Platzierung konnte nicht angepasst werden!');
+	                 }
+    	         }
+    	         
+    	         return $this->redirectToRoute('administration_live', array('tournamentId' => $tournamentId));
+    	     }
+				
 			return array (
 				'tournament' => $tournament,
-				'frm_live_ranking' => $formLiveRanking->createView(),
+		        'frm_edit_rank' => $formEditRank->createView(),
 				'frm_live_config' => $formLiveConfig->createView()
 			);
 		}
@@ -102,6 +131,12 @@ class AdministrationController extends Controller
 			->add('tournament', EntityType::class, array(
 					'label' => 'Turnier wählen',
 					'class' => 'AppBundle:Tournament',
+			        'placeholder' => 'Bitte Turnier wählen',
+			        'query_builder' => function (EntityRepository $er) {
+			        return $er->createQueryBuilder('t')
+			         ->orderBy('t.date', 'DESC');
+			        },
+			        'group_by' => 'event'
 			))
 			->add('submit', SubmitType::class, array('label' => 'Laden'))
 			->getForm();

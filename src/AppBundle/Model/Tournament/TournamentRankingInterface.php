@@ -2,6 +2,17 @@
 namespace AppBundle\Model\Tournament;
 
 
-interface TournamentRankingInterface{
+use AppBundle\Model\Player\PlayerInterface;
 
+interface TournamentRankingInterface
+{
+    /**
+     * @return TournamentInterface
+     */
+    public function getTournament();
+    
+    /**
+     * @return PlayerInterface
+     */
+    public function getPlayer();
 }

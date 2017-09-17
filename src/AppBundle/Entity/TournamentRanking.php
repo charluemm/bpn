@@ -3,14 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Model\Tournament\TournamentRankingInterface;
 
 /**
  * TournamentRank
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\TournamentRankingRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TournamentRankingRepository")
  */
-class TournamentRanking
+class TournamentRanking implements TournamentRankingInterface
 {
     /** 
      * @ORM\Id()

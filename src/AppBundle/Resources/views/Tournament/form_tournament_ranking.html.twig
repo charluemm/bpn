@@ -1,0 +1,39 @@
+{% use 'bootstrap_3_layout.html.twig' %}
+
+{% block ranking_field_row %}
+<div class="form-group col-sm-12{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _add_ranking_ranking_entry_row %}
+<div class="form-group col-sm-12{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        <h4>{{ form.vars.value.player }}</h4>
+        
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _add_ranking_ranking_entry_kickedByPlayer_row %}
+<div class="form-group col-sm-6{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _add_ranking_ranking_entry_kickedAt_row %}
+<div class="form-group col-sm-6{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+
+

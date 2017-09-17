@@ -2,21 +2,18 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Tournament;
+use AppBundle\Entity\TournamentManager;
+use AppBundle\Entity\TournamentRanking;
+use AppBundle\Form\AddRankingType;
+use AppBundle\Form\TournamentType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Tournament;
-use AppBundle\Form\TournamentType;
-use AppBundle\Entity\TournamentRanking;
-use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Form\AddRankingType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Util\Debug;
-use AppBundle\Entity\TournamentManager;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -26,7 +23,7 @@ use AppBundle\Entity\TournamentManager;
  */
 class TournamentController extends Controller
 {
-
+    
     /**
      * Creates a new Tournament entity.
      *
@@ -167,7 +164,6 @@ class TournamentController extends Controller
         );
     }
 
-
     /**
     * Creates a form to edit a Tournament entity.
     *
@@ -187,145 +183,6 @@ class TournamentController extends Controller
         return $form;
     }
 
-    /**
-     * Displays a form to add Ranking to an existing Tournament entity.
-     *
-     * @Route("/{id}/ranking", name="tournament_add_ranking")
-     * @Method("GET")
-     * @Template("AppBundle:Tournament:edit.html.twig")
-     */
-    public function addRankingAction($id)
-    {
-        /** @var TournamentManager $tournamentManager **/
-        $tournamentManager = $this->get('bpn.tournament.manager');
-        
-        $entity = $tournamentManager->find($id);
-       
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tournament entity.');
-        }
-
-        $form_edit = $this->createAddRankingForm($entity);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $form_edit->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to add ranking to a Tournament entity.
-    *
-    * @param Tournament $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createAddRankingForm(Tournament $entity)
-    {
-        $form = $this->createForm(AddRankingType::class, $entity, array(
-            'action' => $this->generateUrl('tournament_update_ranking', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', SubmitType::class, array('label' => 'Update'));
-
-        return $form;
-    }
-    
-    /**
-     * Edits an existing Tournament entity.
-     *
-     * @Route("/{id}", name="tournament_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Tournament:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        /** @var TournamentManager $tournamentManager **/
-        $tournamentManager = $this->get('bpn.tournament.manager');
-        
-        $entity = $tournamentManager->find($id);
-        
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tournament entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-        
-        if ($editForm->isValid()) 
-        {
-        	$em = $this->getDoctrine()->getManager();
-        	$rankingRepo = $em->getRepository('AppBundle:TournamentRanking');
-        	$players = $editForm->get('players')->getData();
-        	
-        	$allRankings = new ArrayCollection($rankingRepo->findBy(array('tournament' => $entity)));
-        	$tournamentRanking = new ArrayCollection();
-
-        	foreach($players as $player)
-        	{
-        		$ranking = $rankingRepo->findOneBy(array('tournament' => $entity, 'player' => $player));
-        		if(empty($ranking))
-        		{
-        			$ranking = new TournamentRanking($entity, $player);
-        			$em->persist($ranking);
-        		}
-        		$allRankings->removeElement($ranking);
-        		$tournamentRanking->add($ranking);
-        	}
-        	
-        	foreach ($allRankings as $ranking)
-        		$em->remove($ranking);
-        	
-        	$entity->setRanking($tournamentRanking);
-        	
-        	$tournamentManager->update($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('tournament_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Tournament Ranking .
-     *
-     * @Route("/{id}/ranking", name="tournament_update_ranking")
-     * @Method("PUT")
-     * @Template("AppBundle:Tournament:edit.html.twig")
-     */
-    public function updateRankingAction(Request $request, $id)
-    {
-        /** @var TournamentManager $tournamentManager **/
-        $tournamentManager = $this->get('bpn.tournament.manager');
-        
-        $entity = $tournamentManager->find($id);
-        
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tournament entity.');
-        }
-
-        $editForm = $this->createAddRankingForm($entity);
-        $editForm->handleRequest($request);
-        
-        if ($editForm->isValid()) 
-        {
-        	$tournamentManager->update($entity);
-
-            return $this->redirect($this->generateUrl('tournament_add_ranking', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
-    }
     /**
      * Deletes a Tournament entity.
      *
@@ -368,5 +225,44 @@ class TournamentController extends Controller
             ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * @Route("/{tournamentId}/ranking", name="tournament_ranking_update")
+     * @Template("AppBundle:Tournament:update_ranking.html.twig")
+     */
+    public function updateTournamentRankingAction(Request $request, $tournamentId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+        /** @var $tournamentRankingManager TournamentRankingManager **/
+        $tournamentRankingManager = $this->get('bpn.tournament_ranking.manager');
+        
+        if (!$entity)
+        {
+            throw $this->createNotFoundException('Unable to find Tournament entity.');
+        }
+     
+        $editForm = $this->createForm(AddRankingType::class, $entity, array(
+                'label' => false,
+        ))
+            ->add('submit', SubmitType::class, array('label' => 'Update'));
+        
+        $editForm->handleRequest($request);
+        if ($editForm->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            
+            $tournamentRankingManager->refreshRanking($entity);
+            
+            return $this->redirect($this->generateUrl('administration_live', array('tournamentId' => $tournamentId)));
+        }
+        
+        return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+        );
+        
     }
 }

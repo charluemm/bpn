@@ -17,8 +17,6 @@ abstract class AbstractManager
         $this->_repo = $repo;
     }
     
-    abstract public function create();
-    
     abstract public function find($id);
     
     abstract public function findAll();
