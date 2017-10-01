@@ -74,12 +74,13 @@ class AdministrationController extends Controller
     			        'class' => 'AppBundle:Player',
     			        'choices' => $playersAlive,
     			        'placeholder' => 'Spieler wählen',
-    			        'required' => true
+    			        'required' => false,
+    			        'empty_data' => null
     			))
     			->add('kickedAt', DateTimeType::class, array(
     			        'label' => 'Zeitpunk',
     			        'widget' => 'single_text',
-    			        'format' => 'dd.MM.yyyy HH:mm',
+    			        'format' => 'dd.MM.yyyy HH:mm:ss',
     			        'data' => new \DateTime(),
     			        'required' => true
     			))

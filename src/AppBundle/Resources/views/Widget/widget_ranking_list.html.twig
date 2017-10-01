@@ -1,5 +1,5 @@
 {% for rank in ranking %}
-	<a class="list-group-item">{% if rank.sumPoints is defined %}{% set position = loop.index %}{% else %}{% set position = (rank.rank == null ? 0 : rank.rank) %}{% endif %}
+	<a class="list-group-item">{% set position = (rank.rank == null ? 0 : rank.rank) %}
 		<span class="pull-left badge{% if position == 1 %} badge-success{% else %} badge-info{% endif %}">{{ position }}</span>
 		<p class="list-group-item-text"> <i class="fa fa-fw"></i> 
 			{% if rank.sumPoints is defined %}{{ rank.sumPoints }} Pkt. <small>{{ rank.player }}</small>

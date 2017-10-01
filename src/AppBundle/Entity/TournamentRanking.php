@@ -77,7 +77,7 @@ class TournamentRanking implements TournamentRankingInterface
         return $this->kickedByPlayer;
     }
 
-    public function setKickedByPlayer(Player $player)
+    public function setKickedByPlayer(Player $player = null)
     {
         $this->kickedByPlayer = $player;
         return $this;

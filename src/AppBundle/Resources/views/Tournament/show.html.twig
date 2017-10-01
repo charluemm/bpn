@@ -20,7 +20,7 @@
 			</div>
 			<div class="btn-group pull-right">
 			  <a class="btn btn-default" href="{{ path('tournament_edit', { 'id': entity.id }) }}"><i class="fa fa-fw fa-pencil"></i> Turnier bearbeiten</a>
-			  <a class="btn btn-default" href="{{ path('tournament_add_ranking', { 'id': entity.id }) }}"><i class="fa fa-fw fa-list"></i> Plazierung bearbeiten</a>
+			  <a class="btn btn-default" href="{{ path('tournament_ranking_update', { 'tournamentId': entity.id }) }}"><i class="fa fa-fw fa-list"></i> Plazierung bearbeiten</a>
 			</div>
 		</div>
 	</div>

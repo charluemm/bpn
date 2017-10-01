@@ -68,12 +68,17 @@ class TournamentRankingManager extends AbstractManager
         
         $list = $query->getResult();
         $cnt = \count($list);
-        
+        $i = 0;
         foreach($list as $index => $rank)
         {
             if($rank->getKickedAt() !== null)
             {
-                $rank->setRank($index + 1);
+                $rank->setRank($cnt - $i);
+                $i++;
+            }
+            else
+            {
+                $rank->setRank(null);
             }
         }
         
