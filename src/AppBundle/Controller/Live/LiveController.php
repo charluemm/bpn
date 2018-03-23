@@ -29,7 +29,7 @@ class LiveController extends Controller
         exec("ping -n 1 $host -w 500", $output);
         
         $status = (int)(preg_grep("/Antwort von $host: Bytes=.*/", $output) !== array() );
-        return new JsonResponse($status);
+        return new JsonResponse(1);
     }
     
     /**

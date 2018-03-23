@@ -1,29 +1,94 @@
+
 $( document ).ready(function() 
 {
-	var source;
-	var target;
 	
 	var listTable = $(".tournament-table").toArray();
+	var source;
+	var target;
+	var timeout;
 	
 	var playerGrp1 = $("#player-pool-1 li.list-group-item").toArray();
 	var playerGrp2 = $("#player-pool-2 li.list-group-item").toArray();
 	var playerGrp3 = $("#player-pool-3 li.list-group-item").toArray();
 	
-	var timeout;
 	var i = 1;
 	
-	$("#btn-run").click(function()
+	// click button run
+	$("#btn-run").click(function(){
+		startDraw();
+	});
+	// click button stop
+	$("#btn-stop").click(function(){
+		stopDraw();
+	});
+	// click button refresh
+	$("#btn-refresh").click(function()
+	{
+		randomizeTablePlayer();
+		$(this).toggleClass('disabled');
+	});
+	// click button save
+	$('#btn-save').click(function(){
+		saveTableSeats();
+	});
+	
+	// ping dash button
+	(function button_start_draw() {
+        $.ajax({
+            url: dashButtonStatusUrl,
+            success: function(data){
+                console.log(data);
+                if(data){
+                    $(".navbar-signal").hide();
+                   console.log("ping successfull");
+                   // start light
+                   $.ajax({
+                       url: dmxDrawStartUrl,
+                       success: function(){
+                           // start audio
+                           $('#audio_draw_start').trigger("play").delay(2500);
+                           $('#audio_draw_running').trigger("play");
+                           startDraw();
+                       }
+                   });
+                }
+                else{
+                    //console.log('retry ping');
+                    setTimeout(button_start_draw, 500);
+                }
+                
+            },
+            error: function(err){
+                console.error(err);
+            }
+        });
+    })();
+	
+	// start draw
+	function startDraw()
 	{
 		source = playerGrp1;
 		target = 0;
-		timeout = setTimeout(function(){ selectRandomPlayer();}, 500);
-	});
+		timeout = setTimeout(function(){ selectRandomPlayer();}, 500);		
+	}
 	
-	$("#btn-stop").click(function(){
-		clearTimeout(timeout);
-	});
-
-	$("#btn-refresh").click(function()
+	
+	function stopDraw()
+	{
+		timeout = clearTimeout(timeout);
+		// start light
+        $.ajax({
+            url: dmxDrawStopUrl,
+            success: function(){
+                // start audio
+                $('#audio_draw_running').trigger("pause");
+                startDraw();
+            }
+        });
+        
+	}
+	
+	function randomizeTablePlayer()
 	{
 		$(listTable).each(function(){
 			$(this).randomize();
@@ -32,17 +97,15 @@ $( document ).ready(function()
 				$(obj).html(" <span class=\"badge pull-left\">"+(i+1)+"</span>  "+$(obj).html());
 			});
 			$(this).sumPoints();
-		});
-		$(this).toggleClass('disabled');
-	});
-		
-	$('#btn-save').click(function()
+		});		
+	}
+	
+	function saveTableSeats()
 	{
 		$(listTable).each(function(){
 			$(this).saveSeats();
-		});
-		
-	});
+		});		
+	}
 	
 	function selectRandomPlayer()
 	{
@@ -136,6 +199,7 @@ $( document ).ready(function()
 			// timeout stoppen
 			timeout = clearTimeout(timeout);
 			i = 1;
+			stopDraw();
 		}
 	}
 });

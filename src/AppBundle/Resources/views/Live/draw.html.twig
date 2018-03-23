@@ -56,41 +56,17 @@
 
 {% block javascripts %}
 {{ parent() }}
+
 <script>
 var ajaxTableSeatUrl = "{{ path('ajax_table_add_seats') }}";
-
-(function button_start_draw() {
-    $.ajax({
-        url: "{{ path('button_status') }} ",
-        success: function(data){
-            console.log(data);
-            if(data){
-                $(".navbar-signal").hide();
-               console.log("ping successfull");
-               // start light
-               $.ajax({
-                   url: "{{ path('dmx_draw_start') }}",
-                   success: function(){
-                       // start audio
-                       $('#audio_draw_start').trigger("play").delay(2500);
-                       $('#audio_draw_running').trigger("play");
-                   }
-               });
-            }
-            else{
-                //console.log('retry ping');
-                setTimeout(button_start_draw, 500);
-            }
-            
-        },
-        error: function(err){
-            console.error(err);
-        }
-    });
-})();
-
+var dashButtonStatusUrl = "{{ path('button_status') }}";
+var dmxDrawStartUrl = "{{ path('dmx_draw_start') }}";
+var dmxDrawStopUrl = "{{ path('dmx_draw_stop') }}";
 </script>
+
 {% javascripts '@AppBundle/Resources/public/js/draw.js' %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+
 {% endblock javascripts %}
