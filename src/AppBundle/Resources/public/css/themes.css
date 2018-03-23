@@ -1,4 +1,7 @@
 @CHARSET "ISO-8859-1";
+.navbar-header{
+	margin-right: 30px;
+}
 .themed-color-default {
 	color: #1bbae1 !important;
 }

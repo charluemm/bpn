@@ -39,6 +39,9 @@ class AjaxController extends Controller
 			die ( "Skriptaufruf fehlgeschlagen." );
 		
 		$em = $this->getDoctrine ()->getManager ();
+		
+		$rankingRepo = $em->getRepository(TournamentRanking::class);
+		
 		$tournamentRepo = $em->getRepository ( 'AppBundle:Tournament' );
 		/** @var $tournament Tournament **/
 		$tournament = $tournamentRepo->find ( $id );
@@ -49,9 +52,16 @@ class AjaxController extends Controller
 		$content = array();
 		
 		/** @var $rank TournamentRanking **/
-		foreach($tournament->getRanking() as $rank)
+		foreach($rankingRepo->findByTournament($tournament) as $rank)
 		{
-			$content[] = array('player' => $rank->getPlayer()->getNickname(), 'rank' => $rank->getRank() ? : "");
+		    $player = $rank->getPlayer();
+			$element = array('player' => $player->getNickname(), 'rank' => $rank->getRank() ? : "");
+			if($rank->getKickedByPlayer())
+			{
+			    $element['kickedBy'] = $rank->getKickedByPlayer()->getNickname();
+			}
+			
+			$content[] = $element;
 		}
 		
 		return new JsonResponse(array_reverse($content), 200);

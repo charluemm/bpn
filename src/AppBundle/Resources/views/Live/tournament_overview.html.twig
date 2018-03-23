@@ -39,7 +39,7 @@
             
         </div>
         
-        <div class="col-sm-3">    
+        <div class="col-sm-2">    
            <div class="panel panel-default">
                <div class="panel-heading">
                    <h3 class="panel-title">Blind Level</h3>
@@ -50,7 +50,7 @@
             </div>
         </div>
         
-        <div class="col-sm-3">
+        <div class="col-sm-4">
            <div class="panel panel-default">
                <div class="panel-heading">
                    <h3 class="panel-title">Player Ranking <span class="badge pull-right" id="player_count"></span></h3>
@@ -59,7 +59,9 @@
                    {% for list in tournament.ranking | batch(tournament.ranking | length / 2) %}
                    <ul class="list-group borderless col-sm-6">
                        {% for rank in list %}
-                       <li class="list-group-item"><span class="label label-danger label-as-badge">{{ rank.rank }}</span> {{ rank.player.nickname }}</li>
+                       <li class="list-group-item">
+                            <span class="label label-danger label-as-badge">{{ rank.rank }}</span> {{ rank.player.nickname }}{% if rank.kickedByPlayer %} <small>vs. {{ rank.kickedByPlayer.nickname }}</small>{% endif %}
+                       </li>
                        {% endfor %}
                    </ul>
                    {% endfor %}
@@ -169,7 +171,12 @@ function refreshRanking()
                     item = data.pop();
                     if(typeof item != "undefined")
                     {
-                    	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player + "</li>";
+                    	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player;
+
+                    	if(item.kickedBy)
+                    	{
+                    	 add += " <small><small>vs. " + item.kickedBy + "</small></small></li>";
+                    	}
                     }
                     i++;
                 }

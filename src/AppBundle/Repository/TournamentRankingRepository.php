@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Tournament;
 /**
  * TournamentRankRepository
  *
@@ -11,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class TournamentRankingRepository extends EntityRepository
 {
+    public function findByTournament(Tournament $tournament)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->join('r.player', 'p')
+            ->where('r.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
+            ->orderBy('r.rank', 'ASC')
+            ->addOrderBy('p.nickname', 'ASC')
+            ->getQuery();
+        
+        return $query->getResult();
+    }
 }
