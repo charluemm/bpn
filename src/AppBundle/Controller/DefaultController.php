@@ -12,13 +12,11 @@ class DefaultController extends Controller
 	/**
 	 * @Route("/", name="index")
 	 */
-    public function indexAction($name = "Test")
+    public function indexAction()
     {
     	//$em = $this->getDoctrine()->getManager();
     	
-        return $this->render('AppBundle:Default:index.html.twig', array(
-        		'name' => "Test",
-        ));
+        return $this->render('AppBundle:Default:index.html.twig', array());
     }
 	/**
 	 * @Route("/annual-ranking", name="annualranking")

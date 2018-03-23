@@ -20,17 +20,30 @@ use Doctrine\Common\Util\Debug;
  */
 class DmxController extends Controller
 {   
+    private function putSocket($message)
+    {
+        try
+        {
+            $sock = fsockopen("127.0.0.1", 10160);
+        }
+        catch(\Exception $ex)
+        {
+            return false;
+        }
+        
+        fputs($sock, $message.PHP_EOL);
+        fclose($sock);
+        
+        return true;
+    }
+    
     /**
      * @Route("/draw/light/enable", name="dmx_draw_start")
      */
     public function startDrawLigth()
     {
-        $output = array();
-        $return = "";
+        $return = $this->putSocket("start_scene {93B4A812-4039-4794-933B-DA7B6D5C6EFA}");
         
-        $sock = fsockopen("127.0.0.1", 10160);
-        fputs($sock, "start_scene {93B4A812-4039-4794-933B-DA7B6D5C6EFA}".PHP_EOL);
-        fclose($sock);
         return new JsonResponse($return);
     }
     
@@ -39,12 +52,8 @@ class DmxController extends Controller
      */
     public function stopDrawLigth()
     {
-        $output = array();
-        $return = "";
+        $return = $this->putSocket("stop_scene {93B4A812-4039-4794-933B-DA7B6D5C6EFA}");
         
-        $sock = fsockopen("127.0.0.1", 10160);
-        fputs($sock, "stop_scene {93B4A812-4039-4794-933B-DA7B6D5C6EFA}".PHP_EOL);
-        fclose($sock);
         return new JsonResponse($return);
     }
     
@@ -53,12 +62,8 @@ class DmxController extends Controller
      */
     public function startNextBlind()
     {
-        $output = array();
-        $return = "";
+        $return = $this->putSocket("start_scene {C246C458-4171-4F2F-BB94-994DB2828232}");
         
-        $sock = fsockopen("127.0.0.1", 10160);
-        fputs($sock, "start_scene {C246C458-4171-4F2F-BB94-994DB2828232}".PHP_EOL);
-        fclose($sock);
         return new JsonResponse($return);
     }
 }

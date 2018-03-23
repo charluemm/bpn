@@ -18,44 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class OverviewController extends Controller
 {
     /**
-     * TODO: muss noch angepasst werden
-     *      * nur zum Test
-     *      
-     * @Route("/single-table", name="live_single_table")
-     * @Template("AppBundle:Live:single_table.html.twig")
-     */
-    public function singleTableAction()
-    {
-    	$em = $this->getDoctrine()->getManager();
-    	$allPlayer = $em->getRepository('AppBundle:Player')->findAll();
-    	 
-        return array(
-        		'all_player' => $allPlayer
-        );    
-    }
-    
-    /**
-     * @Route("/{tournamentId}/overview_new", name="live_tournament_overview_new")
-     * @Template("AppBundle:Live:tournament_overview_new.html.twig")
-     */
-    public function tournamentOverviewNewAction($tournamentId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        
-        if(!empty($tournamentId))
-        {
-            /* @var $tournament Tournament */
-            $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
-            
-            return array(
-                    'tournament' => $tournament
-            );
-        }
-        return array(
-        );
-    }
-    
-    /**
      * @Route("/{tournamentId}/overview", name="live_tournament_overview")
      * @Template("AppBundle:Live:tournament_overview.html.twig")
      */

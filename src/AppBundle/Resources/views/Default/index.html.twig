@@ -1,38 +1,25 @@
 {% extends 'AppBundle::template.html.twig' %}
 
 {% block content %}
-<div class="content-section-a">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-5 col-sm-6">
-				<hr class="section-heading-spacer">
-				<div class="clearfix"></div>
-				<h2 class="section-heading">
-					Jetzt veröffentlicht:<br>Die offizielle 5-Jahreswertung
-				</h2>
-				<p class="lead">
-					Vielen Dank an <strong>Brände</strong> und <strong>Tyce</strong>, die in mühsiger Kleinsarbeit die Statistiken der letzten Jahre
-					durchforstet haben. <br/>
-					Schau dir die <a href="{{ path('annualranking') }}">5-Jahreswertung</a> an.
-				</p>
-			</div>
-			<div class="col-lg-5 col-lg-offset-2 col-sm-6">
-				<img alt="" src="{{ asset('bundles/app/images/background.jpg') }}" class="img-responsive">
-			</div>
-		</div>
-	</div> <!-- /.container -->
-</div>
-
-<div class="content-section-b">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6 col-lg-3">
-				{% include 'AppBundle:Widget:widget_player_medium.html.twig' %}
-			</div>
-			<div class="col-sm-6 col-lg-3">
-				{% include 'AppBundle:Widget:widget_player_medium.html.twig' %}
-			</div>
-		</div>
-	</div> <!-- /.container -->
-</div>
+{# <div class="content-section-a">#}
+{# 	<div class="container">#}
+{# 		<div class="row">#}
+{# 			<div class="col-lg-5 col-sm-6">#}
+{# 				<hr class="section-heading-spacer">#}
+{# 				<div class="clearfix"></div>#}
+{# 				<h2 class="section-heading">#}
+{# 					Jetzt veröffentlicht:<br>Die offizielle 5-Jahreswertung#}
+{# 				</h2>#}
+{# 				<p class="lead">#}
+{# 					Vielen Dank an <strong>Brände</strong> und <strong>Tyce</strong>, die in mühsiger Kleinsarbeit die Statistiken der letzten Jahre#}
+{# 					durchforstet haben. <br/>#}
+{# 					Schau dir die <a href="{{ path('annualranking') }}">5-Jahreswertung</a> an.#}
+{# 				</p>#}
+{# 			</div>#}
+{# 			<div class="col-lg-5 col-lg-offset-2 col-sm-6">#}
+{# 				<img alt="" src="{{ asset('bundles/app/images/background.jpg') }}" class="img-responsive">#}
+{# 			</div>#}
+{# 		</div>#}
+{# 	</div> <!-- /.container -->#}
+{# </div>#}
 {% endblock %}

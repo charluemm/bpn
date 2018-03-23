@@ -22,6 +22,10 @@ h6 {
 	font-weight: 700;
 }
 
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    background-color: transparent;
+    color: #00bc8c;
+}
 .rank-down{
 	width: 0;
 height: 0;
@@ -48,8 +52,9 @@ body {
 }
 
 .intro-header {
-	background: rgba(0, 0, 0, 0) url("../images/intro-bg.jpg") no-repeat scroll center center / cover;
+	background: rgba(0, 0, 0, 0) url("../images/intro-bg.jpg")  no-repeat center center / cover;
 	color: #f8f8f8;
+	height: 100%;
 	padding-bottom: 50px;
 	padding-top: 50px;
 	text-align: center;

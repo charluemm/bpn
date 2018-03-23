@@ -11,40 +11,6 @@
 <div class="container-fluid">
 	<div class="row"  id="live-tournament-overview">
        <div class="col-sm-6">
-           <div class="panel panel-default">
-               <div class="panel-heading">
-                   <h3 class="panel-title">Turnier Info</h3>
-               </div>
-               <div class="panel-body">
-                    <table class="table">
-                        <tr>
-                            <td>Zeit</td>
-                            <td>verbleibende Spieler</td>
-                        </tr>
-                        <tr>
-                            <th id="time"></th>
-                            <th id="player_count"></th>
-                        </tr>
-                        <tr>
-                            <td>aktuelle Blinds</td>
-                            <td>nächster Blind</td>
-                        </tr>
-                        <tr>
-                            <th id="blind_current"></th>
-                            <th id="blind_next"></th>
-                        </tr>
-                        <tr>
-                            <td>Blinderhöhung in</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th id="blind_next_time"></th>
-                            <th></th>
-                        </tr>
-                    </table>
-               </div>
-            </div>
-            
             <div class="panel panel-default">
                <div class="panel-heading">
                    <h3 class="panel-title">Wertigkeit Chips</h3>
@@ -73,16 +39,7 @@
             
         </div>
         
-        <div class="col-sm-3">
-            <div class="panel panel-default">
-               <div class="panel-heading">
-                   <h3 class="panel-title">Übersicht Tische</h3>
-               </div>
-               <div class="panel-body">
-                    <p>Übersicht Tische</p>
-               </div>
-            </div>
-            
+        <div class="col-sm-3">    
            <div class="panel panel-default">
                <div class="panel-heading">
                    <h3 class="panel-title">Blind Level</h3>
@@ -96,7 +53,7 @@
         <div class="col-sm-3">
            <div class="panel panel-default">
                <div class="panel-heading">
-                   <h3 class="panel-title">Player Ranking</h3>
+                   <h3 class="panel-title">Player Ranking <span class="badge pull-right" id="player_count"></span></h3>
                </div>
                <div class="panel-body" id="player-ranking">
                    {% for list in tournament.ranking | batch(tournament.ranking | length / 2) %}
@@ -141,30 +98,27 @@ function refreshRanking()
         success:function(data){
             $('#player-ranking').empty();
 
-            var i = 1;
-            var res = data;
+            var i = 0;
             var item;
             var append = "";
-            
-            // TODO: AUsgabe in zwei Spalten
-            var length = res.length;
+            var length = data.length;
             
             for(j = 1; j <= 2; j++)
             {
             	add = "";
                 while(i < (length / 2))
                 {
-                    console.log("ITEM " + (i));
-                    item = res.pop();
-                	//add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + res[i * j].rank + "</span> " + res[i * j].player + "</li>";
-                	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player + "</li>";
+                    item = data.pop();
+                    if(typeof item != "undefined")
+                    {
+                    	add += "<li class=\"list-group-item\"><span class=\"label label-danger label-as-badge\">" + item.rank + "</span> " + item.player + "</li>";
+                    }
                     i++;
                 }
                 append += "<ul class=\"list-group borderless col-sm-6\">" + add + "</ul>";
                 i = 0;
-                
-            }           
-                $('#player-ranking').append(append);
+            }
+            $('#player-ranking').append(append);
         }
     });
 }
@@ -180,8 +134,8 @@ function updateClock ()
     currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
    
     // Compose the string for display
-    var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " Uhr";    
-    $("#time").html(currentTimeString);    
+    var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds;    
+    $(".current-time").html(currentTimeString);    
 }
 
 
@@ -192,7 +146,7 @@ $(document).ready(function()
 	refreshRanking();
     var clock_refresh = setInterval('updateClock()', 1000);
     var auto_refresh = setInterval('refreshTournamentInfo()', 10000);
-    var ranking_refesh = setInterval('refreshRanking()', 10000);
+    var ranking_refesh = setInterval('refreshRanking()', 15000);
 });
 </script>
 {% endblock %}

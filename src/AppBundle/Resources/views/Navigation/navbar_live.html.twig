@@ -1,12 +1,21 @@
 <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<a href="{{ path("index") }}" class="navbar-brand">{% if tournament is defined %}{{ tournament }}{% else %}Brände Pokernight{% endif %}</a>
-		</div>
-		<ul class="nav navbar-nav navbar-right">
-			
-		</ul>
+	<div class="navbar-header">
+		<a href="{{ path("index") }}" class="navbar-brand">{% if tournament is defined %}{{ tournament }}{% else %}Brände Pokernight{% endif %}</a>
 	</div>
-	<!-- /.container -->
+	
+    <div class="navbar-header navbar-clock text-success">
+        aktuell <span class="current-blind text-digital">10/20</span>
+    </div>
+    
+    <div class="navbar-header navbar-clock text-success">
+         <i class="fa fa-hourglass-2"></i> <span class="current-time text-digital"></span>
+    </div>
+    
+    <div class="navbar-header navbar-clock text-success">
+        nächster <span class="next-blind text-digital">20/40</span>
+     </div>
+    
+	<div class="navbar-right navbar-clock text-success">
+		 <i class="fa fa-clock-o"></i> <span class="current-time text-digital"></span>
+	</div>
 </nav>
