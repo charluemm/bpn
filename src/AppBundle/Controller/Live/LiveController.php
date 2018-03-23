@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Common\Util\Debug;
+use AppBundle\Entity\TournamentManager;
+use AppBundle\Entity\BlindLevel;
 
 /**
  * @author Michael Müller <development@reu-network.de>
@@ -29,7 +31,27 @@ class LiveController extends Controller
         exec("ping -n 1 $host -w 500", $output);
         
         $status = (int)(preg_grep("/Antwort von $host: Bytes=.*/", $output) !== array() );
+        return new JsonResponse($status);
+    }
+    
+    /**
+     * @Route("/{tournamentId}/raise-blind", name="live_raise_blind")
+     */
+    public function raiseBlind($tournamentId)
+    {
+        /** @var TournamentManager $tournamentManager **/
+        $tournamentManager = $this->get('bpn.tournament.manager');
+        $blindRepo = $this->getDoctrine()->getRepository(BlindLevel::class);
+        
+        $tournament = $tournamentManager->find($tournamentId);
+        $currBlind = $tournament->getBlindLevel();
+        $nextBlind = $blindRepo->findOneBy([ 'level' => ($currBlind ? $currBlind->getLevel() : 0) + 1]);
+        
+        $tournament->setBlindLevel($nextBlind);
+        $tournamentManager->update($tournament);
+        
         return new JsonResponse(1);
+        
     }
     
     /**

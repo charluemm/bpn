@@ -18,27 +18,14 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use AppBundle\Entity\TournamentRanking;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use AppBundle\Entity\TournamentRanking\TournamentRankingManager;
+use AppBundle\Entity\BlindLevel;
+use AppBundle\Entity\TournamentManager;
 
 /**
  */
 class AdministrationController extends Controller 
 {
-	/**
-	 * Action für Auslosung
-	 *
-	 * @Route("/draw", name="administration_draw")
-	 * @Template("AppBundle:Administration:draw.html.twig")
-	 */
-	public function drawAction() 
-	{
-		$em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('AppBundle:Player')->findAll();
-        
-		return array (
-			'listPlayer' => $entities
-		);
-	}
-	
+
 	/**
 	 *  Auswahl live event
 	 *
@@ -47,19 +34,44 @@ class AdministrationController extends Controller
 	 */
 	public function liveAction(Request $request, $tournamentId = null) 
 	{
-		$em = $this->getDoctrine()->getManager();
 		/** @var $tournamentRankingManager TournamentRankingManager **/
 		$tournamentRankingManager = $this->get('bpn.tournament_ranking.manager');
+		/** @var $tournamentManager TournamentManager **/
+		$tournamentManager = $this->get('bpn.tournament.manager');
 		
 		if(!empty($tournamentId))
 		{
-		    $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
-		    $formLiveConfig = $this->createFormBuilder()
+		    $tournament = $tournamentManager->find($tournamentId);
+		    // FORM live_config
+    		$currentBlind = $tournament->getBlindLevel();
+		    $formLiveConfig = $this->createFormBuilder($tournament)
+		          ->add('blindLevel', EntityType::class, array(
+		                  'class' => BlindLevel::class,
+		                  'choice_label' => 'name',
+		                  'empty_data' => null,
+		                  'required' => false,
+		                  'placeholder' => 'Blind Level auswählen',
+		                  'query_builder' => function (EntityRepository $er) use ($currentBlind) {
+    		                  return $er->createQueryBuilder('b')
+    		                      // ->where('b.level >= :currLevel')
+    		                      // ->setParameter('currLevel', empty($currentBlind) ? 0 : $currentBlind->getLevel())
+    		                      ->orderBy('b.level', 'ASC');
+		                  },
+		          ))
 				->add('submit', SubmitType::class, array('label' => 'Speichern'))
 				->getForm();
 			
+		    $formLiveConfig->handleRequest($request);
+		    if($formLiveConfig->isSubmitted() && $formLiveConfig->isValid())
+		    {
+		        $tournament->setLastBlindRaiseAt(new \DateTime());
+		        $tournamentManager->update($tournament);
+		        $this->addFlash('success', 'Blind Level aktualisiert.');
+		        return $this->redirectToRoute('administration_live', array('tournamentId' => $tournamentId));
+		    }
+		
 				
-				
+			// FORM edit_ranking
 			$playersAlive = $tournament->getPlayers();
 			$formEditRank = $this->createFormBuilder()
     			->add('player', EntityType::class, array(

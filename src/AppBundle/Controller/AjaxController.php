@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Seat;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\TournamentRanking;
+use AppBundle\Entity\BlindLevel;
+use Doctrine\Common\Util\Debug;
 
 /**
  *
@@ -18,13 +20,14 @@ use AppBundle\Entity\TournamentRanking;
  *        
  * @Route("/ajax")
  */
-class AjaxController extends Controller {
-
+class AjaxController extends Controller 
+{
+    const DEFAULT_BLIND_TIMER = 900; // 15min
+    
 	/**
 	 * Gibt für ein bestimmtes Turnier das aktuelle Ranking zurück
 	 *
 	 * @Route("/tournament/{id}/ranking", name="ajax_tournament_ranking")
-	 * @Method("POST")
 	 *
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -58,7 +61,6 @@ class AjaxController extends Controller {
 	 * Gibt Livedaten zu einem Turnier als JSON zurück
 	 * 
 	 * @Route("/tournament/{id}/live/info", name="ajax_tournament_live_data")
-	 * @Method("POST")        
 	 *
 	 * @param Request $request        	
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -72,11 +74,33 @@ class AjaxController extends Controller {
 		$tournamentRepo = $em->getRepository ( 'AppBundle:Tournament' );
 		$tournament = $tournamentRepo->find ( $id );
 	
+		$blindRepo = $em->getRepository(BlindLevel::class);
+		
 		if (empty ( $tournament ))
 			die ( "Kein Turnier mit dieser ID vorhanden" );
 	
+		// generate data
 		$activePlayer = $tournamentRepo->countActivePlayer ( $id );
 		$countPlayer = count ( $tournament->getRanking () );
+	
+		$currBlind = $tournament->getBlindLevel();
+		$nextBlind = $blindRepo->findOneBy([ 'level' => ($currBlind ? $currBlind->getLevel() : 0) + 1]);
+		
+		$raiseAt = $tournament->getLastBlindRaiseAt();
+		// setze ablauftimer nur, wenn bereits eine Blinderhöhung anstand
+		if(!empty($raiseAt))
+		{
+		    $raiseAt->add(date_interval_create_from_date_string(self::DEFAULT_BLIND_TIMER." seconds"));
+		    $raiseAt = $raiseAt->format('r');
+		}
+		else
+		{
+		    $raiseAt = "";
+		}
+
+		// create output
+		$currBlind = $currBlind == null ? "" : $currBlind->getName();		
+		$nextBlind = $nextBlind == null ? "" : $nextBlind->getName();
 		
 		$return = array (
 				'player' => array (
@@ -84,9 +108,10 @@ class AjaxController extends Controller {
 						'count' => $countPlayer 
 				),
 				'blind' => array (
-						'current' => '10/20',
-						'next' => "20/40",
-						'next_time' => time () 
+						'current' => $currBlind,
+						'next' => $nextBlind,
+						'raiseAt' => $raiseAt
+				        
 				) 
 		);
 		

@@ -82,7 +82,20 @@ class Tournament extends AbstractTournament
      * @ORM\OrderBy({"number" = "ASC"})     
      */
     protected $tables;
-       
+      
+    /**
+     * @ORM\ManyToOne(targetEntity="BlindLevel")
+     * @ORM\JoinColumn(name="blind_lvl_id", referencedColumnName="id", nullable=true)
+     * @var BlindLevel
+     */
+    protected $blindLevel;
+    
+    /**
+     * @ORM\Column(name="last_blind_raise", type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    protected $lastBlindRaiseAt;
+    
     /**
      * Get id
      *

@@ -73,6 +73,12 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
+var timeString = "";
+var clock_refresh;
+var countdown_refresh;
+var auto_refresh;
+var ranking_refresh;
+
 function refreshTournamentInfo()
 {
 	$.ajax({
@@ -83,8 +89,60 @@ function refreshTournamentInfo()
             var nextBlindTime = $.now() - data.blind.next_time;
 
             $('#player_count').html(data.player.current + "/" + data.player.count);
-            $('#blind_current').html(data.blind.current);
-            $('#blind_next').html(data.blind.next);
+            $('.current-blind').html(data.blind.current);
+            $('.next-blind').html(data.blind.next);
+
+            timeString = data.blind.raiseAt;
+            // check time
+            if(timeString !== "" && new Date() >= new Date(timeString))
+            {
+            	$('.time-left').text('00:00:00').removeClass('text-success').addClass('text-danger blink_me');
+                $('.time-left').parent().find('i').addClass('text-danger blink_me');
+                
+                 stopTimers();
+                // play sound
+                var times = 3;
+                var loop = setInterval(repeat, 2020);
+        
+                function repeat() {
+                    times--;
+                    if (times === 0) {
+                        clearInterval(loop);
+                        loop = null;
+                    }
+
+                    $('.time-left').text('00:00:00');
+                    var audio = document.createElement("audio");
+                    audio.src = "{{ asset('bundles/app/audio/next_blind.mp3') }}";
+        
+                    audio.play();
+                }
+        
+                repeat();  
+
+                
+                // start dmx
+                $.ajax({
+                    url: "{{ path('dmx_next_blind') }}",
+                    success: function()
+                    {
+                    	$('.time-left').text('00:00:00');
+                        // raise blind
+                        $.ajax({
+                            url: "{{ path('live_raise_blind', { 'tournamentId': tournament.id }) }}",
+                            success: function()
+                            {                                
+                                setTimeout(function(){
+                                	$('.time-left').removeClass('text-danger blink_me').addClass('text-success');
+                                    $('.time-left').parent().find('i').removeClass('text-danger blink_me');                           
+                                }, 5000);
+                                
+                                startTimers();
+                            }
+                        });                        
+                    }
+                });
+            }
         }
     });
 }
@@ -135,18 +193,53 @@ function updateClock ()
    
     // Compose the string for display
     var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds;    
-    $(".current-time").html(currentTimeString);    
+    $(".current-time").html(currentTimeString);       
 }
 
+function updateBlindCountdown()
+{
+	if(timeString == "")
+	{
+		return;
+	}
+	var nextDate = new Date(timeString);
+	nextDate = new Date(nextDate - new Date());
+
+	var nextMinutes = nextDate.getMinutes ( );
+    var nextSeconds = nextDate.getSeconds ( );
+
+    // Pad the minutes and seconds with leading zeros, if required
+    nextMinutes = ( nextMinutes < 10 ? "0" : "" ) + nextMinutes;
+    nextSeconds = ( nextSeconds < 10 ? "0" : "" ) + nextSeconds;
+   
+    // Compose the string for display
+    var nextTimeString =  " 00:" + nextMinutes + ":" + nextSeconds;    
+    $(".time-left").html(nextTimeString);
+}
+
+function startTimers()
+{
+    updateClock();
+    refreshTournamentInfo();
+    refreshRanking();
+
+    clock_refresh = setInterval('updateClock()', 1000);
+    countdown_refresh = setInterval('updateBlindCountdown()', 1000);
+    auto_refresh = setInterval('refreshTournamentInfo()', 10000);
+    ranking_refresh = setInterval('refreshRanking()', 15000);
+}
+
+function stopTimers()
+{
+	clearInterval(clock_refresh);
+	clearInterval(countdown_refresh);
+	clearInterval(auto_refresh);
+	clearInterval(ranking_refresh);
+}
 
 $(document).ready(function()
 {
-	updateClock();
-	refreshTournamentInfo();
-	refreshRanking();
-    var clock_refresh = setInterval('updateClock()', 1000);
-    var auto_refresh = setInterval('refreshTournamentInfo()', 10000);
-    var ranking_refesh = setInterval('refreshRanking()', 15000);
+	startTimers();
 });
 </script>
 {% endblock %}

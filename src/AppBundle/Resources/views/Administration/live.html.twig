@@ -36,11 +36,14 @@
 	<hr />
 	<div class="row">
 		<div class="col-xs-12 col-md-6">
+		  <div class="col-xs-12">
+				{% form_theme frm_live_config 'bootstrap_3_horizontal_layout.html.twig' %}
+				{{ form(frm_live_config) }}
+		  </div>
+		  
 			<div class="col-xs-12">
 				<h3>Platzierung setzen</h3>
                 {{ form(frm_edit_rank) }}
-{# 				{% form_theme frm_live_config 'bootstrap_3_horizontal_layout.html.twig' %}#}
-{# 				{{ form(frm_live_config) }}#}
 			</div>
 		</div>
 		<div class="col-xs-12 col-md-6">
@@ -76,52 +79,5 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script type="text/javascript">
-
-$( document ).ready(function() {
-	var list = $("#source .list-group-item").toArray();
-	var elemlength = list.length;
-	var timeout = null;
-	var randomitem = null;
-	var i = 1;
-
-	function randomSelect() {    
-		$("#source .list-group-item").removeClass("list-group-item-warning"); 
-		elemlength = list.length;
-		randomnum = Math.floor(Math.random()*elemlength);
-		randomitem = list[randomnum];
-		randTimeout = Math.floor(Math.random() * (400 - 10) + 10);
-		$(randomitem).toggleClass("list-group-item-warning");
-		timeout = setTimeout(randomSelect, randTimeout);
-		if(list.length == 0)
-		{
-			clearTimeout(timeout);
-			list = jQuery.grep(list, function(value) {
-				  return value != randomitem;
-			});
-			$('#result').append($('#source .list-group-item-warning').removeClass('list-group-item-warning'));
-		}
-		else if(i++ % 20 == 0 && list.length != 0)
-		{
-			$('#result').append($(randomitem).removeClass('list-group-item-warning'));
-			list = jQuery.grep(list, function(value) {
-				  return value != randomitem;
-			});
-		}
-	}
-	
-	$('#btn-select').click(function(){
-		i = 1;
-		randomSelect();
-	});
-	$('#btn-stop').click(function(){
-		clearTimeout(timeout);
-		list = jQuery.grep(list, function(value) {
-			  return value != randomitem;
-		});
-		$('#result').append($('#source .list-group-item-warning').removeClass('list-group-item-warning'));
-		randomSelect();
-	});
-});
-</script>
+{{ parent() }}
 {% endblock javascripts %}

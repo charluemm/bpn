@@ -8,6 +8,7 @@ use AppBundle\Entity\Location;
 use AppBundle\Entity\TournamentRanking;
 use AppBundle\Entity\TournamentTable;
 use AppBundle\Entity\Event;
+use AppBundle\Entity\BlindLevel;
 
 /**
  * AbstractTournament
@@ -61,6 +62,16 @@ abstract class AbstractTournament implements TournamentInterface
      *  
      */
     protected $tables;
+    
+    /**
+     * @var BlindLevel
+     */
+    protected $blindLevel;
+    
+    /**
+     * @var \DateTime
+     */
+    protected $lastBlindRaiseAt;
     
     public function __construct(Event $event = null)
     {
@@ -267,4 +278,47 @@ abstract class AbstractTournament implements TournamentInterface
     	else
     		return null;
     }
+
+    /**
+     * 
+     * @return \AppBundle\Entity\BlindLevel
+     */
+    public function getBlindLevel ()
+    {
+        return $this->blindLevel;
+    }
+
+    /**
+     * 
+     * @param BlindLevel $blindLevel
+     * @return \AppBundle\Model\Tournament\AbstractTournament
+     */
+    public function setBlindLevel (BlindLevel $blindLevel = null)
+    {
+        $this->lastBlindRaiseAt = $blindLevel == null ? null : new \DateTime();
+        
+        $this->blindLevel = $blindLevel;
+        return $this;
+    }
+
+    /**
+     * 
+     * @return DateTime
+     */
+    public function getLastBlindRaiseAt()
+    {
+        return $this->lastBlindRaiseAt;
+    }
+
+    /**
+     * 
+     * @param \DateTime $lastBlindRaiseAt
+     * @return \AppBundle\Model\Tournament\AbstractTournament
+     */
+    public function setLastBlindRaiseAt(\DateTime $lastBlindRaiseAt = null)
+    {
+        $this->lastBlindRaiseAt = $lastBlindRaiseAt;
+        return $this;
+    }
+ 
 }
