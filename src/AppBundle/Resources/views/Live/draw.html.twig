@@ -1,17 +1,12 @@
 {% extends "AppBundle::template_live.html.twig" %} 
 
+{% block navbar %}
+    {# NAVBAR #}
+    {% include 'AppBundle:Navigation:navbar_draw.html.twig' %}
+{% endblock navbar %}
+
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-    	<div class="col-sm-12 text-center">
-    	   <div class="btn-group">
-    		<a class="btn btn-success" id="btn-run" alt="Start" title="Start"><i class="fa fa-fw fa-play"></i></a>
-    		<a class="btn btn-danger" id="btn-stop" alt="Stopp" title="Stopp"><i class="fa fa-fw fa-stop"></i></a>
-    		<a class="btn btn-warning" id="btn-refresh" alt="" title=""><i class="fa fa-fw fa-refresh"></i></a>
-    		<a class="btn btn-info" id="btn-save" alt="" title=""><i class="fa fa-fw fa-floppy-o"></i></a>    	   
-    	   </div>
-    	</div>
-    </div>
     
 	<div class="row">
 		<div class="col-sm-6">
@@ -51,12 +46,49 @@
 	   </div>
     </div>
 </div>
+
+<audio id="audio_draw_start">
+   <source src="{{ asset('bundles/app/audio/draw_start.m4a') }}">
+</audio>
+<audio id="audio_draw_running" src="{{ asset('bundles/app/audio/draw_running.mp3') }}" loop>       
+</audio>
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
 <script>
 var ajaxTableSeatUrl = "{{ path('ajax_table_add_seats') }}";
+
+// (function button_start_draw() {
+//     $.ajax({
+        url: "{{ path('button_status') }} ",
+//         success: function(data){
+//             console.log(data);
+//             if(data){
+//                 $(".navbar-signal").hide();
+//                console.log("ping successfull");
+//                // start light
+//                $.ajax({
+                   url: "{{ path('dmx_draw_start') }}",
+//                    success: function(){
+//                        // start audio
+//                        $('#audio_draw_start').trigger("play").delay(2500);
+//                        $('#audio_draw_running').trigger("play");
+//                    }
+//                });
+//             }
+//             else{
+//                 //console.log('retry ping');
+//                 setTimeout(button_start_draw, 500);
+//             }
+            
+//         },
+//         error: function(){
+//             alert("unerwarteter fehler");
+//         }
+//     });
+// })();
+
 </script>
 {% javascripts '@AppBundle/Resources/public/js/draw.js' %}
     <script src="{{ asset_url }}"></script>

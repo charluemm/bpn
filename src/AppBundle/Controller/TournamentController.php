@@ -94,7 +94,6 @@ class TournamentController extends Controller
      * Displays a form to create a new Tournament entity.
      *
      * @Route("/new", name="tournament_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -141,10 +140,9 @@ class TournamentController extends Controller
      * Displays a form to edit an existing Tournament entity.
      *
      * @Route("/{id}/edit", name="tournament_edit")
-     * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         /** @var TournamentManager $tournamentManager **/
         $tournamentManager = $this->get('bpn.tournament.manager');
@@ -158,6 +156,14 @@ class TournamentController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
+        $editForm->handleRequest($request);
+        if($editForm->isSubmitted() && $editForm->isValid())
+        {
+            $tournamentManager->update($entity);
+            $this->addFlash('success', "Turnier wurde erfolgreich bearbeitet.");
+            return $this->redirectToRoute('tournament_show', array('id' => $id));
+        }
+        
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -175,8 +181,7 @@ class TournamentController extends Controller
     private function createEditForm(Tournament $entity)
     {
         $form = $this->createForm(TournamentType::class, $entity, array(
-            'action' => $this->generateUrl('tournament_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'action' => $this->generateUrl('tournament_edit', array('id' => $entity->getId())),
         ));
 
         $form->add('submit', SubmitType::class, array('label' => 'Update'));

@@ -17,13 +17,12 @@
 
 {% block body %} 
 {# NAVBAR #}
-{% include 'AppBundle:Navigation:navbar_live_new.html.twig' %}
+{% include 'AppBundle:Navigation:navbar_live.html.twig' %}
 
-{#
 <video playsinline autoplay loop id="bgvid">
     <source src="{{ asset ('bundles/app/images/background_video.mp4') }}" type="video/mp4">
 </video>
-#}
+
 <div id="wrapper" class="">
 	{# SIDEBAR #}
     {% include 'AppBundle:Navigation:live_sidebar_left.html.twig' %}
@@ -31,10 +30,8 @@
      <!-- Toggle Buttons -->
     <a href="#left-menu-toggle" class="btn btn-link btn-md" id="left-menu-toggle"><span class="glyphicon glyphicon-chevron-left"></span></a>
     
-    
     {# page content #}
 	<div id="page-content-wrapper">
-       
 		{% block content %} 
     	<div class="container-fluid">
         	<div class="row">
@@ -49,44 +46,8 @@
 
 
 {% block javascripts %}
-{{ parent() }}
-
 <script type="text/javascript">
-
-function triggerNextBlind(){
-	    	var times = 3;
-            var loop = setInterval(repeat, 1999);
-
-                function repeat() {
-                    times--;
-                    if (times === 0) {
-                        clearInterval(loop);
-                    }
-        
-                    var audio = document.createElement("audio");
-                    audio.src = "{{ asset('bundles/app/audio/next_blind.mp3') }}";
-        
-                    audio.play();
-                }
-        
-                repeat();      
-	// start light scene
-	$.ajax({
-	    url: "{{ path('dmx_next_blind') }}",
-	    success: function(data){
-        },
-        error: function(){
-            alert("unerwarteter fehler (next blind)");
-        }
-	});
-}
-
 $(document).ready(function() {
-	$("span").click(function(){
-		$('#audio_draw_running').trigger("pause");
-		triggerNextBlind();
-	});
-	
 		$(".col-sm-1").each(function(){
 		    $(this).height($(this).width() * 1.9);
 		});
@@ -102,4 +63,4 @@ $(document).ready(function() {
 	    });
 });
 </script>
-{% endblock javascripts %}
+{% endblock %}

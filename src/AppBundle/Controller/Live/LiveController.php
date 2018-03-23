@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Common\Util\Debug;
 
 /**
  * @author Michael Müller <development@reu-network.de>
@@ -17,6 +19,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class LiveController extends Controller
 {
+    /**
+     * @Route("/button-status", name="button_status")
+     */
+    public function buttonStatusAction()
+    {
+        $output = array();
+        $host = "192.168.2.113";
+        exec("ping -n 1 $host -w 500", $output);
+        
+        $status = (int)(preg_grep("/Antwort von $host: Bytes=.*/", $output) !== array() );
+        return new JsonResponse($status);
+    }
+    
     /**
      * @Route("/{tournamentId}", name="live_index")
      * @Template("AppBundle:Live:live.html.twig")

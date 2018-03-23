@@ -53,7 +53,7 @@ class CalculationController extends Controller
 		);
 	}
 	
-	private function createAnnualRanking($old)
+	private function createAnnualRanking()
 	{
 	    /** @var AnnualRankingManager $annualRankingManager **/
 	    $annualRankingManager = $this->get('bpn.annual_ranking.manager');

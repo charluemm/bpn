@@ -16,8 +16,10 @@
 {% endblock %} 
 
 {% block body %} 
-{# NAVBAR #}
-{% include 'AppBundle:Navigation:navbar_live.html.twig' %}
+{% block navbar %}
+    {# NAVBAR #}
+    {% include 'AppBundle:Navigation:navbar_live.html.twig' %}
+{% endblock navbar %}
 
 <video playsinline autoplay loop id="bgvid">
     <source src="{{ asset ('bundles/app/images/background_video.mp4') }}" type="video/mp4">

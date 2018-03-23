@@ -4,7 +4,11 @@
 		<p class="list-group-item-text"> <i class="fa fa-fw"></i> 
 			{% if rank.sumPoints is defined %}{{ rank.sumPoints }} Pkt. <small>{{ rank.player }}</small>
 			{% else %}{{ rank.player }} <small class="pull-right">{{ rank.player.annualRankingPoints }} Pkt. in 5-Jahreswertung</small>
-			{% endif %}</p>
+			{% endif %}
+		    {% if rank.kickedByPlayer is not null %}
+		    <br /><small>{{ rank.kickedAt | date('d.m.Y H:i') }} gegen {{ rank.kickedByPlayer.Nickname }}</small>
+		    {% endif %}
+		</p>
 	</a>
 {% else %}
 	<a class="list-group-item list-group-item-warning">

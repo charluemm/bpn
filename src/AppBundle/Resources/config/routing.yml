@@ -8,6 +8,10 @@ live:
     type:     annotation 
     prefix:   /live
 
+dmx:
+    resource: "@AppBundle/Controller/DmxController.php"
+    type:     annotation 
+    
 bpn_default:
     resource: "@AppBundle/Controller/DefaultController.php"
     type:     annotation 

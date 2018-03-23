@@ -1,0 +1,23 @@
+<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+		<a href="{{ path("index") }}" class="navbar-brand">{% if tournament is defined %}{{ tournament }}{% else %}Brände Pokernight{% endif %}</a>
+	</div>
+	
+	<div class="navbar-header navbar-clock text-success">
+        <span class="text-digital">Auslosung</span> 
+    </div>
+    
+    <div class="navbar-header navbar-clock navbar-signal text-success">
+        <i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Warten auf Signal...<span class="text-digital"></span> 
+    </div>
+    
+	<ul class="nav navbar-nav navbar-right">
+		<div class="btn-group">
+            <a class="btn btn-success" id="btn-run" alt="Start" title="Start"><i class="fa fa-fw fa-play"></i></a>
+            {# <a class="btn btn-danger" id="btn-stop" alt="Stopp" title="Stopp"><i class="fa fa-fw fa-stop"></i></a> #}
+            <a class="btn btn-warning" id="btn-refresh" alt="" title=""><i class="fa fa-fw fa-refresh"></i></a>
+            {# <a class="btn btn-info" id="btn-save" alt="" title=""><i class="fa fa-fw fa-floppy-o"></i></a>         #}
+           </div>
+	</ul>
+</nav>
