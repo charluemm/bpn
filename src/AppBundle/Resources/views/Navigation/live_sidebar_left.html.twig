@@ -1,20 +1,15 @@
 <!-- Left Sidebar -->
 <div id="left-sidebar-wrapper">
     <ul class="sidebar-nav">
-        
         {% if tournament is defined %}
         <li>
-            <a href="{{ path('live_tournament_overview', {'tournamentId': tournament.id}) }}">Turnieransicht</a>
+            <a href="{{ path('live_tournament_annual_ranking', {'tournamentId': tournament.id}) }}">5-Jahreswertung (Turnier)</a>
         </li>
         <li>
             <a href="{{ path('live_draw', {'tournamentId': tournament.id}) }}">Auslosung</a>
         </li>
-        
         <li>
-            <a href="{{ path('live_index', {'tournamentId': tournament.id}) }}">Turnier Index</a>
-        </li>
-        <li>
-            <a href="{{ path('live_tournament_annual_ranking', {'tournamentId': tournament.id}) }}">5-Jahreswertung (Turnier)</a>
+            <a href="{{ path('live_tournament_overview', {'tournamentId': tournament.id}) }}">Turnierübersicht</a>
         </li>
         {% endif %}
     </ul>

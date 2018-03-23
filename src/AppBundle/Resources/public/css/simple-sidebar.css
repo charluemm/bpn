@@ -170,6 +170,7 @@ li > .sub-bar {
 
     #left-sidebar-wrapper {
         width: 250px;
+        margin-top: 15px;
     }
 
     #right-sidebar-wrapper {
