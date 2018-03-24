@@ -63,7 +63,8 @@
 #page-content-wrapper {
     width: 100%;
     position: absolute;
-    padding: 15px;
+    padding: 5px;
+    padding-top: 20px;
 }
 
 #wrapper.left-toggled #page-content-wrapper {
@@ -186,7 +187,8 @@ li > .sub-bar {
     }
 
     #page-content-wrapper {
-        padding: 20px;
+        padding: 5px;
+        padding-top: 20px;
         position: relative;
     }
 

@@ -21,9 +21,11 @@
     {% include 'AppBundle:Navigation:navbar_live.html.twig' %}
 {% endblock navbar %}
 
-{# <video playsinline autoplay loop id="bgvid">#}
-{#     <source src="{{ asset ('bundles/app/images/background_video.mp4') }}" type="video/mp4">#}
-{# </video>#}
+{% block video %}
+<video playsinline autoplay loop id="bgvid">
+    <source src="{{ asset ('bundles/app/images/background_video.mp4') }}" type="video/mp4">
+</video>
+{% endblock %}
 
 <div id="wrapper" class="">
 	{# SIDEBAR #}
@@ -44,6 +46,9 @@
 		{% endblock%}
 	</div>
 </div>
+
+{% block footer %}
+{% endblock %}
 {% endblock %}
 
 

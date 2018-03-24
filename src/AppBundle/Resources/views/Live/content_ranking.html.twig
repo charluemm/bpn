@@ -1,0 +1,18 @@
+<div class="col-sm-3 col-sm-offset-2" style="padding-right: 0px;">
+   <div class="panel panel-default">
+       <div class="panel-heading">
+           <h3 class="panel-title">aktuelle Platzierung <span class="badge pull-right" id="player_count"></span></h3>
+       </div>
+       <div class="panel-body" id="player-ranking">
+           {% for list in tournament.ranking | batch(tournament.ranking | length / 2) %}
+           <ul class="list-group borderless col-sm-6">
+               {% for rank in list %}
+               <li class="list-group-item">
+                    <span class="label label-danger label-as-badge">{{ rank.rank }}</span> {{ rank.player.nickname }}{% if rank.kickedByPlayer %} <small>vs. {{ rank.kickedByPlayer.nickname }}</small>{% endif %}
+               </li>
+               {% endfor %}
+           </ul>
+           {% endfor %}
+       </div>
+    </div>
+</div>

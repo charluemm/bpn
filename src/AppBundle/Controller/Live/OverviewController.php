@@ -39,6 +39,28 @@ class OverviewController extends Controller
     }
     
     /**
+     * @Route("/{tournamentId}/overview/navbar-only", name="live_tournament_overview_navbar")
+     * @Template("AppBundle:Live:tournament_overview.html.twig")
+     */
+    public function tournamentOverviewNavbarOnlyAction($tournamentId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        if(!empty($tournamentId))
+        {
+            /* @var $tournament Tournament */
+            $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+            
+            return array(
+                    'tournament' => $tournament,
+                    'navbarOnly' => true
+            );
+        }
+        return array(
+        );
+    }
+    
+    /**
      * @Route("/{tournamentId}/annual-ranking", name="live_tournament_annual_ranking")
      * @Template("AppBundle:Live:annual_ranking.html.twig")
      */

@@ -8,13 +8,26 @@
 {% endblock %}
 
 {% block content %}
+{% if navbarOnly is not defined %}
 <div class="container-fluid">
-	<div class="row"  id="live-tournament-overview">
-       <div class="col-sm-6">
+    <div class="row"  id="live-tournament-overview">
+       {% include "AppBundle:Live:content_chips.html.twig" %}
+        
+       {% include "AppBundle:Live:content_ranking.html.twig" %}        
+    </div> 
+</div>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+        <div class="col-sm-8">
             <div class="panel panel-default">
-               <div class="panel-heading">
-                   <h3 class="panel-title">Wertigkeit Chips</h3>
-               </div>
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title">Wertigkeit Chips</h3>#}
+{#                </div>#}
                <div class="panel-body">
                     <div class="chip red">
                       <div>10</div>
@@ -36,41 +49,12 @@
                     </div> 
                </div>
             </div>
-            
         </div>
-        
-        <div class="col-sm-2">    
-           <div class="panel panel-default">
-               <div class="panel-heading">
-                   <h3 class="panel-title">Blind Level</h3>
-               </div>
-               <div class="panel-body">
-                    <p>Liste Blind Level</p>
-               </div>
-            </div>
-        </div>
-        
-        <div class="col-sm-4">
-           <div class="panel panel-default">
-               <div class="panel-heading">
-                   <h3 class="panel-title">Player Ranking <span class="badge pull-right" id="player_count"></span></h3>
-               </div>
-               <div class="panel-body" id="player-ranking">
-                   {% for list in tournament.ranking | batch(tournament.ranking | length / 2) %}
-                   <ul class="list-group borderless col-sm-6">
-                       {% for rank in list %}
-                       <li class="list-group-item">
-                            <span class="label label-danger label-as-badge">{{ rank.rank }}</span> {{ rank.player.nickname }}{% if rank.kickedByPlayer %} <small>vs. {{ rank.kickedByPlayer.nickname }}</small>{% endif %}
-                       </li>
-                       {% endfor %}
-                   </ul>
-                   {% endfor %}
-               </div>
-            </div>
-        </div>        
-	</div> 
-</div>
-{% endblock %}
+    </div>
+  </div>
+</footer>
+
+{% endblock footer %}
 
 {% block javascripts %}
 {{ parent() }}
@@ -148,7 +132,7 @@ function refreshTournamentInfo()
         }
     });
 }
-
+{% if navbarOnly is not defined %}
 function refreshRanking()
 {
 	$.ajax({
@@ -187,6 +171,8 @@ function refreshRanking()
         }
     });
 }
+{% endif %}
+
 function updateClock ()
 {
     var currentTime = new Date ( );
