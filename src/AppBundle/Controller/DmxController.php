@@ -66,4 +66,14 @@ class DmxController extends Controller
         
         return new JsonResponse($return);
     }
+    
+    /**
+     * @Route("/seat-open", name="dmx_seat_open")
+     */
+    public function seatOpen()
+    {
+        $return = $this->putSocket("start_scene {C246C458-4171-4F2F-BB94-994DB2828232}");
+        
+        return new JsonResponse($return);
+    }
 }
