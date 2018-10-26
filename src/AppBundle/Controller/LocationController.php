@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Location;
 use AppBundle\Form\LocationType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Location controller.
@@ -70,12 +71,12 @@ class LocationController extends Controller
      */
     private function createCreateForm(Location $entity)
     {
-        $form = $this->createForm(new LocationType(), $entity, array(
+        $form = $this->createForm(LocationType::class, $entity, array(
             'action' => $this->generateUrl('location_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
@@ -159,12 +160,12 @@ class LocationController extends Controller
     */
     private function createEditForm(Location $entity)
     {
-        $form = $this->createForm(new LocationType(), $entity, array(
+        $form = $this->createForm(LocationType::class, $entity, array(
             'action' => $this->generateUrl('location_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
 
         return $form;
     }
@@ -239,7 +240,7 @@ class LocationController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('location_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
             ->getForm()
         ;
     }

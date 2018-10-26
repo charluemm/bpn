@@ -59,43 +59,6 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
-var button_seat_open = null;
-
-$( document ).ready(function() 
-{
-    // ping dash button
-    (function button_seat_open() {
-        $.ajax({
-            url: "{{ path('button_status') }}",
-            success: function(data){
-                if(data)
-                {
-                    console.log("ping successfull");
-                   // start light
-                   $.ajax({
-                       url: "{{ path('dmx_seat_open') }}",
-                       success: function(){
-                    	   setTimeout(button_seat_open, 30000);
-                       }
-                   });
-                }
-                else
-                {
-                    setTimeout(button_seat_open, 1000);
-                }            
-            },
-            error: function(err){
-                console.error(err);
-            }
-        });
-    })();
-
-    $('#player_count').click(function(){
-        clearTimeout(button_seat_open);
-        button_seat_open = null;
-    });
-});
-
 var timeString = "";
 var clock_refresh;
 var countdown_refresh;
@@ -161,6 +124,7 @@ function refreshTournamentInfo()
                                 }, 5000);
                                 
                                 startTimers();
+                                countdown_refresh = setInterval('updateBlindCountdown()', 1000);
                             }
                         });                        
                     }

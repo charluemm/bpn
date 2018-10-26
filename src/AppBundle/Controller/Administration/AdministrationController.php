@@ -61,15 +61,6 @@ class AdministrationController extends Controller
 				->add('submit', SubmitType::class, array('label' => 'Speichern'))
 				->getForm();
 			
-		    $formLiveConfig->handleRequest($request);
-		    if($formLiveConfig->isSubmitted() && $formLiveConfig->isValid())
-		    {
-		        $tournament->setLastBlindRaiseAt(new \DateTime());
-		        $tournamentManager->update($tournament);
-		        $this->addFlash('success', 'Blind Level aktualisiert.');
-		        return $this->redirectToRoute('administration_live', array('tournamentId' => $tournamentId));
-		    }
-		
 				
 			// FORM edit_ranking
 			$playersAlive = $tournament->getPlayers();
@@ -98,7 +89,17 @@ class AdministrationController extends Controller
     			))
 			 ->add('submit', SubmitType::class, array('label' => 'Update'))
 		     ->getForm();
-			
+
+		     
+		    $formLiveConfig->handleRequest($request);
+		    if($formLiveConfig->isSubmitted() && $formLiveConfig->isValid())
+		    {
+		        $tournament->setLastBlindRaiseAt(new \DateTime());
+		        $tournamentManager->update($tournament);
+		        $this->addFlash('success', 'Blind Level aktualisiert.');
+		        return $this->redirectToRoute('administration_live', array('tournamentId' => $tournamentId));
+		    }
+		
     	     $formEditRank->handleRequest($request);
     	     if($formEditRank->isSubmitted() && $formEditRank->isValid())
     	     {

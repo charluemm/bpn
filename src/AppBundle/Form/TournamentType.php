@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\EntityRepository;
 
 class TournamentType extends AbstractType
 {
@@ -74,6 +75,11 @@ class TournamentType extends AbstractType
             			'label' => 'Teilnemer',
             			'class' => 'AppBundle:Player',
             			'data' => $data->getPlayers(),
+            	        'query_builder' => function (EntityRepository $er) {
+                	        return $er->createQueryBuilder('p')
+                    	        ->addOrderBy('p.givenname', 'ASC')
+                    	        ->addOrderBy('p.surname', 'ASC');
+            	        },
             			'multiple' => true,
             			'expanded' => true,
             			'required' => false,
