@@ -81,8 +81,10 @@ class AjaxController extends Controller
 			die ( "Skriptaufruf fehlgeschlagen." );
 		
 		$em = $this->getDoctrine ()->getManager ();
+		/** @var \AppBundle\Repository\TournamentRepository $tournamentRepo */
 		$tournamentRepo = $em->getRepository ( 'AppBundle:Tournament' );
-		$tournament = $tournamentRepo->find ( $id );
+		/** @var Tournament $tournament */
+		$tournament = $tournamentRepo->find( $id );
 	
 		$blindRepo = $em->getRepository(BlindLevel::class);
 		
@@ -113,6 +115,7 @@ class AjaxController extends Controller
 		$nextBlind = $nextBlind == null ? "" : $nextBlind->getName();
 		
 		$return = array (
+		        'status' => $tournament->getCurrentStatus(),
 				'player' => array (
 						'current' => $activePlayer,
 						'count' => $countPlayer 

@@ -9,6 +9,7 @@ use AppBundle\Entity\TournamentRanking;
 use AppBundle\Entity\TournamentTable;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\BlindLevel;
+use AppBundle\Entity\TournamentStatus;
 
 /**
  * AbstractTournament
@@ -73,12 +74,18 @@ abstract class AbstractTournament implements TournamentInterface
      */
     protected $lastBlindRaiseAt;
     
+    /**
+     * @var TournamentStatus
+     */
+    protected $tournamentStatus;
+    
     public function __construct(Event $event = null)
     {
     	$this->ranking = new ArrayCollection();
     	$this->tables = new ArrayCollection();
     	$this->setEvent($event);
     	$this->mainTournament = false;
+    	$this->tournamentStatus = new TournamentStatus($this, TournamentStatus::$DESCRIPTION_CREATED);
     }
     
     public function __toString()
@@ -320,5 +327,35 @@ abstract class AbstractTournament implements TournamentInterface
         $this->lastBlindRaiseAt = $lastBlindRaiseAt;
         return $this;
     }
- 
+
+    /**
+     * Gibt Status als String zuruück
+     * 
+     * @return string
+     */
+    public function getCurrentStatus()
+    {
+        if(is_null($this->tournamentStatus))
+        {
+            return "undefined";
+        }
+        
+        return $this->tournamentStatus->getDescription();
+    }
+
+    /**
+     * 
+     * @param TournamentStatus $currentStatus
+     * @return \AppBundle\Model\Tournament\AbstractTournament
+     */
+    public function setTournamentStatus (TournamentStatus $currentStatus)
+    {
+        $this->tournamentStatus = $currentStatus;
+        return $this;
+    }
+   
+    public function getTournamentStatus()
+    {
+        return $this->tournamentStatus;
+    }
 }

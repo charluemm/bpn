@@ -97,6 +97,13 @@ class Tournament extends AbstractTournament
     protected $lastBlindRaiseAt;
     
     /**
+     * @ORM\ManyToOne(targetEntity="TournamentStatus")
+     * @ORM\JoinColumn(name="current_status", referencedColumnName="id", nullable=true)
+     * @var TournamentStatus
+     */
+    protected $tournamentStatus;
+    
+    /**
      * Get id
      *
      * @return integer
