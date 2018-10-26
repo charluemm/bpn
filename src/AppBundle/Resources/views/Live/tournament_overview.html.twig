@@ -105,8 +105,7 @@ function refreshTournamentInfo()
                 }
         
                 repeat();  
-
-                
+               
                 // start dmx
                 $.ajax({
                     url: "{{ path('dmx_next_blind') }}",
@@ -233,7 +232,7 @@ function stopTimers()
 
 $(document).ready(function()
 {
-	startTimers();
+	//startTimers();
 });
 </script>
 {% endblock %}
