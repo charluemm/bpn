@@ -1,6 +1,5 @@
 $( document ).ready(function() 
 {
-	
 	var listTable = $(".tournament-table").toArray();
 	var source;
 	var target;
@@ -25,6 +24,10 @@ $( document ).ready(function()
 	{
 		randomizeTablePlayer();
 		$(this).toggleClass('disabled');
+		// hide pool; maximize tables
+		$('#player-pool-container').hide();
+		$('#table-container').attr("class", "col-sm-12");
+		$('#table-container').children().attr('class', "col-sm-"+(listTable.length == 4 ? "3" : "4" ));
 	});
 	// click button save
 	$('#btn-save').click(function(){
@@ -45,7 +48,7 @@ $( document ).ready(function()
                        url: dmxDrawStartUrl,
                        success: function(){
                            // start audio
-                           $('#audio_draw_start').trigger("play").delay(2500);
+                           $('#audio_draw_start').trigger("play"); //.delay(2500);
                            $('#audio_draw_running').trigger("play");
                            startDraw();
                        }
@@ -231,10 +234,13 @@ $.fn.saveSeats = function(){
 
 $.fn.sumPoints = function(){
 	var sum = 0;
+	var cntPlayer = 0;
 	$(this).find('.list-group-item').each(function(){
 		sum += $(this).data('player-points');
+		cntPlayer++;
 	});
-	$(this).closest('.panel').append('<div class=\"panel-footer\">Summe <span class="pull-right">' + sum + ' Punkte</span></div>');
+	$(this).closest('.panel').append('<div class=\"panel-footer\">&Sigma; <span class="">' + sum + ' Punkte</span>  <span class="pull-right">&Oslash; ' + (sum/cntPlayer).toFixed(2) + ' Punkte</span></div>');
+	
 	return this;
 }
 

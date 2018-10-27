@@ -9,7 +9,7 @@
 <div class="container-fluid">
     
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-6" id="table-container">
 			{% for table in tournament.tables %}		
 			<div class="col-sm-4">
 			     <div class="panel panel-default" id="table-{{ table.id }}" style="margin-left: -27px">
@@ -24,7 +24,7 @@
 			</div>
 			{% endfor %}
 		</div>
-		<div class="col-sm-6">
+		<div class="col-sm-6" id="player-pool-container">
     	    {% for group in grouped_list %}
             <div class="col-sm-4">
                 <div class="panel panel-default" id="player-pool-{{ loop.index }}">
@@ -50,7 +50,7 @@
 <audio id="audio_draw_start">
    <source src="{{ asset('bundles/app/audio/draw_start.m4a') }}">
 </audio>
-<audio id="audio_draw_running" src="{{ asset('bundles/app/audio/draw_running.mp3') }}" loop>       
+<audio id="audio_draw_running" src="{{ asset('bundles/app/audio/draw_running.wav') }}" loop>       
 </audio>
 {% endblock %}
 

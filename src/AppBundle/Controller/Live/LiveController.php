@@ -68,15 +68,16 @@ class LiveController extends Controller
     }
     
     /**
-     * @Route("/button-status", name="button_status")
+     * @Route("/ajax/button-status", name="button_status")
      */
     public function buttonStatusAction()
     {
         $output = array();
-        $host = "192.168.2.113";
-        exec("ping -n 1 $host -w 200", $output);
+        $host = "192.168.1.113";
+        exec("ping -n 1 $host -w 500", $output);
         
         $status = (int)(preg_grep("/Antwort von $host: Bytes=.*/", $output) !== array() );
+        
         return new JsonResponse($status);
     }
     
