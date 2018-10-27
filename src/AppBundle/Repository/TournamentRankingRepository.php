@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Tournament;
+use AppBundle\Entity\Player;
 /**
  * TournamentRankRepository
  *
@@ -23,5 +24,25 @@ class TournamentRankingRepository extends EntityRepository
             ->getQuery();
         
         return $query->getResult();
+    }
+    
+    /**
+     * Löscht Einträge anhand des Turniers und einer übergebenen Liste von Spielern
+     * 
+     * @param Tournament $tournament
+     * @param array $playerList List of Player
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function deleteByTournamentAndPlayerList(Tournament $tournament, array $playerList)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->delete()
+            ->where('r.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
+            ->andWhere('r.player IN (:playerList)')
+            ->setParameter('playerList', $playerList)
+            ->getQuery();
+        
+        return $query->execute();
     }
 }

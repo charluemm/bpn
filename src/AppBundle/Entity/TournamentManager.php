@@ -43,7 +43,7 @@ class TournamentManager extends AbstractManager
     public function findPastMainTournaments()
     {
         $date = new \DateTime();
-        $date->setDate(2018, 03, 23);
+        $date->setDate(2018, 10, 26);
         
         $query = $this->getRepository()->createQueryBuilder('t')
             ->where('t.mainTournament = true')

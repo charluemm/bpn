@@ -68,7 +68,7 @@ class CalculationController extends Controller
 	    $listTournaments = array_reverse($tournamentManager->findPastMainTournaments());
 	    
 	    $startIndex = (\count($listTournaments)) % 5;
-        $listPlayer = $playerManager->findAll();
+	    $listPlayer = $playerManager->findAll();
 	    
 	    $sumPoints = array();
 	    

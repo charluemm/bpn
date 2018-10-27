@@ -60,6 +60,7 @@
 {{ parent() }}
 <script>
 var timeString = "";
+var currStatus = "";
 var clock_refresh;
 var countdown_refresh;
 var auto_refresh;
@@ -72,6 +73,28 @@ function refreshTournamentInfo()
         dataType: 'json',
         type: 'POST',
         success:function(data){
+            console.info(data);
+            console.info($.inArray(data.status, ["", "created"]));
+            // show play if new
+            if($.inArray(data.status, ["0", "undefined", "", "created"]))
+            {
+                $('#btn-pause').hide();
+                $('#btn-start').show();
+                return true;
+            }
+            // show pause and continue if not paused
+        	else if(data.status !== "pause")
+            {
+                $('#btn-pause').show();
+                $('#btn-start').hide();
+            }
+            else
+            {
+                $('#btn-pause').hide();
+                $('#btn-start').show();
+                return true;
+            }
+            
             var nextBlindTime = $.now() - data.blind.next_time;
 
             $('#player_count').html(data.player.current + "/" + data.player.count);
@@ -129,6 +152,11 @@ function refreshTournamentInfo()
                     }
                 });
             }
+        },
+        error: function()
+        {
+            console.log("error");
+            return;
         }
     });
 }
@@ -212,11 +240,11 @@ function updateBlindCountdown()
 
 function startTimers()
 {
-    updateClock();
+    //updateClock();
     refreshTournamentInfo();
     refreshRanking();
 
-    clock_refresh = setInterval('updateClock()', 1000);
+    //clock_refresh = setInterval('updateClock()', 1000);
     countdown_refresh = setInterval('updateBlindCountdown()', 1000);
     auto_refresh = setInterval('refreshTournamentInfo()', 10000);
     ranking_refresh = setInterval('refreshRanking()', 15000);
@@ -224,7 +252,7 @@ function startTimers()
 
 function stopTimers()
 {
-	clearInterval(clock_refresh);
+	//clearInterval(clock_refresh);
 	clearInterval(countdown_refresh);
 	clearInterval(auto_refresh);
 	clearInterval(ranking_refresh);
@@ -232,7 +260,14 @@ function stopTimers()
 
 $(document).ready(function()
 {
+	clock_refresh = setInterval('updateClock()', 1000);
+	refreshTournamentInfo();
+	auto_refresh = setInterval('refreshTournamentInfo()', 10000);
 	//startTimers();
+
+	$('#btn-start').on('click', function(){
+		
+	});
 });
 </script>
 {% endblock %}

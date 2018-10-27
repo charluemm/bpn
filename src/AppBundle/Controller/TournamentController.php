@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\TournamentRanking\TournamentRankingManager;
+use Doctrine\Common\Util\Debug;
 
 
 /**
@@ -28,6 +29,8 @@ class TournamentController extends Controller
     /**
      * Creates a new Tournament entity.
      *
+     * !! Form Action Target !!
+     * 
      * @Route("/", name="tournament_create")
      * @Method("POST")
      * @Template("AppBundle:Tournament:new.html.twig")
@@ -157,8 +160,39 @@ class TournamentController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         $editForm->handleRequest($request);
+        
         if($editForm->isSubmitted() && $editForm->isValid())
         {
+            $em = $this->getDoctrine()->getManager();
+            $rankingRepo = $em->getRepository('AppBundle:TournamentRanking');
+            $players = $editForm->get('players')->getData();
+            
+            $tournamentManager->update($entity, false);
+           
+            // alte Spieler aus Ranking holen und nicht mehr teilnehmende TournamentRankings entfernen
+            $oldPlayers = [];
+            foreach($rankingRepo->findByTournament($entity) as $oldRanking)
+            {
+                $oldPlayers[] = $oldRanking->getPlayer(); 
+            }
+            $delete = array_diff($oldPlayers, $players);
+            $rankingRepo->deleteByTournamentAndPlayerList($entity, $delete);
+            
+            // Ranking für Spieler anlegen
+            foreach ($players as $player)
+            {
+                $ranking = $rankingRepo->findBy(array('tournament' => $entity, 'player' => $player));
+                if(empty($ranking))
+                {
+                    $ranking = new TournamentRanking($entity, $player);
+                    $em->persist($ranking);
+                    $entity->addRanking($ranking);
+                }
+            }
+            
+            
+            $em->flush();
+            
             $tournamentManager->update($entity);
             $this->addFlash('success', "Turnier wurde erfolgreich bearbeitet.");
             return $this->redirectToRoute('tournament_show', array('id' => $id));
@@ -213,7 +247,8 @@ class TournamentController extends Controller
             $tournamentManager->remove($entity);
         }
 
-        return $this->redirect($this->generateUrl('tournament'));
+        $this->addFlash('success', "Turnier erfolgreich gelöscht!");
+        return $this->redirect($this->generateUrl('event_index'));
     }
 
     /**

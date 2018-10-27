@@ -337,7 +337,7 @@ abstract class AbstractTournament implements TournamentInterface
     {
         if(is_null($this->tournamentStatus))
         {
-            return "undefined";
+            return "";
         }
         
         return $this->tournamentStatus->getDescription();

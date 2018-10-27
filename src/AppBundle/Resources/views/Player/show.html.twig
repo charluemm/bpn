@@ -87,7 +87,7 @@
 				    <span class="badge{% if ranking.points == 0 %}">keine Wertung 
 				    				  {% else %} badge-info">{{ "%d Punkte (Rang ??)" | format(ranking.points) }}{% endif %}
 				    </span>
-				    <p class="list-group-item-text">{{ ranking.date | date('d.m.Y') }}</p>
+				    <p class="list-group-item-text">{{ ranking.tournament.date | date('d.m.Y') }}</p>
 				  </a>
 	            {% else %}
 				  <a class="list-group-item list-group-item-warning">
