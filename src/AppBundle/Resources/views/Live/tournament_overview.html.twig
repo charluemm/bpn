@@ -28,25 +28,37 @@
 {#                <div class="panel-heading">#}
 {#                    <h3 class="panel-title">Wertigkeit Chips</h3>#}
 {#                </div>#}
+{#                <div class="panel-body">#}
+{#                     <div class="chip red">#}
+{#                       <div>10</div>#}
+{#                     </div>#}
+{#                     <div class="chip white">#}
+{#                       <div>20</div>#}
+{#                     </div> #}
+{#                     <div class="chip black">#}
+{#                       <div>50</div>#}
+{#                     </div>#}
+{#                     <div class="chip green">#}
+{#                       <div>100</div>#}
+{#                     </div>#}
+{#                     <div class="chip blue">#}
+{#                       <div>200</div>#}
+{#                     </div>#}
+{#                    <div class="chip orange">#}
+{#                       <div>500</div>#}
+{#                     </div> #}
+{#                </div>#}
                <div class="panel-body">
-                    <div class="chip red">
-                      <div>10</div>
-                    </div>
-                    <div class="chip white">
-                      <div>20</div>
-                    </div> 
-                    <div class="chip black">
-                      <div>50</div>
-                    </div>
-                    <div class="chip green">
-                      <div>100</div>
-                    </div>
+                    
                     <div class="chip blue">
                       <div>200</div>
                     </div>
                    <div class="chip orange">
                       <div>500</div>
                     </div> 
+                    <div class="chip red">
+                      <div>1000</div>
+                    </div>
                </div>
             </div>
         </div>
@@ -75,26 +87,7 @@ function refreshTournamentInfo()
         success:function(data){
             console.info(data);
             console.info($.inArray(data.status, ["", "created"]));
-            // show play if new
-            if($.inArray(data.status, ["0", "undefined", "", "created"]))
-            {
-                $('#btn-pause').hide();
-                $('#btn-start').show();
-                return true;
-            }
-            // show pause and continue if not paused
-        	else if(data.status !== "pause")
-            {
-                $('#btn-pause').show();
-                $('#btn-start').hide();
-            }
-            else
-            {
-                $('#btn-pause').hide();
-                $('#btn-start').show();
-                return true;
-            }
-            
+           
             var nextBlindTime = $.now() - data.blind.next_time;
 
             $('#player_count').html(data.player.current + "/" + data.player.count);
@@ -103,6 +96,7 @@ function refreshTournamentInfo()
 
             timeString = data.blind.raiseAt;
             // check time
+            // todo: zeitumstelung? irgendwas stimmt da nicht, if wird nicht rue....
             if(timeString !== "" && new Date() >= new Date(timeString))
             {
             	$('.time-left').text('00:00:00').removeClass('text-success').addClass('text-danger blink_me');
@@ -145,8 +139,8 @@ function refreshTournamentInfo()
                                     $('.time-left').parent().find('i').removeClass('text-danger blink_me');                           
                                 }, 5000);
                                 
+                                updateBlindCountdown();
                                 startTimers();
-                                countdown_refresh = setInterval('updateBlindCountdown()', 1000);
                             }
                         });                        
                     }
@@ -187,7 +181,7 @@ function refreshRanking()
 
                     	if(item.kickedBy)
                     	{
-                    	 add += " <small><small>vs. " + item.kickedBy + "</small></small></li>";
+                    	 add += " <small><small>vs. " + item.kickedBy + "</small> <span class=\"pull-right\"><small>" + item.kickedAt + "</small></span></small></li>";
                     	}
                     }
                     i++;
@@ -263,11 +257,7 @@ $(document).ready(function()
 	clock_refresh = setInterval('updateClock()', 1000);
 	refreshTournamentInfo();
 	auto_refresh = setInterval('refreshTournamentInfo()', 10000);
-	//startTimers();
-
-	$('#btn-start').on('click', function(){
-		
-	});
+	startTimers();
 });
 </script>
 {% endblock %}

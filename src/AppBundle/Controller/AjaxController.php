@@ -13,6 +13,7 @@ use AppBundle\Entity\Tournament;
 use AppBundle\Entity\TournamentRanking;
 use AppBundle\Entity\BlindLevel;
 use Doctrine\Common\Util\Debug;
+use AppBundle\Entity\TournamentStatus;
 
 /**
  *
@@ -60,6 +61,7 @@ class AjaxController extends Controller
 			{
 			    $element['kickedBy'] = $rank->getKickedByPlayer()->getNickname();
 			}
+			$element['kickedAt'] = $rank->getKickedAt() ? $rank->getKickedAt()->format("d.m.y H:i") . " Uhr " : "";
 			
 			$content[] = $element;
 		}
@@ -97,6 +99,8 @@ class AjaxController extends Controller
 	
 		$currBlind = $tournament->getBlindLevel();
 		$nextBlind = $blindRepo->findOneBy([ 'level' => ($currBlind ? $currBlind->getLevel() : 0) + 1]);
+		
+		
 		
 		$raiseAt = $tournament->getLastBlindRaiseAt();
 		// setze ablauftimer nur, wenn bereits eine Blinderhöhung anstand

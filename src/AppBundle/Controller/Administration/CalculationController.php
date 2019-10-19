@@ -53,6 +53,10 @@ class CalculationController extends Controller
 		);
 	}
 	
+	/**
+	 * TODO: Differenz (Punkte die verloren werden und zusätzliche Punkte hinzufügen
+	 * @return boolean
+	 */
 	private function createAnnualRanking()
 	{
 	    /** @var AnnualRankingManager $annualRankingManager **/

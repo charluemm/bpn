@@ -4,7 +4,6 @@
 
 {% set header_css = 'header-background-2' %}
 {% block content %}
-    {{ dump(annualRanking) }}
 <div class="container-fluid">
 	<div class="row">
 	   {% set index = 0 %}
@@ -21,7 +20,6 @@
                         {% elseif diff_rank > 0 %}
                         <span class="text-success" }}">&#x1F53A; {{ diff_rank }}</span>
                     {% endif %}
-                        {{ diff_rank }}
                     </td>
                     <td>{{ row.player }}</td>
                    <td class="text-right">{{ row.current }} Pkt.</td>

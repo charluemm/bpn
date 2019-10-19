@@ -44,7 +44,7 @@ class TournamentStatus
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="date")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
     
