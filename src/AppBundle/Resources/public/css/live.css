@@ -6,6 +6,20 @@ body {
   background-size: cover;
 }
 
+/** DRAG AND DROP STUFF **/
+#widget-live-ranking,
+#widget-live-chips {
+	position: absolute;
+	z-index: 9;
+  }
+  
+#widget-live-ranking-header,
+#widget-live-chips-header {
+	padding: 10px;
+	cursor: move;
+	z-index: 10;
+  }
+
 .navbar-brand {
 	margin-left: 25px;
 }

@@ -16,9 +16,9 @@
                 <tr>
                     <td class="badge{% if row.curr_rank == 1 %} badge-success{% else %} badge-default{% endif %}">{{ row.curr_rank }}</td>
                     <td>{% if diff_rank < 0 %}
-                        <span class="text-danger" }}">&#x1F53B; {{ diff_rank|slice(1) }}</span>
+                        <span class="text-danger">&#x1F53B; {{ diff_rank|slice(1) }}</span>
                         {% elseif diff_rank > 0 %}
-                        <span class="text-success" }}">&#x1F53A; {{ diff_rank }}</span>
+                        <span class="text-success">&#x1F53A; {{ diff_rank }}</span>
                     {% endif %}
                     </td>
                     <td>{{ row.player }}</td>
