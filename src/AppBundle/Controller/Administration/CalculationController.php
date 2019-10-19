@@ -70,8 +70,8 @@ class CalculationController extends Controller
 	    $annualRankingManager->removeAll();
 
 	    $listTournaments = array_reverse($tournamentManager->findPastMainTournaments());
-	    
-	    $startIndex = (\count($listTournaments)) % 5;
+		
+	    //$startIndex = (\count($listTournaments)) % 5;
 	    $listPlayer = $playerManager->findAll();
 	    
 	    $sumPoints = array();
@@ -102,15 +102,18 @@ class CalculationController extends Controller
                     $sumPoints[$player->getId()] = 0;
 	            
 	            // summe zurücksetzen
-	            if($startIndex == $key || (($startIndex + 5) == $key))
-	            {
-                    $sumPoints[$player->getId()] = $points;
-	            }
-	            // addieren
-	            else 
-	            {    
-                    $sumPoints[$player->getId()] += $points;	                
-	            }
+	            // if($startIndex == $key || (($startIndex + 5) == $key))
+	            // {
+                //     $sumPoints[$player->getId()] = $points;
+	            // }
+	            // // addieren
+	            // else 
+	            // {    
+                //     $sumPoints[$player->getId()] += $points;	                
+	            // }
+				
+				// summe
+				$sumPoints[$player->getId()] += $points;	                
                 
                 $newRanking = $annualRankingManager->create($player, $tournament)
                    ->setPoints($points)
