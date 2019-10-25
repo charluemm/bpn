@@ -60,7 +60,8 @@ function refreshTournamentInfo()
 
             timeString = data.blind.raiseAt;
             // check time
-            // todo: zeitumstelung? irgendwas stimmt da nicht, if wird nicht rue....
+            // todo: zeitumstelung? irgendwas stimmt da nicht, if wird nicht true....
+            // FIX für 16. BPN: Bei Zeitumtellung wird der Blind neu gesetzt und damit auch die Zeiten
             if(timeString !== "" && new Date() >= new Date(timeString))
             {
             	$('.time-left').text('00:00:00').removeClass('text-success').addClass('text-danger blink_me');
@@ -179,6 +180,7 @@ function updateBlindCountdown()
 {
 	if(timeString == "")
 	{
+        $(".time-left").html("Waiting...");
 		return;
 	}
 	var nextDate = new Date(timeString);

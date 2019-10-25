@@ -41,6 +41,7 @@ class AdministrationController extends Controller
 		
 		if(!empty($tournamentId))
 		{
+			/** @var Tournament $tournament */
 		    $tournament = $tournamentManager->find($tournamentId);
 		    // FORM live_config
     		$currentBlind = $tournament->getBlindLevel();
@@ -94,7 +95,14 @@ class AdministrationController extends Controller
 		    $formLiveConfig->handleRequest($request);
 		    if($formLiveConfig->isSubmitted() && $formLiveConfig->isValid())
 		    {
-		        $tournament->setLastBlindRaiseAt(new \DateTime());
+				if($tournament->getBlindLevel() == null)
+				{
+					$tournament->setLastBlindRaiseAt(null);
+				}
+				else
+				{
+					$tournament->setLastBlindRaiseAt(new \DateTime());
+				}
 		        $tournamentManager->update($tournament);
 		        $this->addFlash('success', 'Blind Level aktualisiert.');
 		        return $this->redirectToRoute('administration_live', array('tournamentId' => $tournamentId));
