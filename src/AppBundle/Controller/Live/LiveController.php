@@ -73,7 +73,7 @@ class LiveController extends Controller
     public function buttonStatusAction()
     {
         $output = array();
-        $host = "192.168.1.113";
+        $host = "192.168.10.35";
         exec("ping -n 1 $host -w 500", $output);
         
         $status = (int)(preg_grep("/Antwort von $host: Bytes=.*/", $output) !== array() );
