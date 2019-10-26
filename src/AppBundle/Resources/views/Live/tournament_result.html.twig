@@ -1,0 +1,37 @@
+{% extends "AppBundle::template_live.html.twig" %} 
+
+{% block navbar %}
+{% endblock navbar %}
+
+{% block video %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">       
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Ergebnis {{ result.event.name }} <small>{{ result.location }} am {{ result.date | date("d.m.Y") }}</small></h2>
+        </div>
+    </div>
+    <div class="row" style="font-size: 125%">
+       {% set index = 0 %}
+       {% set ranking_data = result.ranking %}
+       {% for col in ranking_data|batch(ranking_data|length / 3) %}
+        <div class="col-sm-4">
+          <table class="table">
+            {% for row in col %}{% set index = index + 1 %} 
+                <tr>
+                    <td class="badge{% if index == 1 %} badge-success{% else %} badge-default{% endif %}">{{ index }}</td>
+                    <td>{{ row.player }}</td>
+                </tr>             
+          {% endfor %}
+          </table>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock javascripts %}

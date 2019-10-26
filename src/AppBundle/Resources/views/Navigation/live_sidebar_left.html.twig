@@ -3,6 +3,9 @@
     <ul class="sidebar-nav">
         {% if tournament is defined %}
         <li>
+            <a href="{{ path('live_tournament_tournament_result', {'tournamentId': tournament.id}) }}">Ergebnis letzte Pokernight</a>
+        </li>
+        <li>
             <a href="{{ path('live_tournament_annual_ranking', {'tournamentId': tournament.id}) }}">5-Jahreswertung (Turnier)</a>
         </li>
         <li>

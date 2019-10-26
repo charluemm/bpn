@@ -9,6 +9,7 @@ use AppBundle\Entity\TournamentManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Michael Müller <development@reu-network.de>
@@ -82,6 +83,24 @@ class OverviewController extends Controller
         }
         
         return array(
+        );
+    }
+
+    /**
+     * @Route("/tournament-result/{tournamentId}", name="live_tournament_tournament_result")
+     * @Template("AppBundle:Live:tournament_result.html.twig")
+     */
+    public function TournamentResultAction(Request $request, $tournamentId = null)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        
+        /* @var $tournament Tournament */
+        $tournament = $em->getRepository('AppBundle:Tournament')->find($tournamentId);
+        $result = $em->getRepository('AppBundle:Tournament')->find(19);
+        return array(
+                'tournament' => $tournament,
+                'result' => $result
         );
     }
 }
